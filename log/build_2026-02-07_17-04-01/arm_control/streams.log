@@ -1,0 +1,16 @@
+[0.676s] Invoking command in '/home/ibrahim/tasc_arm/build/arm_control': PYTHONPATH=/home/ibrahim/tasc_arm/build/arm_control/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/ibrahim/tasc_arm/build/arm_control/build --no-deps symlink_data
+[0.860s] running develop
+[0.981s] running egg_info
+[0.982s] writing arm_control.egg-info/PKG-INFO
+[0.982s] writing dependency_links to arm_control.egg-info/dependency_links.txt
+[0.982s] writing entry points to arm_control.egg-info/entry_points.txt
+[0.983s] writing requirements to arm_control.egg-info/requires.txt
+[0.983s] writing top-level names to arm_control.egg-info/top_level.txt
+[0.986s] reading manifest file 'arm_control.egg-info/SOURCES.txt'
+[0.986s] writing manifest file 'arm_control.egg-info/SOURCES.txt'
+[0.986s] running build_ext
+[0.986s] Creating /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm-control.egg-link (link to .)
+[0.986s] 
+[0.986s] Installed /home/ibrahim/tasc_arm/build/arm_control
+[0.986s] running symlink_data
+[1.010s] Invoked command in '/home/ibrahim/tasc_arm/build/arm_control' returned '0': PYTHONPATH=/home/ibrahim/tasc_arm/build/arm_control/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/ibrahim/tasc_arm/build/arm_control/build --no-deps symlink_data

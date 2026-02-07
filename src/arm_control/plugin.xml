@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<library path="arm_control">
+  <class
+    name="arm_control/MG996RServoSystem"
+    type="arm_control::MG996RServoSystem"
+    base_class_type="hardware_interface::SystemInterface">
+    <description>
+      ros2_control hardware interface that publishes servo degrees to an ESP32 micro-ROS topic (MG996R via PCA9685).
+    </description>
+  </class>
+</library>
+
