@@ -18,3 +18,4 @@ arm_forward_controller:
       - end_joint
       - gear_right_joint
     interface_name: position
+

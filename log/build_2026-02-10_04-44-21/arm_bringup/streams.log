@@ -1,0 +1,16 @@
+[3.293s] Invoking command in '/home/ibrahim/tasc_arm/build/arm_bringup': PYTHONPATH=/home/ibrahim/tasc_arm/build/arm_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ibrahim/tasc_arm/install/arm_bringup/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/ibrahim/tasc_arm/build/arm_bringup/build --no-deps symlink_data
+[3.473s] running develop
+[3.621s] running egg_info
+[3.621s] writing arm_bringup.egg-info/PKG-INFO
+[3.621s] writing dependency_links to arm_bringup.egg-info/dependency_links.txt
+[3.622s] writing entry points to arm_bringup.egg-info/entry_points.txt
+[3.622s] writing requirements to arm_bringup.egg-info/requires.txt
+[3.623s] writing top-level names to arm_bringup.egg-info/top_level.txt
+[3.641s] reading manifest file 'arm_bringup.egg-info/SOURCES.txt'
+[3.641s] writing manifest file 'arm_bringup.egg-info/SOURCES.txt'
+[3.643s] running build_ext
+[3.643s] Creating /home/ibrahim/tasc_arm/install/arm_bringup/lib/python3.10/site-packages/arm-bringup.egg-link (link to .)
+[3.643s] 
+[3.643s] Installed /home/ibrahim/tasc_arm/build/arm_bringup
+[3.644s] running symlink_data
+[3.675s] Invoked command in '/home/ibrahim/tasc_arm/build/arm_bringup' returned '0': PYTHONPATH=/home/ibrahim/tasc_arm/build/arm_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ibrahim/tasc_arm/install/arm_bringup/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/ibrahim/tasc_arm/build/arm_bringup/build --no-deps symlink_data

@@ -1,0 +1,8 @@
+In file included from [01m[K/home/ibrahim/tasc_arm/src/phidgets_hardware/src/phidgets_stepper_hardware.cpp:1[m[K:
+[01m[K/home/ibrahim/tasc_arm/src/phidgets_hardware/include/phidgets_hardware/phidgets_stepper_hardware.hpp:14:10:[m[K [01;31m[Kfatal error: [m[Kphidget22.h: No such file or directory
+   14 | #include [01;31m[K<phidget22.h>[m[K
+      |          [01;31m[K^~~~~~~~~~~~~[m[K
+compilation terminated.
+gmake[2]: *** [CMakeFiles/phidgets_hardware.dir/build.make:76: CMakeFiles/phidgets_hardware.dir/src/phidgets_stepper_hardware.cpp.o] Error 1
+gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/phidgets_hardware.dir/all] Error 2
+gmake: *** [Makefile:146: all] Error 2

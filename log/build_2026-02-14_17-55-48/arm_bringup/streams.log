@@ -1,0 +1,20 @@
+[0.406s] Invoking command in '/home/ibrahim/tasc_arm/src/arm_bringup': PYTHONPATH=/home/ibrahim/tasc_arm/build/arm_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ibrahim/tasc_arm/install/arm_bringup/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/arm_bringup build --build-base /home/ibrahim/tasc_arm/build/arm_bringup/build install --record /home/ibrahim/tasc_arm/build/arm_bringup/install.log --single-version-externally-managed install_data
+[0.548s] running egg_info
+[0.548s] writing ../../build/arm_bringup/arm_bringup.egg-info/PKG-INFO
+[0.548s] writing dependency_links to ../../build/arm_bringup/arm_bringup.egg-info/dependency_links.txt
+[0.548s] writing entry points to ../../build/arm_bringup/arm_bringup.egg-info/entry_points.txt
+[0.548s] writing requirements to ../../build/arm_bringup/arm_bringup.egg-info/requires.txt
+[0.548s] writing top-level names to ../../build/arm_bringup/arm_bringup.egg-info/top_level.txt
+[0.549s] reading manifest file '../../build/arm_bringup/arm_bringup.egg-info/SOURCES.txt'
+[0.550s] writing manifest file '../../build/arm_bringup/arm_bringup.egg-info/SOURCES.txt'
+[0.550s] running build
+[0.550s] running build_py
+[0.550s] running install
+[0.550s] running install_lib
+[0.551s] running install_data
+[0.551s] running install_egg_info
+[0.552s] removing '/home/ibrahim/tasc_arm/install/arm_bringup/lib/python3.10/site-packages/arm_bringup-0.0.0-py3.10.egg-info' (and everything under it)
+[0.552s] Copying ../../build/arm_bringup/arm_bringup.egg-info to /home/ibrahim/tasc_arm/install/arm_bringup/lib/python3.10/site-packages/arm_bringup-0.0.0-py3.10.egg-info
+[0.553s] running install_scripts
+[0.564s] writing list of installed files to '/home/ibrahim/tasc_arm/build/arm_bringup/install.log'
+[0.578s] Invoked command in '/home/ibrahim/tasc_arm/src/arm_bringup' returned '0': PYTHONPATH=/home/ibrahim/tasc_arm/build/arm_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ibrahim/tasc_arm/install/arm_bringup/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/arm_bringup build --build-base /home/ibrahim/tasc_arm/build/arm_bringup/build install --record /home/ibrahim/tasc_arm/build/arm_bringup/install.log --single-version-externally-managed install_data

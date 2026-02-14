@@ -1,0 +1,21 @@
+[0.609s] Invoking command in '/home/ibrahim/tasc_arm/build/arm_control': PYTHONPATH=/home/ibrahim/tasc_arm/build/arm_control/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/ibrahim/tasc_arm/build/arm_control/build --no-deps symlink_data
+[0.782s] running develop
+[0.895s] running egg_info
+[0.895s] writing arm_control.egg-info/PKG-INFO
+[0.895s] writing dependency_links to arm_control.egg-info/dependency_links.txt
+[0.896s] writing entry points to arm_control.egg-info/entry_points.txt
+[0.896s] writing requirements to arm_control.egg-info/requires.txt
+[0.896s] writing top-level names to arm_control.egg-info/top_level.txt
+[0.897s] reading manifest file 'arm_control.egg-info/SOURCES.txt'
+[0.898s] writing manifest file 'arm_control.egg-info/SOURCES.txt'
+[0.899s] running build_ext
+[0.900s] Creating /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm-control.egg-link (link to .)
+[0.900s] Installing keyboard_cartesian_ik_teleop script to /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control
+[0.900s] Installing keyboard_teleop script to /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control
+[0.900s] Installing logitech_joystick_ik script to /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control
+[0.900s] Installing ps5_arm_teleop script to /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control
+[0.900s] Installing ps5_cartesian_ik_teleop script to /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control
+[0.901s] 
+[0.901s] Installed /home/ibrahim/tasc_arm/build/arm_control
+[0.901s] running symlink_data
+[0.923s] Invoked command in '/home/ibrahim/tasc_arm/build/arm_control' returned '0': PYTHONPATH=/home/ibrahim/tasc_arm/build/arm_control/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/ibrahim/tasc_arm/build/arm_control/build --no-deps symlink_data

@@ -1,0 +1,50 @@
+running develop
+Removing /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm-control.egg-link (link to .)
+running egg_info
+writing ../../build/arm_control/arm_control.egg-info/PKG-INFO
+writing dependency_links to ../../build/arm_control/arm_control.egg-info/dependency_links.txt
+writing entry points to ../../build/arm_control/arm_control.egg-info/entry_points.txt
+writing requirements to ../../build/arm_control/arm_control.egg-info/requires.txt
+writing top-level names to ../../build/arm_control/arm_control.egg-info/top_level.txt
+reading manifest file '../../build/arm_control/arm_control.egg-info/SOURCES.txt'
+writing manifest file '../../build/arm_control/arm_control.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/ibrahim/tasc_arm/build/arm_control/build
+creating /home/ibrahim/tasc_arm/build/arm_control/build/lib
+creating /home/ibrahim/tasc_arm/build/arm_control/build/lib/arm_control
+copying arm_control/ps5_cartesian_ik_teleop.py -> /home/ibrahim/tasc_arm/build/arm_control/build/lib/arm_control
+copying arm_control/keyboard_teleop.py -> /home/ibrahim/tasc_arm/build/arm_control/build/lib/arm_control
+copying arm_control/logitech_joystick_ik.py -> /home/ibrahim/tasc_arm/build/arm_control/build/lib/arm_control
+copying arm_control/ps5_arm_teleop.py -> /home/ibrahim/tasc_arm/build/arm_control/build/lib/arm_control
+copying arm_control/keyboard_cartesian_ik_teleop.py -> /home/ibrahim/tasc_arm/build/arm_control/build/lib/arm_control
+copying arm_control/__init__.py -> /home/ibrahim/tasc_arm/build/arm_control/build/lib/arm_control
+running install
+running install_lib
+creating /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm_control
+copying /home/ibrahim/tasc_arm/build/arm_control/build/lib/arm_control/ps5_cartesian_ik_teleop.py -> /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm_control
+copying /home/ibrahim/tasc_arm/build/arm_control/build/lib/arm_control/keyboard_teleop.py -> /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm_control
+copying /home/ibrahim/tasc_arm/build/arm_control/build/lib/arm_control/logitech_joystick_ik.py -> /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm_control
+copying /home/ibrahim/tasc_arm/build/arm_control/build/lib/arm_control/ps5_arm_teleop.py -> /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm_control
+copying /home/ibrahim/tasc_arm/build/arm_control/build/lib/arm_control/keyboard_cartesian_ik_teleop.py -> /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm_control
+copying /home/ibrahim/tasc_arm/build/arm_control/build/lib/arm_control/__init__.py -> /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm_control
+byte-compiling /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm_control/ps5_cartesian_ik_teleop.py to ps5_cartesian_ik_teleop.cpython-310.pyc
+byte-compiling /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm_control/keyboard_teleop.py to keyboard_teleop.cpython-310.pyc
+byte-compiling /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm_control/logitech_joystick_ik.py to logitech_joystick_ik.cpython-310.pyc
+byte-compiling /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm_control/ps5_arm_teleop.py to ps5_arm_teleop.cpython-310.pyc
+byte-compiling /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm_control/keyboard_cartesian_ik_teleop.py to keyboard_cartesian_ik_teleop.cpython-310.pyc
+byte-compiling /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm_control/__init__.py to __init__.cpython-310.pyc
+running install_data
+copying resource/arm_control -> /home/ibrahim/tasc_arm/install/arm_control/share/ament_index/resource_index/packages
+copying package.xml -> /home/ibrahim/tasc_arm/install/arm_control/share/arm_control
+copying config/controllers.yaml -> /home/ibrahim/tasc_arm/install/arm_control/share/arm_control/config
+copying plugin.xml -> /home/ibrahim/tasc_arm/install/arm_control/share/arm_control
+running install_egg_info
+Copying ../../build/arm_control/arm_control.egg-info to /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm_control-0.0.0-py3.10.egg-info
+running install_scripts
+Installing keyboard_cartesian_ik_teleop script to /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control
+Installing keyboard_teleop script to /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control
+Installing logitech_joystick_ik script to /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control
+Installing ps5_arm_teleop script to /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control
+Installing ps5_cartesian_ik_teleop script to /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control
+writing list of installed files to '/home/ibrahim/tasc_arm/build/arm_control/install.log'

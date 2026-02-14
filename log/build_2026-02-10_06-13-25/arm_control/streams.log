@@ -1,0 +1,54 @@
+[0.833s] Invoking command in '/home/ibrahim/tasc_arm/build/arm_control': PYTHONPATH=/home/ibrahim/tasc_arm/build/arm_control/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --uninstall --editable --build-directory /home/ibrahim/tasc_arm/build/arm_control/build
+[1.008s] running develop
+[1.126s] Removing /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm-control.egg-link (link to .)
+[1.146s] Invoked command in '/home/ibrahim/tasc_arm/build/arm_control' returned '0': PYTHONPATH=/home/ibrahim/tasc_arm/build/arm_control/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --uninstall --editable --build-directory /home/ibrahim/tasc_arm/build/arm_control/build
+[1.147s] Invoking command in '/home/ibrahim/tasc_arm/src/arm_control': PYTHONPATH=/home/ibrahim/tasc_arm/build/arm_control/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/arm_control build --build-base /home/ibrahim/tasc_arm/build/arm_control/build install --record /home/ibrahim/tasc_arm/build/arm_control/install.log --single-version-externally-managed install_data --force
+[1.310s] running egg_info
+[1.310s] writing ../../build/arm_control/arm_control.egg-info/PKG-INFO
+[1.310s] writing dependency_links to ../../build/arm_control/arm_control.egg-info/dependency_links.txt
+[1.311s] writing entry points to ../../build/arm_control/arm_control.egg-info/entry_points.txt
+[1.311s] writing requirements to ../../build/arm_control/arm_control.egg-info/requires.txt
+[1.311s] writing top-level names to ../../build/arm_control/arm_control.egg-info/top_level.txt
+[1.313s] reading manifest file '../../build/arm_control/arm_control.egg-info/SOURCES.txt'
+[1.313s] writing manifest file '../../build/arm_control/arm_control.egg-info/SOURCES.txt'
+[1.314s] running build
+[1.314s] running build_py
+[1.314s] creating /home/ibrahim/tasc_arm/build/arm_control/build
+[1.314s] creating /home/ibrahim/tasc_arm/build/arm_control/build/lib
+[1.314s] creating /home/ibrahim/tasc_arm/build/arm_control/build/lib/arm_control
+[1.314s] copying arm_control/ps5_cartesian_ik_teleop.py -> /home/ibrahim/tasc_arm/build/arm_control/build/lib/arm_control
+[1.314s] copying arm_control/keyboard_teleop.py -> /home/ibrahim/tasc_arm/build/arm_control/build/lib/arm_control
+[1.316s] copying arm_control/logitech_joystick_ik.py -> /home/ibrahim/tasc_arm/build/arm_control/build/lib/arm_control
+[1.316s] copying arm_control/ps5_arm_teleop.py -> /home/ibrahim/tasc_arm/build/arm_control/build/lib/arm_control
+[1.316s] copying arm_control/keyboard_cartesian_ik_teleop.py -> /home/ibrahim/tasc_arm/build/arm_control/build/lib/arm_control
+[1.316s] copying arm_control/__init__.py -> /home/ibrahim/tasc_arm/build/arm_control/build/lib/arm_control
+[1.316s] running install
+[1.316s] running install_lib
+[1.316s] creating /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm_control
+[1.316s] copying /home/ibrahim/tasc_arm/build/arm_control/build/lib/arm_control/ps5_cartesian_ik_teleop.py -> /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm_control
+[1.316s] copying /home/ibrahim/tasc_arm/build/arm_control/build/lib/arm_control/keyboard_teleop.py -> /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm_control
+[1.316s] copying /home/ibrahim/tasc_arm/build/arm_control/build/lib/arm_control/logitech_joystick_ik.py -> /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm_control
+[1.316s] copying /home/ibrahim/tasc_arm/build/arm_control/build/lib/arm_control/ps5_arm_teleop.py -> /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm_control
+[1.317s] copying /home/ibrahim/tasc_arm/build/arm_control/build/lib/arm_control/keyboard_cartesian_ik_teleop.py -> /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm_control
+[1.317s] copying /home/ibrahim/tasc_arm/build/arm_control/build/lib/arm_control/__init__.py -> /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm_control
+[1.317s] byte-compiling /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm_control/ps5_cartesian_ik_teleop.py to ps5_cartesian_ik_teleop.cpython-310.pyc
+[1.318s] byte-compiling /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm_control/keyboard_teleop.py to keyboard_teleop.cpython-310.pyc
+[1.318s] byte-compiling /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm_control/logitech_joystick_ik.py to logitech_joystick_ik.cpython-310.pyc
+[1.319s] byte-compiling /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm_control/ps5_arm_teleop.py to ps5_arm_teleop.cpython-310.pyc
+[1.320s] byte-compiling /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm_control/keyboard_cartesian_ik_teleop.py to keyboard_cartesian_ik_teleop.cpython-310.pyc
+[1.321s] byte-compiling /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm_control/__init__.py to __init__.cpython-310.pyc
+[1.321s] running install_data
+[1.321s] copying resource/arm_control -> /home/ibrahim/tasc_arm/install/arm_control/share/ament_index/resource_index/packages
+[1.321s] copying package.xml -> /home/ibrahim/tasc_arm/install/arm_control/share/arm_control
+[1.321s] copying config/controllers.yaml -> /home/ibrahim/tasc_arm/install/arm_control/share/arm_control/config
+[1.321s] copying plugin.xml -> /home/ibrahim/tasc_arm/install/arm_control/share/arm_control
+[1.345s] running install_egg_info
+[1.347s] Copying ../../build/arm_control/arm_control.egg-info to /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm_control-0.0.0-py3.10.egg-info
+[1.357s] running install_scripts
+[1.370s] Installing keyboard_cartesian_ik_teleop script to /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control
+[1.371s] Installing keyboard_teleop script to /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control
+[1.371s] Installing logitech_joystick_ik script to /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control
+[1.371s] Installing ps5_arm_teleop script to /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control
+[1.371s] Installing ps5_cartesian_ik_teleop script to /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control
+[1.372s] writing list of installed files to '/home/ibrahim/tasc_arm/build/arm_control/install.log'
+[1.399s] Invoked command in '/home/ibrahim/tasc_arm/src/arm_control' returned '0': PYTHONPATH=/home/ibrahim/tasc_arm/build/arm_control/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/arm_control build --build-base /home/ibrahim/tasc_arm/build/arm_control/build install --record /home/ibrahim/tasc_arm/build/arm_control/install.log --single-version-externally-managed install_data --force

@@ -1,0 +1,39 @@
+[0.170s] Invoking command in '/home/ibrahim/tasc_arm/build/phidgets_hardware': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ibrahim/tasc_arm/install/arm_bringup:/opt/ros/humble /usr/bin/cmake --build /home/ibrahim/tasc_arm/build/phidgets_hardware -- -j4 -l4
+[0.211s] [35m[1mConsolidate compiler generated dependencies of target phidgets_hardware[0m
+[0.223s] [ 50%] [32mBuilding CXX object CMakeFiles/phidgets_hardware.dir/src/phidgets_stepper_hardware.cpp.o[0m
+[2.508s] [100%] [32m[1mLinking CXX shared library libphidgets_hardware.so[0m
+[2.640s] [100%] Built target phidgets_hardware
+[2.649s] Invoked command in '/home/ibrahim/tasc_arm/build/phidgets_hardware' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ibrahim/tasc_arm/install/arm_bringup:/opt/ros/humble /usr/bin/cmake --build /home/ibrahim/tasc_arm/build/phidgets_hardware -- -j4 -l4
+[2.651s] Invoking command in '/home/ibrahim/tasc_arm/build/phidgets_hardware': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ibrahim/tasc_arm/install/arm_bringup:/opt/ros/humble /usr/bin/cmake --install /home/ibrahim/tasc_arm/build/phidgets_hardware
+[2.657s] -- Install configuration: ""
+[2.657s] -- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/phidgets_hardware_plugin.xml
+[2.657s] -- Installing: /home/ibrahim/tasc_arm/install/phidgets_hardware/lib/libphidgets_hardware.so
+[2.658s] -- Set runtime path of "/home/ibrahim/tasc_arm/install/phidgets_hardware/lib/libphidgets_hardware.so" to ""
+[2.658s] -- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/include
+[2.658s] -- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/include/phidgets_hardware
+[2.658s] -- Installing: /home/ibrahim/tasc_arm/install/phidgets_hardware/include/phidgets_hardware/phidgets_stepper_hardware.hpp
+[2.658s] -- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/description
+[2.658s] -- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/description/phidgets_single_motor.urdf.xacro
+[2.658s] -- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/config
+[2.658s] -- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/config/ros2_control_controllers.yaml
+[2.658s] -- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/launch
+[2.658s] -- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/launch/bringup_single_motor.launch.py
+[2.658s] -- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/phidgets_hardware_plugin.xml
+[2.658s] -- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/lib/phidgets_hardware/keyboard_stepper_teleop.py
+[2.659s] -- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/ament_index/resource_index/package_run_dependencies/phidgets_hardware
+[2.659s] -- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/ament_index/resource_index/parent_prefix_path/phidgets_hardware
+[2.659s] -- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/environment/ament_prefix_path.sh
+[2.659s] -- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/environment/ament_prefix_path.dsv
+[2.659s] -- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/environment/path.sh
+[2.659s] -- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/environment/path.dsv
+[2.659s] -- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/local_setup.bash
+[2.659s] -- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/local_setup.sh
+[2.659s] -- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/local_setup.zsh
+[2.659s] -- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/local_setup.dsv
+[2.659s] -- Installing: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/package.dsv
+[2.659s] -- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/ament_index/resource_index/packages/phidgets_hardware
+[2.659s] -- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/ament_index/resource_index/hardware_interface__pluginlib__plugin/phidgets_hardware
+[2.659s] -- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/cmake/phidgets_hardwareConfig.cmake
+[2.659s] -- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/cmake/phidgets_hardwareConfig-version.cmake
+[2.659s] -- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/package.xml
+[2.660s] Invoked command in '/home/ibrahim/tasc_arm/build/phidgets_hardware' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ibrahim/tasc_arm/install/arm_bringup:/opt/ros/humble /usr/bin/cmake --install /home/ibrahim/tasc_arm/build/phidgets_hardware

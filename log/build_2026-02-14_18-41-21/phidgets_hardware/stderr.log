@@ -1,0 +1,6 @@
+[31mCMake Error at cmake_install.cmake:89 (file):
+  file INSTALL cannot find
+  "/home/ibrahim/tasc_arm/src/phidgets_hardware/phidgets_hardware/logitech_extreme3dpro_stepper_teleop.py":
+  No such file or directory.
+
+[0m

@@ -21,10 +21,19 @@ def generate_launch_description():
         output="screen",
     )
 
-    robot_state_publisher = Node(
+    #robot_state_publisher = Node(
+    #    package="robot_state_publisher",
+    #    executable="robot_state_publisher",
+    #    parameters=[{"robot_description": robot_description}],
+    #    output="screen",
+    #)
+    
+    robot_state_publisher_sim = Node(
         package="robot_state_publisher",
         executable="robot_state_publisher",
+        name="robot_state_publisher_sim",
         parameters=[{"robot_description": robot_description}],
+        remappings=[("/joint_states", "/joint_states_sim")],
         output="screen",
     )
 
@@ -49,6 +58,13 @@ def generate_launch_description():
         output="screen",
     )
     
+    # New node that publishes /joint_states_sim
+    joint_state_offset = Node(
+        package="arm_control",              # wherever you install it
+        executable="joint_state_offset.py", # name must match what you install
+        output="screen",
+    )
+    
     joy_node = Node(
         package="joy",
         executable="joy_node",
@@ -62,10 +78,11 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
-        robot_state_publisher,
+        robot_state_publisher_sim,
         ros2_control_node,
         spawner_jsb,
         spawner_arm,
+        joint_state_offset,
         rviz,
         joy_node,
     ])

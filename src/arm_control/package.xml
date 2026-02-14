@@ -3,9 +3,18 @@
 <package format="3">
   <name>arm_control</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
+  <description>ROS 2 control hardware + teleop nodes for the TASC arm.</description>
+
   <maintainer email="ahmedmegahed20142@gmail.com">ahmedtabl</maintainer>
-  <license>TODO: License declaration</license>
+  <license>TODO</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>rclcpp_lifecycle</depend>
+  <depend>hardware_interface</depend>
+  <depend>pluginlib</depend>
+  <depend>std_msgs</depend>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
@@ -13,6 +22,7 @@
   <test_depend>python3-pytest</test_depend>
 
   <export>
-    <build_type>ament_python</build_type>
+    <build_type>ament_cmake</build_type>
   </export>
 </package>
+

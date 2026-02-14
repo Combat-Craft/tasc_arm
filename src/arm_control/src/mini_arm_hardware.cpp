@@ -185,5 +185,5 @@ hardware_interface::return_type MG996RServoSystem::write(const rclcpp::Time &, c
 
 }  // namespace arm_control
 
-PLUGINLIB_EXPORT_CLASS(mini_arm_ros2::MG996RServoSystem, hardware_interface::SystemInterface)
+PLUGINLIB_EXPORT_CLASS(arm_control::MG996RServoSystem, hardware_interface::SystemInterface)
 

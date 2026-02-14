@@ -23,10 +23,11 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            "keyboard_teleop = mini_arm_teleop.keyboard_teleop:main",
-            "keyboard_cartesian_ik_teleop = mini_arm_teleop.keyboard_cartesian_ik_teleop:main",
-            "ps5_arm_teleop = mini_arm_teleop.ps5_arm_teleop:main",
-            "ps5_cartesian_ik_teleop = mini_arm_teleop.ps5_cartesian_ik_teleop:main",
+            "keyboard_teleop = arm_control.keyboard_teleop:main",
+            "keyboard_cartesian_ik_teleop = arm_control.keyboard_cartesian_ik_teleop:main",
+            "ps5_arm_teleop = arm_control.ps5_arm_teleop:main",
+            "ps5_cartesian_ik_teleop = arm_control.ps5_cartesian_ik_teleop:main",
+            "logitech_joystick_ik = arm_control.logitech_joystick_ik:main",
         ],
     },
 )

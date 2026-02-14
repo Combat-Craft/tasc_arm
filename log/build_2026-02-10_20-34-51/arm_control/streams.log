@@ -1,0 +1,52 @@
+[0.218s] Invoking command in '/home/ibrahim/tasc_arm/build/arm_control': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ibrahim/tasc_arm/install/arm_bringup:/opt/ros/humble /usr/bin/cmake /home/ibrahim/tasc_arm/src/arm_control -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/ibrahim/tasc_arm/install/arm_control
+[0.380s] -- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.665s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.831s] -- Found rclcpp: 16.0.14 (/opt/ros/humble/share/rclcpp/cmake)
+[1.135s] -- Found rosidl_generator_c: 3.1.7 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[1.218s] -- Found rosidl_adapter: 3.1.7 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[1.278s] -- Found rosidl_generator_cpp: 3.1.7 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[1.364s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[1.406s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[1.519s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[1.524s] -- Found rmw_cyclonedds_cpp: 1.3.4 (/opt/ros/humble/share/rmw_cyclonedds_cpp/cmake)
+[1.630s] -- Using RMW implementation 'rmw_cyclonedds_cpp' as default
+[1.789s] -- Found rclcpp_lifecycle: 16.0.14 (/opt/ros/humble/share/rclcpp_lifecycle/cmake)
+[1.846s] -- Found hardware_interface: 2.51.0 (/opt/ros/humble/share/hardware_interface/cmake)
+[2.139s] -- Configuring done
+[2.422s] -- Generating done
+[2.437s] -- Build files have been written to: /home/ibrahim/tasc_arm/build/arm_control
+[2.445s] Invoked command in '/home/ibrahim/tasc_arm/build/arm_control' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ibrahim/tasc_arm/install/arm_bringup:/opt/ros/humble /usr/bin/cmake /home/ibrahim/tasc_arm/src/arm_control -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/ibrahim/tasc_arm/install/arm_control
+[2.445s] Invoking command in '/home/ibrahim/tasc_arm/build/arm_control': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ibrahim/tasc_arm/install/arm_bringup:/opt/ros/humble /usr/bin/cmake --build /home/ibrahim/tasc_arm/build/arm_control -- -j4 -l4
+[2.494s] [35m[1mConsolidate compiler generated dependencies of target arm_control[0m
+[2.548s] [100%] Built target arm_control
+[2.557s] Invoked command in '/home/ibrahim/tasc_arm/build/arm_control' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ibrahim/tasc_arm/install/arm_bringup:/opt/ros/humble /usr/bin/cmake --build /home/ibrahim/tasc_arm/build/arm_control -- -j4 -l4
+[2.558s] Invoking command in '/home/ibrahim/tasc_arm/build/arm_control': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ibrahim/tasc_arm/install/arm_bringup:/opt/ros/humble /usr/bin/cmake --install /home/ibrahim/tasc_arm/build/arm_control
+[2.566s] -- Install configuration: ""
+[2.566s] -- Execute custom install script
+[2.566s] -- Up-to-date symlink: /home/ibrahim/tasc_arm/install/arm_control/share/arm_control//plugin.xml
+[2.566s] -- Up-to-date symlink: /home/ibrahim/tasc_arm/install/arm_control/lib/libarm_control.so
+[2.578s] -- Up-to-date symlink: /home/ibrahim/tasc_arm/install/arm_control/include/arm_control/mini_arm_hardware.hpp
+[2.578s] -- Up-to-date symlink: /home/ibrahim/tasc_arm/install/arm_control/share/arm_control/plugin.xml
+[2.579s] -- Up-to-date symlink: /home/ibrahim/tasc_arm/install/arm_control/share/arm_control/config/controllers.yaml
+[2.579s] -- Up-to-date symlink: /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control/keyboard_teleop.py
+[2.579s] -- Up-to-date symlink: /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control/keyboard_cartesian_ik_teleop.py
+[2.579s] -- Up-to-date symlink: /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control/ps5_arm_teleop.py
+[2.579s] -- Up-to-date symlink: /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control/ps5_cartesian_ik_teleop.py
+[2.579s] -- Up-to-date symlink: /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control/logitech_joystick_ik.py
+[2.579s] -- Up-to-date symlink: /home/ibrahim/tasc_arm/install/arm_control/share/ament_index/resource_index/package_run_dependencies/arm_control
+[2.580s] -- Up-to-date symlink: /home/ibrahim/tasc_arm/install/arm_control/share/ament_index/resource_index/parent_prefix_path/arm_control
+[2.581s] -- Up-to-date symlink: /home/ibrahim/tasc_arm/install/arm_control/share/arm_control/environment/ament_prefix_path.sh
+[2.581s] -- Up-to-date symlink: /home/ibrahim/tasc_arm/install/arm_control/share/arm_control/environment/ament_prefix_path.dsv
+[2.581s] -- Up-to-date symlink: /home/ibrahim/tasc_arm/install/arm_control/share/arm_control/environment/path.sh
+[2.581s] -- Up-to-date symlink: /home/ibrahim/tasc_arm/install/arm_control/share/arm_control/environment/path.dsv
+[2.582s] -- Up-to-date symlink: /home/ibrahim/tasc_arm/install/arm_control/share/arm_control/local_setup.bash
+[2.582s] -- Up-to-date symlink: /home/ibrahim/tasc_arm/install/arm_control/share/arm_control/local_setup.sh
+[2.583s] -- Up-to-date symlink: /home/ibrahim/tasc_arm/install/arm_control/share/arm_control/local_setup.zsh
+[2.583s] -- Up-to-date symlink: /home/ibrahim/tasc_arm/install/arm_control/share/arm_control/local_setup.dsv
+[2.583s] -- Symlinking: /home/ibrahim/tasc_arm/install/arm_control/share/arm_control/package.dsv
+[2.591s] -- Up-to-date symlink: /home/ibrahim/tasc_arm/install/arm_control/share/ament_index/resource_index/packages/arm_control
+[2.591s] -- Up-to-date symlink: /home/ibrahim/tasc_arm/install/arm_control/share/ament_index/resource_index/hardware_interface__pluginlib__plugin/arm_control
+[2.592s] -- Up-to-date symlink: /home/ibrahim/tasc_arm/install/arm_control/share/arm_control/cmake/arm_controlConfig.cmake
+[2.592s] -- Up-to-date symlink: /home/ibrahim/tasc_arm/install/arm_control/share/arm_control/cmake/arm_controlConfig-version.cmake
+[2.592s] -- Up-to-date symlink: /home/ibrahim/tasc_arm/install/arm_control/share/arm_control/package.xml
+[2.594s] Invoked command in '/home/ibrahim/tasc_arm/build/arm_control' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ibrahim/tasc_arm/install/arm_bringup:/opt/ros/humble /usr/bin/cmake --install /home/ibrahim/tasc_arm/build/arm_control

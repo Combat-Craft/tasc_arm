@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="phidgets_single_motor">
+
+  <link name="base_link"/>
+  <link name="motor_link"/>
+
+  <joint name="motor_joint" type="continuous"> <!-- NOTE: Continuous for now is fine for a test joint, but we want to put revolute for joint limits later -->
+    <parent link="base_link"/>
+    <child link="motor_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+  <ros2_control name="PhidgetsStepper" type="actuator">
+    <hardware>
+      <plugin>phidgets_hardware/PhidgetsStepperHardware</plugin>
+
+      <!-- Your addressing -->
+      <param name="device_serial">766944</param>
+      <param name="hub_port">0</param>
+      <param name="channel">0</param>
+
+      <!-- Motion config -->
+      <param name="acceleration">1000.0</param>
+      <param name="velocity_limit">479.0</param>
+
+      <!-- Current limits -->
+      <param name="current_limit">1.2</param>
+      <param name="holding_current_limit">0.6</param>
+
+      <!-- Rescale factor applied on the device:
+           after setRescaleFactor, the Stepper API position units become OUTPUT rotations -->
+      <param name="rescale_factor_rot">0.00416666667</param>
+
+      <!-- Clamp command in radians -->
+      <param name="command_limit_rad">6.283185307179586</param>
+    </hardware>
+
+    <joint name="motor_joint">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+  </ros2_control>
+
+</robot>
+

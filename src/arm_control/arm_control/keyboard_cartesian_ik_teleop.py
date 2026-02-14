@@ -86,8 +86,8 @@ class CartesianIKTeleop(Node):
 
         # Optional joint mapping (flip directions / add offsets)
         # If your 2nd joint needs flipped, set sign[1] = -1
-        self.sign = np.array([1, 1, 1, 1, 1, 1], dtype=float)
-        self.offset = np.array([0, 0, 0, 0, 0, 0], dtype=float)
+        self.sign = np.array([-1, -1, 1, 1, -1, -1], dtype=float)
+        self.offset = np.array([-0.366519, 0.436332, -0.872665, -1.13446, 1.46608, 0.0], dtype=float)
 
         # URDF limits (you used +/-1.57 everywhere)
         self.limits_lo = np.array([-1.57] * 6, dtype=float)
@@ -122,31 +122,30 @@ class CartesianIKTeleop(Node):
         for j, jn in enumerate(self.joint_names):
             for i, link in enumerate(self.chain.links):
                 if link.name == jn:
-                    guess[i] = float(self.q[j])
+                    q_urdf_guess = self.sign[j] * float(self.q[j]) + self.offset[j]
+                    guess[i] = q_urdf_guess
                     break
 
         sol = self.chain.inverse_kinematics(target_xyz, initial_position=guess)
 
-        # Extract our 6 joints back out in the correct order
-        q6 = np.zeros(6, dtype=float)
+        # Extract URDF-space solution in our 6-joint order
+        q_urdf = np.zeros(6, dtype=float)
         for j, jn in enumerate(self.joint_names):
-            found = False
             for i, link in enumerate(self.chain.links):
                 if link.name == jn:
-                    q6[j] = float(sol[i])
-                    found = True
-                    break
-            if not found:
-                q6[j] = float(self.q[j])
+                     q_urdf[j] = float(sol[i])
+                     break
 
-        # Apply sign/offset mapping
-        q6 = self.sign * q6 + self.offset
+        # Convert URDF-space -> physical command space
+        # q_phys = sign * (q_urdf - offset)
+        q_phys = self.sign * (q_urdf - self.offset)
 
-        # Clamp to limits
+        # Clamp physical commands to limits
         for i in range(6):
-            q6[i] = clamp(float(q6[i]), float(self.limits_lo[i]), float(self.limits_hi[i]))
+             q_phys[i] = clamp(float(q_phys[i]), float(self.limits_lo[i]), float(self.limits_hi[i]))
 
-        return q6
+        return q_phys
+
 
     def apply_key(self, k: str):
         moved = False

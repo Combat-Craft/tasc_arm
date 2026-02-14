@@ -1,0 +1,4 @@
+Invoking command in '/home/ibrahim/tasc_arm/build/phidgets_hardware': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/ibrahim/tasc_arm/src/phidgets_hardware -DCMAKE_INSTALL_PREFIX=/home/ibrahim/tasc_arm/install/phidgets_hardware
+Invoked command in '/home/ibrahim/tasc_arm/build/phidgets_hardware' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/ibrahim/tasc_arm/src/phidgets_hardware -DCMAKE_INSTALL_PREFIX=/home/ibrahim/tasc_arm/install/phidgets_hardware
+Invoking command in '/home/ibrahim/tasc_arm/build/phidgets_hardware': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/ibrahim/tasc_arm/build/phidgets_hardware -- -j4 -l4
+Invoked command in '/home/ibrahim/tasc_arm/build/phidgets_hardware' returned '2': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/ibrahim/tasc_arm/build/phidgets_hardware -- -j4 -l4

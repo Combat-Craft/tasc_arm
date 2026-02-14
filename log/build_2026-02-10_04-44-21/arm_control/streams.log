@@ -1,0 +1,20 @@
+[3.245s] Invoking command in '/home/ibrahim/tasc_arm/build/arm_control': PYTHONPATH=/home/ibrahim/tasc_arm/build/arm_control/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/ibrahim/tasc_arm/build/arm_control/build --no-deps symlink_data
+[3.418s] running develop
+[3.573s] running egg_info
+[3.573s] writing arm_control.egg-info/PKG-INFO
+[3.574s] writing dependency_links to arm_control.egg-info/dependency_links.txt
+[3.574s] writing entry points to arm_control.egg-info/entry_points.txt
+[3.574s] writing requirements to arm_control.egg-info/requires.txt
+[3.575s] writing top-level names to arm_control.egg-info/top_level.txt
+[3.576s] reading manifest file 'arm_control.egg-info/SOURCES.txt'
+[3.594s] writing manifest file 'arm_control.egg-info/SOURCES.txt'
+[3.595s] running build_ext
+[3.595s] Creating /home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages/arm-control.egg-link (link to .)
+[3.596s] Installing keyboard_cartesian_ik_teleop script to /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control
+[3.596s] Installing keyboard_teleop script to /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control
+[3.596s] Installing ps5_arm_teleop script to /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control
+[3.596s] Installing ps5_cartesian_ik_teleop script to /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control
+[3.596s] 
+[3.596s] Installed /home/ibrahim/tasc_arm/build/arm_control
+[3.596s] running symlink_data
+[3.620s] Invoked command in '/home/ibrahim/tasc_arm/build/arm_control' returned '0': PYTHONPATH=/home/ibrahim/tasc_arm/build/arm_control/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/ibrahim/tasc_arm/build/arm_control/build --no-deps symlink_data

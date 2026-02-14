@@ -1,0 +1,246 @@
+[0.443s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build', '--symlink-install']
+[0.443s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=True, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=4, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=None, packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, mixin_files=None, mixin=None, verb_parser=<colcon_mixin.mixin.mixin_argument.MixinArgumentDecorator object at 0x717b2125f340>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x717b212183a0>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x717b212183a0>>, mixin_verb=('build',))
+[4.507s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[4.507s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[4.507s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[4.507s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[4.507s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[4.507s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[4.507s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/ibrahim/tasc_arm'
+[4.507s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[4.507s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[4.507s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[4.507s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[4.507s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[4.507s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[4.507s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[4.507s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[4.507s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[4.517s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[4.517s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[4.517s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[4.517s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[4.517s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[4.517s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[4.517s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[4.517s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[4.517s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[4.517s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[4.517s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[4.517s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[4.517s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[4.517s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[4.517s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[4.517s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[4.517s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[4.517s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_pkg']
+[4.517s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_pkg'
+[4.517s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_meta']
+[4.517s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_meta'
+[4.517s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[4.517s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[4.517s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[4.517s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[4.518s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[4.518s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[4.518s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[4.518s] Level 1:colcon.colcon_core.package_identification:_identify(src/arm_bringup) by extensions ['ignore', 'ignore_ament_install']
+[4.518s] Level 1:colcon.colcon_core.package_identification:_identify(src/arm_bringup) by extension 'ignore'
+[4.518s] Level 1:colcon.colcon_core.package_identification:_identify(src/arm_bringup) by extension 'ignore_ament_install'
+[4.518s] Level 1:colcon.colcon_core.package_identification:_identify(src/arm_bringup) by extensions ['colcon_pkg']
+[4.518s] Level 1:colcon.colcon_core.package_identification:_identify(src/arm_bringup) by extension 'colcon_pkg'
+[4.518s] Level 1:colcon.colcon_core.package_identification:_identify(src/arm_bringup) by extensions ['colcon_meta']
+[4.518s] Level 1:colcon.colcon_core.package_identification:_identify(src/arm_bringup) by extension 'colcon_meta'
+[4.518s] Level 1:colcon.colcon_core.package_identification:_identify(src/arm_bringup) by extensions ['ros']
+[4.518s] Level 1:colcon.colcon_core.package_identification:_identify(src/arm_bringup) by extension 'ros'
+[4.539s] DEBUG:colcon.colcon_core.package_identification:Package 'src/arm_bringup' with type 'ros.ament_python' and name 'arm_bringup'
+[4.539s] Level 1:colcon.colcon_core.package_identification:_identify(src/arm_control) by extensions ['ignore', 'ignore_ament_install']
+[4.539s] Level 1:colcon.colcon_core.package_identification:_identify(src/arm_control) by extension 'ignore'
+[4.539s] Level 1:colcon.colcon_core.package_identification:_identify(src/arm_control) by extension 'ignore_ament_install'
+[4.539s] Level 1:colcon.colcon_core.package_identification:_identify(src/arm_control) by extensions ['colcon_pkg']
+[4.539s] Level 1:colcon.colcon_core.package_identification:_identify(src/arm_control) by extension 'colcon_pkg'
+[4.539s] Level 1:colcon.colcon_core.package_identification:_identify(src/arm_control) by extensions ['colcon_meta']
+[4.539s] Level 1:colcon.colcon_core.package_identification:_identify(src/arm_control) by extension 'colcon_meta'
+[4.540s] Level 1:colcon.colcon_core.package_identification:_identify(src/arm_control) by extensions ['ros']
+[4.540s] Level 1:colcon.colcon_core.package_identification:_identify(src/arm_control) by extension 'ros'
+[4.540s] DEBUG:colcon.colcon_core.package_identification:Package 'src/arm_control' with type 'ros.ament_python' and name 'arm_control'
+[4.540s] Level 1:colcon.colcon_core.package_identification:_identify(src/arm_description) by extensions ['ignore', 'ignore_ament_install']
+[4.540s] Level 1:colcon.colcon_core.package_identification:_identify(src/arm_description) by extension 'ignore'
+[4.540s] Level 1:colcon.colcon_core.package_identification:_identify(src/arm_description) by extension 'ignore_ament_install'
+[4.540s] Level 1:colcon.colcon_core.package_identification:_identify(src/arm_description) by extensions ['colcon_pkg']
+[4.540s] Level 1:colcon.colcon_core.package_identification:_identify(src/arm_description) by extension 'colcon_pkg'
+[4.540s] Level 1:colcon.colcon_core.package_identification:_identify(src/arm_description) by extensions ['colcon_meta']
+[4.540s] Level 1:colcon.colcon_core.package_identification:_identify(src/arm_description) by extension 'colcon_meta'
+[4.541s] Level 1:colcon.colcon_core.package_identification:_identify(src/arm_description) by extensions ['ros']
+[4.541s] Level 1:colcon.colcon_core.package_identification:_identify(src/arm_description) by extension 'ros'
+[4.541s] DEBUG:colcon.colcon_core.package_identification:Package 'src/arm_description' with type 'ros.ament_cmake' and name 'arm_description'
+[4.541s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[4.541s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[4.541s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[4.541s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[4.541s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[4.648s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[4.648s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[4.652s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 453 installed packages in /opt/ros/humble
+[4.654s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[4.690s] Level 5:colcon.colcon_core.verb:set package 'arm_bringup' build argument 'cmake_args' from command line to 'None'
+[4.690s] Level 5:colcon.colcon_core.verb:set package 'arm_bringup' build argument 'cmake_target' from command line to 'None'
+[4.690s] Level 5:colcon.colcon_core.verb:set package 'arm_bringup' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[4.690s] Level 5:colcon.colcon_core.verb:set package 'arm_bringup' build argument 'cmake_clean_cache' from command line to 'False'
+[4.690s] Level 5:colcon.colcon_core.verb:set package 'arm_bringup' build argument 'cmake_clean_first' from command line to 'False'
+[4.690s] Level 5:colcon.colcon_core.verb:set package 'arm_bringup' build argument 'cmake_force_configure' from command line to 'False'
+[4.690s] Level 5:colcon.colcon_core.verb:set package 'arm_bringup' build argument 'ament_cmake_args' from command line to 'None'
+[4.690s] Level 5:colcon.colcon_core.verb:set package 'arm_bringup' build argument 'catkin_cmake_args' from command line to 'None'
+[4.690s] Level 5:colcon.colcon_core.verb:set package 'arm_bringup' build argument 'catkin_skip_building_tests' from command line to 'False'
+[4.690s] DEBUG:colcon.colcon_core.verb:Building package 'arm_bringup' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/ibrahim/tasc_arm/build/arm_bringup', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/ibrahim/tasc_arm/install/arm_bringup', 'merge_install': False, 'path': '/home/ibrahim/tasc_arm/src/arm_bringup', 'symlink_install': True, 'test_result_base': None}
+[4.691s] Level 5:colcon.colcon_core.verb:set package 'arm_control' build argument 'cmake_args' from command line to 'None'
+[4.691s] Level 5:colcon.colcon_core.verb:set package 'arm_control' build argument 'cmake_target' from command line to 'None'
+[4.691s] Level 5:colcon.colcon_core.verb:set package 'arm_control' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[4.691s] Level 5:colcon.colcon_core.verb:set package 'arm_control' build argument 'cmake_clean_cache' from command line to 'False'
+[4.691s] Level 5:colcon.colcon_core.verb:set package 'arm_control' build argument 'cmake_clean_first' from command line to 'False'
+[4.691s] Level 5:colcon.colcon_core.verb:set package 'arm_control' build argument 'cmake_force_configure' from command line to 'False'
+[4.691s] Level 5:colcon.colcon_core.verb:set package 'arm_control' build argument 'ament_cmake_args' from command line to 'None'
+[4.691s] Level 5:colcon.colcon_core.verb:set package 'arm_control' build argument 'catkin_cmake_args' from command line to 'None'
+[4.691s] Level 5:colcon.colcon_core.verb:set package 'arm_control' build argument 'catkin_skip_building_tests' from command line to 'False'
+[4.691s] DEBUG:colcon.colcon_core.verb:Building package 'arm_control' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/ibrahim/tasc_arm/build/arm_control', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/ibrahim/tasc_arm/install/arm_control', 'merge_install': False, 'path': '/home/ibrahim/tasc_arm/src/arm_control', 'symlink_install': True, 'test_result_base': None}
+[4.691s] Level 5:colcon.colcon_core.verb:set package 'arm_description' build argument 'cmake_args' from command line to 'None'
+[4.691s] Level 5:colcon.colcon_core.verb:set package 'arm_description' build argument 'cmake_target' from command line to 'None'
+[4.691s] Level 5:colcon.colcon_core.verb:set package 'arm_description' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[4.691s] Level 5:colcon.colcon_core.verb:set package 'arm_description' build argument 'cmake_clean_cache' from command line to 'False'
+[4.691s] Level 5:colcon.colcon_core.verb:set package 'arm_description' build argument 'cmake_clean_first' from command line to 'False'
+[4.691s] Level 5:colcon.colcon_core.verb:set package 'arm_description' build argument 'cmake_force_configure' from command line to 'False'
+[4.691s] Level 5:colcon.colcon_core.verb:set package 'arm_description' build argument 'ament_cmake_args' from command line to 'None'
+[4.691s] Level 5:colcon.colcon_core.verb:set package 'arm_description' build argument 'catkin_cmake_args' from command line to 'None'
+[4.691s] Level 5:colcon.colcon_core.verb:set package 'arm_description' build argument 'catkin_skip_building_tests' from command line to 'False'
+[4.691s] DEBUG:colcon.colcon_core.verb:Building package 'arm_description' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/ibrahim/tasc_arm/build/arm_description', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/ibrahim/tasc_arm/install/arm_description', 'merge_install': False, 'path': '/home/ibrahim/tasc_arm/src/arm_description', 'symlink_install': True, 'test_result_base': None}
+[4.691s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[4.692s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[4.692s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/ibrahim/tasc_arm/src/arm_bringup' with build type 'ament_python'
+[4.692s] Level 1:colcon.colcon_core.shell:create_environment_hook('arm_bringup', 'ament_prefix_path')
+[4.711s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[4.711s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ibrahim/tasc_arm/install/arm_bringup/share/arm_bringup/hook/ament_prefix_path.ps1'
+[4.717s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/ibrahim/tasc_arm/install/arm_bringup/share/arm_bringup/hook/ament_prefix_path.dsv'
+[4.735s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ibrahim/tasc_arm/install/arm_bringup/share/arm_bringup/hook/ament_prefix_path.sh'
+[4.736s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[4.736s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[4.739s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/ibrahim/tasc_arm/src/arm_control' with build type 'ament_python'
+[4.739s] Level 1:colcon.colcon_core.shell:create_environment_hook('arm_control', 'ament_prefix_path')
+[4.739s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ibrahim/tasc_arm/install/arm_control/share/arm_control/hook/ament_prefix_path.ps1'
+[4.740s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/ibrahim/tasc_arm/install/arm_control/share/arm_control/hook/ament_prefix_path.dsv'
+[4.740s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ibrahim/tasc_arm/install/arm_control/share/arm_control/hook/ament_prefix_path.sh'
+[4.741s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[4.741s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[4.744s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/ibrahim/tasc_arm/src/arm_description' with build type 'ament_cmake'
+[4.744s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/ibrahim/tasc_arm/src/arm_description'
+[4.744s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[4.744s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[4.947s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/ibrahim/tasc_arm/src/arm_bringup'
+[4.948s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[4.948s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[5.132s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/ibrahim/tasc_arm/src/arm_control'
+[5.132s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[5.132s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[5.210s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/ibrahim/tasc_arm/build/arm_description': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/ibrahim/tasc_arm/build/arm_description -- -j4 -l4
+[7.726s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/ibrahim/tasc_arm/build/arm_description' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/ibrahim/tasc_arm/build/arm_description -- -j4 -l4
+[7.745s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/ibrahim/tasc_arm/build/arm_description': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/ibrahim/tasc_arm/build/arm_description
+[7.845s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(arm_description)
+[7.846s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/ibrahim/tasc_arm/build/arm_description' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/ibrahim/tasc_arm/build/arm_description
+[7.900s] Level 1:colcon.colcon_core.environment:checking '/home/ibrahim/tasc_arm/install/arm_description' for CMake module files
+[7.901s] Level 1:colcon.colcon_core.environment:checking '/home/ibrahim/tasc_arm/install/arm_description' for CMake config files
+[7.901s] Level 1:colcon.colcon_core.shell:create_environment_hook('arm_description', 'cmake_prefix_path')
+[7.901s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ibrahim/tasc_arm/install/arm_description/share/arm_description/hook/cmake_prefix_path.ps1'
+[7.902s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/ibrahim/tasc_arm/install/arm_description/share/arm_description/hook/cmake_prefix_path.dsv'
+[7.902s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ibrahim/tasc_arm/install/arm_description/share/arm_description/hook/cmake_prefix_path.sh'
+[7.903s] Level 1:colcon.colcon_core.environment:checking '/home/ibrahim/tasc_arm/install/arm_description/bin'
+[7.903s] Level 1:colcon.colcon_core.environment:checking '/home/ibrahim/tasc_arm/install/arm_description/lib/pkgconfig/arm_description.pc'
+[7.903s] Level 1:colcon.colcon_core.environment:checking '/home/ibrahim/tasc_arm/install/arm_description/lib/python3.10/site-packages'
+[7.903s] Level 1:colcon.colcon_core.environment:checking '/home/ibrahim/tasc_arm/install/arm_description/bin'
+[7.904s] INFO:colcon.colcon_core.shell:Creating package script '/home/ibrahim/tasc_arm/install/arm_description/share/arm_description/package.ps1'
+[7.917s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/ibrahim/tasc_arm/install/arm_description/share/arm_description/package.dsv'
+[7.935s] INFO:colcon.colcon_core.shell:Creating package script '/home/ibrahim/tasc_arm/install/arm_description/share/arm_description/package.sh'
+[7.943s] INFO:colcon.colcon_core.shell:Creating package script '/home/ibrahim/tasc_arm/install/arm_description/share/arm_description/package.bash'
+[7.970s] INFO:colcon.colcon_core.shell:Creating package script '/home/ibrahim/tasc_arm/install/arm_description/share/arm_description/package.zsh'
+[7.977s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/ibrahim/tasc_arm/install/arm_description/share/colcon-core/packages/arm_description)
+[7.977s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(arm_description)
+[7.977s] Level 1:colcon.colcon_core.environment:checking '/home/ibrahim/tasc_arm/install/arm_description' for CMake module files
+[7.978s] Level 1:colcon.colcon_core.environment:checking '/home/ibrahim/tasc_arm/install/arm_description' for CMake config files
+[7.978s] Level 1:colcon.colcon_core.shell:create_environment_hook('arm_description', 'cmake_prefix_path')
+[7.978s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ibrahim/tasc_arm/install/arm_description/share/arm_description/hook/cmake_prefix_path.ps1'
+[7.978s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/ibrahim/tasc_arm/install/arm_description/share/arm_description/hook/cmake_prefix_path.dsv'
+[7.979s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ibrahim/tasc_arm/install/arm_description/share/arm_description/hook/cmake_prefix_path.sh'
+[7.979s] Level 1:colcon.colcon_core.environment:checking '/home/ibrahim/tasc_arm/install/arm_description/bin'
+[7.979s] Level 1:colcon.colcon_core.environment:checking '/home/ibrahim/tasc_arm/install/arm_description/lib/pkgconfig/arm_description.pc'
+[7.979s] Level 1:colcon.colcon_core.environment:checking '/home/ibrahim/tasc_arm/install/arm_description/lib/python3.10/site-packages'
+[7.979s] Level 1:colcon.colcon_core.environment:checking '/home/ibrahim/tasc_arm/install/arm_description/bin'
+[7.979s] INFO:colcon.colcon_core.shell:Creating package script '/home/ibrahim/tasc_arm/install/arm_description/share/arm_description/package.ps1'
+[7.980s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/ibrahim/tasc_arm/install/arm_description/share/arm_description/package.dsv'
+[7.980s] INFO:colcon.colcon_core.shell:Creating package script '/home/ibrahim/tasc_arm/install/arm_description/share/arm_description/package.sh'
+[7.981s] INFO:colcon.colcon_core.shell:Creating package script '/home/ibrahim/tasc_arm/install/arm_description/share/arm_description/package.bash'
+[7.981s] INFO:colcon.colcon_core.shell:Creating package script '/home/ibrahim/tasc_arm/install/arm_description/share/arm_description/package.zsh'
+[7.981s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/ibrahim/tasc_arm/install/arm_description/share/colcon-core/packages/arm_description)
+[7.985s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/ibrahim/tasc_arm/build/arm_control': PYTHONPATH=/home/ibrahim/tasc_arm/build/arm_control/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/ibrahim/tasc_arm/build/arm_control/build --no-deps symlink_data
+[7.985s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/ibrahim/tasc_arm/build/arm_bringup': PYTHONPATH=/home/ibrahim/tasc_arm/build/arm_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ibrahim/tasc_arm/install/arm_bringup/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/ibrahim/tasc_arm/build/arm_bringup/build --no-deps symlink_data
+[8.359s] Level 1:colcon.colcon_core.shell:create_environment_hook('arm_control', 'pythonpath_develop')
+[8.359s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ibrahim/tasc_arm/build/arm_control/share/arm_control/hook/pythonpath_develop.ps1'
+[8.360s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/ibrahim/tasc_arm/build/arm_control' returned '0': PYTHONPATH=/home/ibrahim/tasc_arm/build/arm_control/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/ibrahim/tasc_arm/build/arm_control/build --no-deps symlink_data
+[8.360s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/ibrahim/tasc_arm/build/arm_control/share/arm_control/hook/pythonpath_develop.dsv'
+[8.361s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ibrahim/tasc_arm/build/arm_control/share/arm_control/hook/pythonpath_develop.sh'
+[8.361s] Level 1:colcon.colcon_core.environment:checking '/home/ibrahim/tasc_arm/install/arm_control' for CMake module files
+[8.362s] Level 1:colcon.colcon_core.environment:checking '/home/ibrahim/tasc_arm/install/arm_control' for CMake config files
+[8.362s] Level 1:colcon.colcon_core.environment:checking '/home/ibrahim/tasc_arm/install/arm_control/lib'
+[8.362s] Level 1:colcon.colcon_core.environment:checking '/home/ibrahim/tasc_arm/install/arm_control/bin'
+[8.362s] Level 1:colcon.colcon_core.environment:checking '/home/ibrahim/tasc_arm/install/arm_control/lib/pkgconfig/arm_control.pc'
+[8.363s] Level 1:colcon.colcon_core.environment:checking '/home/ibrahim/tasc_arm/install/arm_control/lib/python3.10/site-packages'
+[8.363s] Level 1:colcon.colcon_core.shell:create_environment_hook('arm_control', 'pythonpath')
+[8.363s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ibrahim/tasc_arm/install/arm_control/share/arm_control/hook/pythonpath.ps1'
+[8.363s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/ibrahim/tasc_arm/install/arm_control/share/arm_control/hook/pythonpath.dsv'
+[8.363s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ibrahim/tasc_arm/install/arm_control/share/arm_control/hook/pythonpath.sh'
+[8.364s] Level 1:colcon.colcon_core.environment:checking '/home/ibrahim/tasc_arm/install/arm_control/bin'
+[8.364s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(arm_control)
+[8.364s] INFO:colcon.colcon_core.shell:Creating package script '/home/ibrahim/tasc_arm/install/arm_control/share/arm_control/package.ps1'
+[8.365s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/ibrahim/tasc_arm/install/arm_control/share/arm_control/package.dsv'
+[8.365s] INFO:colcon.colcon_core.shell:Creating package script '/home/ibrahim/tasc_arm/install/arm_control/share/arm_control/package.sh'
+[8.365s] INFO:colcon.colcon_core.shell:Creating package script '/home/ibrahim/tasc_arm/install/arm_control/share/arm_control/package.bash'
+[8.366s] INFO:colcon.colcon_core.shell:Creating package script '/home/ibrahim/tasc_arm/install/arm_control/share/arm_control/package.zsh'
+[8.366s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/ibrahim/tasc_arm/install/arm_control/share/colcon-core/packages/arm_control)
+[8.367s] Level 1:colcon.colcon_core.shell:create_environment_hook('arm_bringup', 'pythonpath_develop')
+[8.368s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ibrahim/tasc_arm/build/arm_bringup/share/arm_bringup/hook/pythonpath_develop.ps1'
+[8.368s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/ibrahim/tasc_arm/build/arm_bringup/share/arm_bringup/hook/pythonpath_develop.dsv'
+[8.368s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/ibrahim/tasc_arm/build/arm_bringup' returned '0': PYTHONPATH=/home/ibrahim/tasc_arm/build/arm_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ibrahim/tasc_arm/install/arm_bringup/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/ibrahim/tasc_arm/build/arm_bringup/build --no-deps symlink_data
+[8.369s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ibrahim/tasc_arm/build/arm_bringup/share/arm_bringup/hook/pythonpath_develop.sh'
+[8.369s] Level 1:colcon.colcon_core.environment:checking '/home/ibrahim/tasc_arm/install/arm_bringup' for CMake module files
+[8.369s] Level 1:colcon.colcon_core.environment:checking '/home/ibrahim/tasc_arm/install/arm_bringup' for CMake config files
+[8.370s] Level 1:colcon.colcon_core.environment:checking '/home/ibrahim/tasc_arm/install/arm_bringup/lib'
+[8.370s] Level 1:colcon.colcon_core.environment:checking '/home/ibrahim/tasc_arm/install/arm_bringup/bin'
+[8.370s] Level 1:colcon.colcon_core.environment:checking '/home/ibrahim/tasc_arm/install/arm_bringup/lib/pkgconfig/arm_bringup.pc'
+[8.370s] Level 1:colcon.colcon_core.environment:checking '/home/ibrahim/tasc_arm/install/arm_bringup/lib/python3.10/site-packages'
+[8.370s] Level 1:colcon.colcon_core.shell:create_environment_hook('arm_bringup', 'pythonpath')
+[8.370s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ibrahim/tasc_arm/install/arm_bringup/share/arm_bringup/hook/pythonpath.ps1'
+[8.370s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/ibrahim/tasc_arm/install/arm_bringup/share/arm_bringup/hook/pythonpath.dsv'
+[8.371s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/ibrahim/tasc_arm/install/arm_bringup/share/arm_bringup/hook/pythonpath.sh'
+[8.371s] Level 1:colcon.colcon_core.environment:checking '/home/ibrahim/tasc_arm/install/arm_bringup/bin'
+[8.371s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(arm_bringup)
+[8.371s] INFO:colcon.colcon_core.shell:Creating package script '/home/ibrahim/tasc_arm/install/arm_bringup/share/arm_bringup/package.ps1'
+[8.372s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/ibrahim/tasc_arm/install/arm_bringup/share/arm_bringup/package.dsv'
+[8.372s] INFO:colcon.colcon_core.shell:Creating package script '/home/ibrahim/tasc_arm/install/arm_bringup/share/arm_bringup/package.sh'
+[8.372s] INFO:colcon.colcon_core.shell:Creating package script '/home/ibrahim/tasc_arm/install/arm_bringup/share/arm_bringup/package.bash'
+[8.373s] INFO:colcon.colcon_core.shell:Creating package script '/home/ibrahim/tasc_arm/install/arm_bringup/share/arm_bringup/package.zsh'
+[8.373s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/ibrahim/tasc_arm/install/arm_bringup/share/colcon-core/packages/arm_bringup)
+[8.373s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[8.373s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[8.374s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[8.374s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[8.380s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[8.380s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[8.380s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[8.408s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[8.408s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/ibrahim/tasc_arm/install/local_setup.ps1'
+[8.424s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/ibrahim/tasc_arm/install/_local_setup_util_ps1.py'
+[8.427s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/ibrahim/tasc_arm/install/setup.ps1'
+[8.438s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/ibrahim/tasc_arm/install/local_setup.sh'
+[8.439s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/ibrahim/tasc_arm/install/_local_setup_util_sh.py'
+[8.439s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/ibrahim/tasc_arm/install/setup.sh'
+[8.448s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/ibrahim/tasc_arm/install/local_setup.bash'
+[8.449s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/ibrahim/tasc_arm/install/setup.bash'
+[8.451s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/ibrahim/tasc_arm/install/local_setup.zsh'
+[8.452s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/ibrahim/tasc_arm/install/setup.zsh'
