@@ -110,8 +110,8 @@ function colcon_package_source_powershell_script {
 # the prefix is two levels up from the package specific share directory
 $env:COLCON_CURRENT_PREFIX=(Get-Item $PSCommandPath).Directory.Parent.Parent.FullName
 
-colcon_package_source_powershell_script "$env:COLCON_CURRENT_PREFIX\share/arm_control/hook/cmake_prefix_path.ps1"
-colcon_package_source_powershell_script "$env:COLCON_CURRENT_PREFIX\share/arm_control/hook/ld_library_path_lib.ps1"
-colcon_package_source_powershell_script "$env:COLCON_CURRENT_PREFIX\share/arm_control/local_setup.ps1"
+colcon_package_source_powershell_script "$env:COLCON_CURRENT_PREFIX\share/arm_2026/hook/cmake_prefix_path.ps1"
+colcon_package_source_powershell_script "$env:COLCON_CURRENT_PREFIX\share/arm_2026/hook/ld_library_path_lib.ps1"
+colcon_package_source_powershell_script "$env:COLCON_CURRENT_PREFIX\share/arm_2026/local_setup.ps1"
 
 Remove-Item Env:\COLCON_CURRENT_PREFIX

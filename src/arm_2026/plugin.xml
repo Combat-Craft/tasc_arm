@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<library path="arm_2026">
+  <class
+    name="arm_2026/Arm2026System"
+    type="arm_2026::Arm2026System"
+    base_class_type="hardware_interface::SystemInterface">
+    <description>
+      Mixed arm ros2_control hardware interface for base, shoulder, and elbow.
+    </description>
+  </class>
+</library>
