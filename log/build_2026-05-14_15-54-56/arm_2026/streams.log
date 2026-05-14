@@ -1,0 +1,32 @@
+[0.032s] Invoking command in '/home/ibrahim/tasc_arm/build/arm_2026': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ibrahim/tasc_arm/install/arm_bringup:/opt/ros/humble /usr/bin/cmake --build /home/ibrahim/tasc_arm/build/arm_2026 -- -j4 -l4
+[0.316s] [35m[1mConsolidate compiler generated dependencies of target arm_2026_keyboard_teleop[0m
+[0.316s] [ 50%] Built target arm_2026
+[0.316s] [ 75%] [32mBuilding CXX object CMakeFiles/arm_2026_keyboard_teleop.dir/arm_2026/keyboard_teleop.cpp.o[0m
+[2.481s] [01m[K/home/ibrahim/tasc_arm/src/arm_2026/arm_2026/keyboard_teleop.cpp:[m[K In constructor ‘[01m[K{anonymous}::KeyboardTeleop::KeyboardTeleop()[m[K’:
+[2.481s] [01m[K/home/ibrahim/tasc_arm/src/arm_2026/arm_2026/keyboard_teleop.cpp:75:60:[m[K [01;31m[Kerror: [m[K‘[01m[KFloat32MultiArray[m[K’ is not a member of ‘[01m[Kstd_msgs::msg[m[K’; did you mean ‘[01m[KFloat64MultiArray[m[K’?
+[2.481s]    75 |     actuator_target_pub_ = create_publisher<std_msgs::msg::[01;31m[KFloat32MultiArray[m[K>(
+[2.481s]       |                                                            [01;31m[K^~~~~~~~~~~~~~~~~[m[K
+[2.481s]       |                                                            [32m[KFloat64MultiArray[m[K
+[2.481s] [01m[K/home/ibrahim/tasc_arm/src/arm_2026/arm_2026/keyboard_teleop.cpp:75:78:[m[K [01;31m[Kerror: [m[Kno matching function for call to ‘[01m[K{anonymous}::KeyboardTeleop::create_publisher<<expression error> >(const char [18], int)[m[K’
+[2.481s]    75 |     actuator_target_pub_ = [01;31m[Kcreate_publisher<std_msgs::msg::Float32MultiArray>([m[K
+[2.481s]       |                            [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^[m[K
+[2.481s]    76 | [01;31m[K      "/arm_actuator_cmd", 10)[m[K;
+[2.481s]       |       [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~[m[K                                                
+[2.481s] In file included from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/node.hpp:1321[m[K,
+[2.481s]                  from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors/single_threaded_executor.hpp:28[m[K,
+[2.481s]                  from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors.hpp:22[m[K,
+[2.481s]                  from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:155[m[K,
+[2.481s]                  from [01m[K/home/ibrahim/tasc_arm/src/arm_2026/arm_2026/keyboard_teleop.cpp:15[m[K:
+[2.481s] [01m[K/opt/ros/humble/include/rclcpp/rclcpp/node_impl.hpp:73:1:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Ktemplate<class MessageT, class AllocatorT, class PublisherT> std::shared_ptr<PublisherT> rclcpp::Node::create_publisher(const string&, const rclcpp::QoS&, const rclcpp::PublisherOptionsWithAllocator<AllocatorT>&)[m[K’
+[2.481s]    73 | [01;36m[KNode[m[K::create_publisher(
+[2.481s]       | [01;36m[K^~~~[m[K
+[2.481s] [01m[K/opt/ros/humble/include/rclcpp/rclcpp/node_impl.hpp:73:1:[m[K [01;36m[Knote: [m[K  template argument deduction/substitution failed:
+[2.481s] [01m[K/home/ibrahim/tasc_arm/src/arm_2026/arm_2026/keyboard_teleop.cpp:75:78:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+[2.481s]    75 |     actuator_target_pub_ = [01;31m[Kcreate_publisher<std_msgs::msg::Float32MultiArray>([m[K
+[2.481s]       |                            [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^[m[K
+[2.482s]    76 | [01;31m[K      "/arm_actuator_cmd", 10)[m[K;
+[2.482s]       |       [01;31m[K~~~~~~~~~~~~~~~~~~~~~~~~[m[K                                                
+[4.963s] gmake[2]: *** [CMakeFiles/arm_2026_keyboard_teleop.dir/build.make:76: CMakeFiles/arm_2026_keyboard_teleop.dir/arm_2026/keyboard_teleop.cpp.o] Error 1
+[4.963s] gmake[1]: *** [CMakeFiles/Makefile2:165: CMakeFiles/arm_2026_keyboard_teleop.dir/all] Error 2
+[4.965s] gmake: *** [Makefile:146: all] Error 2
+[4.967s] Invoked command in '/home/ibrahim/tasc_arm/build/arm_2026' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ibrahim/tasc_arm/install/arm_bringup:/opt/ros/humble /usr/bin/cmake --build /home/ibrahim/tasc_arm/build/arm_2026 -- -j4 -l4

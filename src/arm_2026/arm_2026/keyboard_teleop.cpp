@@ -14,6 +14,7 @@
 
 #include "rclcpp/rclcpp.hpp"
 #include "sensor_msgs/msg/joint_state.hpp"
+#include "std_msgs/msg/float32_multi_array.hpp"
 #include "std_msgs/msg/float64_multi_array.hpp"
 
 namespace
@@ -65,15 +66,16 @@ public:
   {
     publish_controller_commands_ = this->declare_parameter<bool>(
       "publish_controller_commands", true);
-    publish_direct_actuator_targets_ = this->declare_parameter<bool>(
-      "publish_direct_actuator_targets", true);
+    publish_direct_actuator_cmd_ = this->declare_parameter<bool>(
+      "publish_direct_actuator_cmd", true);
     require_joint_state_before_motion_ = this->declare_parameter<bool>(
       "require_joint_state_before_motion", false);
 
     command_pub_ = create_publisher<std_msgs::msg::Float64MultiArray>(
       "/position_controller/commands", 10);
-    actuator_target_pub_ = create_publisher<std_msgs::msg::Float64MultiArray>(
-      "/arm_actuator_targets", 10);
+
+    actuator_cmd_pub_ = create_publisher<std_msgs::msg::Float32MultiArray>(
+      "/arm_actuator_cmd", 10);
 
     joint_state_sub_ = create_subscription<sensor_msgs::msg::JointState>(
       "/joint_states", 10,
@@ -125,9 +127,9 @@ private:
       "  Ctrl-C : quit\n"
       "\n");
     std::printf(
-      "Publish modes: /position_controller/commands=%s, /arm_actuator_targets=%s, require_joint_state=%s\n",
+      "Publish modes: /position_controller/commands=%s, /arm_actuator_cmd=%s, require_joint_state=%s\n",
       publish_controller_commands_ ? "on" : "off",
-      publish_direct_actuator_targets_ ? "on" : "off",
+      publish_direct_actuator_cmd_ ? "on" : "off",
       require_joint_state_before_motion_ ? "on" : "off");
     print_status();
   }
@@ -277,6 +279,13 @@ private:
     publish_target();
   }
 
+  static float rad_to_bridge_cmd(double rad_value)
+  {
+    if (rad_value > 1.0) return 1.0f;
+    if (rad_value < -1.0) return -1.0f;
+    return static_cast<float>(rad_value);
+  }
+
   void publish_target()
   {
     if (publish_controller_commands_ && command_pub_) {
@@ -285,17 +294,20 @@ private:
       command_pub_->publish(msg);
     }
 
-    if (publish_direct_actuator_targets_ && actuator_target_pub_) {
-      std_msgs::msg::Float64MultiArray actuator_msg;
-      actuator_msg.data = {target_positions_[1], target_positions_[2]};
-      actuator_target_pub_->publish(actuator_msg);
+    if (publish_direct_actuator_cmd_ && actuator_cmd_pub_) {
+      std_msgs::msg::Float32MultiArray actuator_msg;
+      actuator_msg.data = {
+        rad_to_bridge_cmd(target_positions_[1]),
+        rad_to_bridge_cmd(target_positions_[2])
+      };
+      actuator_cmd_pub_->publish(actuator_msg);
     }
 
     print_status();
   }
 
   rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr command_pub_;
-  rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr actuator_target_pub_;
+  rclcpp::Publisher<std_msgs::msg::Float32MultiArray>::SharedPtr actuator_cmd_pub_;
   rclcpp::Subscription<sensor_msgs::msg::JointState>::SharedPtr joint_state_sub_;
 
   std::array<double, 5> measured_positions_{{0.0, 0.0, 0.0, 0.0, 0.0}};
@@ -310,7 +322,7 @@ private:
 
   bool have_joint_state_{false};
   bool publish_controller_commands_{true};
-  bool publish_direct_actuator_targets_{true};
+  bool publish_direct_actuator_cmd_{true};
   bool require_joint_state_before_motion_{false};
 };
 

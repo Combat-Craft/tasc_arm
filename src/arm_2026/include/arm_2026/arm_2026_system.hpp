@@ -17,7 +17,7 @@
 #include "rclcpp/node.hpp"
 #include "rclcpp/executors/single_threaded_executor.hpp"
 #include "rclcpp_lifecycle/state.hpp"
-#include "std_msgs/msg/float64_multi_array.hpp"
+#include "std_msgs/msg/float32_multi_array.hpp"
 
 namespace arm_2026
 {
@@ -51,7 +51,7 @@ public:
     const rclcpp::Duration & period) override;
 
 private:
-  void actuator_state_callback(const std_msgs::msg::Float64MultiArray::SharedPtr msg);
+  void actuator_state_callback(const std_msgs::msg::Float32MultiArray::SharedPtr msg);
 
   bool phidget_ok(PhidgetReturnCode code, const char * context) const;
   double clampf(double x, double lo, double hi) const;
@@ -89,8 +89,8 @@ private:
   std::thread executor_thread_;
   std::atomic<bool> executor_running_{false};
 
-  rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr actuator_cmd_pub_;
-  rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr actuator_state_sub_;
+  rclcpp::Publisher<std_msgs::msg::Float32MultiArray>::SharedPtr actuator_cmd_pub_;
+  rclcpp::Subscription<std_msgs::msg::Float32MultiArray>::SharedPtr actuator_state_sub_;
 
   // Current ESP32 command/state bridge
   // data[0] = shoulder target/state

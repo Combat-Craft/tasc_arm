@@ -112,7 +112,7 @@ bool Arm2026System::phidget_ok(PhidgetReturnCode code, const char * context) con
 }
 
 void Arm2026System::actuator_state_callback(
-  const std_msgs::msg::Float64MultiArray::SharedPtr msg)
+  const std_msgs::msg::Float32MultiArray::SharedPtr msg)
 {
   if (msg->data.size() < 2)
   {
@@ -122,8 +122,8 @@ void Arm2026System::actuator_state_callback(
     return;
   }
 
-  actuator_state_shoulder_ = msg->data[0];
-  actuator_state_elbow_ = msg->data[1];
+  actuator_state_shoulder_ = static_cast<double>(msg->data[0]);
+  actuator_state_elbow_ = static_cast<double>(msg->data[1]);
   actuator_state_received_.store(true);
 }
 
@@ -136,12 +136,12 @@ hardware_interface::CallbackReturn Arm2026System::on_configure(
   comms_node_ = std::make_shared<rclcpp::Node>("arm_2026_hw_bridge");
 
   actuator_cmd_pub_ =
-    comms_node_->create_publisher<std_msgs::msg::Float64MultiArray>(
-      "/arm_actuator_targets",
+    comms_node_->create_publisher<std_msgs::msg::Float32MultiArray>(
+      "/arm_actuator_cmd",
       10);
 
   actuator_state_sub_ =
-    comms_node_->create_subscription<std_msgs::msg::Float64MultiArray>(
+    comms_node_->create_subscription<std_msgs::msg::Float32MultiArray>(
       "/arm_actuator_states",
       10,
       std::bind(&Arm2026System::actuator_state_callback, this, std::placeholders::_1));
@@ -456,7 +456,6 @@ hardware_interface::CallbackReturn Arm2026System::on_activate(
     }
   }
 
-  // Shoulder and elbow actuator states
   hw_states_[SHOULDER_IDX] = 0.0;
   hw_states_[ELBOW_IDX] = 0.0;
   hw_commands_[SHOULDER_IDX] = 0.0;
@@ -468,7 +467,6 @@ hardware_interface::CallbackReturn Arm2026System::on_activate(
   actuator_state_elbow_ = 0.0;
   actuator_state_received_.store(false);
 
-  // Wrist logical joints
   hw_states_[WRIST_ROLL_IDX] = 0.0;
   hw_states_[WRIST_TWIST_IDX] = 0.0;
   hw_commands_[WRIST_ROLL_IDX] = 0.0;
@@ -595,14 +593,17 @@ hardware_interface::return_type Arm2026System::write(
       "PhidgetStepper_setTargetPosition base");
   }
 
-  // Shoulder and elbow to ESP32
+  // Shoulder and elbow to ESP32 bridge
   actuator_command_shoulder_ = hw_commands_[SHOULDER_IDX];
   actuator_command_elbow_ = hw_commands_[ELBOW_IDX];
 
   if (actuator_cmd_pub_)
   {
-    std_msgs::msg::Float64MultiArray msg;
-    msg.data = {actuator_command_shoulder_, actuator_command_elbow_};
+    std_msgs::msg::Float32MultiArray msg;
+    msg.data = {
+      static_cast<float>(std::clamp(actuator_command_shoulder_, -1.0, 1.0)),
+      static_cast<float>(std::clamp(actuator_command_elbow_, -1.0, 1.0))
+    };
     actuator_cmd_pub_->publish(msg);
   }
 
