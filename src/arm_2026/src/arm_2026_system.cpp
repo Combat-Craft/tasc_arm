@@ -39,11 +39,13 @@ hardware_interface::CallbackReturn Arm2026System::on_init(
 
   if (joint_names_[BASE_IDX] != "base_yaw" ||
       joint_names_[SHOULDER_IDX] != "shoulder_extension" ||
-      joint_names_[ELBOW_IDX] != "elbow_extension")
+      joint_names_[ELBOW_IDX] != "elbow_extension" ||
+      joint_names_[WRIST_ROLL_IDX] != "wrist_roll" ||
+      joint_names_[WRIST_TWIST_IDX] != "wrist_twist")
   {
     RCLCPP_ERROR(
       rclcpp::get_logger("Arm2026System"),
-      "Joint order mismatch. Expected [base_yaw, shoulder_extension, elbow_extension].");
+      "Joint order mismatch. Expected [base_yaw, shoulder_extension, elbow_extension, wrist_roll, wrist_twist].");
     return hardware_interface::CallbackReturn::ERROR;
   }
 
@@ -109,6 +111,22 @@ bool Arm2026System::phidget_ok(PhidgetReturnCode code, const char * context) con
   return false;
 }
 
+void Arm2026System::actuator_state_callback(
+  const std_msgs::msg::Float64MultiArray::SharedPtr msg)
+{
+  if (msg->data.size() < 2)
+  {
+    RCLCPP_WARN(
+      rclcpp::get_logger("Arm2026System"),
+      "Actuator state message too short");
+    return;
+  }
+
+  actuator_state_shoulder_ = msg->data[0];
+  actuator_state_elbow_ = msg->data[1];
+  actuator_state_received_.store(true);
+}
+
 hardware_interface::CallbackReturn Arm2026System::on_configure(
   const rclcpp_lifecycle::State &)
 {
@@ -141,8 +159,8 @@ hardware_interface::CallbackReturn Arm2026System::on_configure(
     }
   });
 
-  // Base Phidget setup
-  if (!phidget_ok(PhidgetStepper_create(&base_stepper_), "PhidgetStepper_create"))
+  // ---------------- Base Phidget ----------------
+  if (!phidget_ok(PhidgetStepper_create(&base_stepper_), "PhidgetStepper_create base"))
   {
     return hardware_interface::CallbackReturn::ERROR;
   }
@@ -150,7 +168,7 @@ hardware_interface::CallbackReturn Arm2026System::on_configure(
   if (!phidget_ok(
         Phidget_setDeviceSerialNumber(
           reinterpret_cast<PhidgetHandle>(base_stepper_), base_device_serial_),
-        "Phidget_setDeviceSerialNumber"))
+        "Phidget_setDeviceSerialNumber base"))
   {
     return hardware_interface::CallbackReturn::ERROR;
   }
@@ -158,7 +176,7 @@ hardware_interface::CallbackReturn Arm2026System::on_configure(
   if (!phidget_ok(
         Phidget_setHubPort(
           reinterpret_cast<PhidgetHandle>(base_stepper_), base_hub_port_),
-        "Phidget_setHubPort"))
+        "Phidget_setHubPort base"))
   {
     return hardware_interface::CallbackReturn::ERROR;
   }
@@ -166,7 +184,7 @@ hardware_interface::CallbackReturn Arm2026System::on_configure(
   if (!phidget_ok(
         Phidget_setChannel(
           reinterpret_cast<PhidgetHandle>(base_stepper_), base_channel_),
-        "Phidget_setChannel"))
+        "Phidget_setChannel base"))
   {
     return hardware_interface::CallbackReturn::ERROR;
   }
@@ -174,7 +192,7 @@ hardware_interface::CallbackReturn Arm2026System::on_configure(
   if (!phidget_ok(
         Phidget_openWaitForAttachment(
           reinterpret_cast<PhidgetHandle>(base_stepper_), 5000),
-        "Phidget_openWaitForAttachment"))
+        "Phidget_openWaitForAttachment base"))
   {
     RCLCPP_WARN(
       rclcpp::get_logger("Arm2026System"),
@@ -187,24 +205,151 @@ hardware_interface::CallbackReturn Arm2026System::on_configure(
       PhidgetStepper_delete(&base_stepper_);
       base_stepper_ = nullptr;
     }
+  }
+  else
+  {
+    if (!phidget_ok(
+          PhidgetStepper_setRescaleFactor(base_stepper_, base_rescale_factor_deg_),
+          "PhidgetStepper_setRescaleFactor base"))
+    {
+      return hardware_interface::CallbackReturn::ERROR;
+    }
 
-    return hardware_interface::CallbackReturn::SUCCESS;
+    base_stepper_attached_ = true;
+    RCLCPP_INFO(
+      rclcpp::get_logger("Arm2026System"),
+      "Base Phidget attached on serial %d, hub port %d",
+      base_device_serial_,
+      base_hub_port_);
   }
 
-  if (!phidget_ok(
-        PhidgetStepper_setRescaleFactor(base_stepper_, base_rescale_factor_deg_),
-        "PhidgetStepper_setRescaleFactor"))
+  // ---------------- Wrist motor 1 ----------------
+  if (!phidget_ok(PhidgetStepper_create(&wrist_motor_1_), "PhidgetStepper_create wrist1"))
   {
     return hardware_interface::CallbackReturn::ERROR;
   }
 
-  base_stepper_attached_ = true;
-  RCLCPP_INFO(
-    rclcpp::get_logger("Arm2026System"),
-    "Base Phidget attached on serial %d, hub port %d, channel %d",
-    base_device_serial_,
-    base_hub_port_,
-    base_channel_);
+  if (!phidget_ok(
+        Phidget_setDeviceSerialNumber(
+          reinterpret_cast<PhidgetHandle>(wrist_motor_1_), wrist_device_serial_),
+        "Phidget_setDeviceSerialNumber wrist1"))
+  {
+    return hardware_interface::CallbackReturn::ERROR;
+  }
+
+  if (!phidget_ok(
+        Phidget_setHubPort(
+          reinterpret_cast<PhidgetHandle>(wrist_motor_1_), wrist_motor_1_hub_port_),
+        "Phidget_setHubPort wrist1"))
+  {
+    return hardware_interface::CallbackReturn::ERROR;
+  }
+
+  if (!phidget_ok(
+        Phidget_setChannel(
+          reinterpret_cast<PhidgetHandle>(wrist_motor_1_), wrist_channel_),
+        "Phidget_setChannel wrist1"))
+  {
+    return hardware_interface::CallbackReturn::ERROR;
+  }
+
+  if (!phidget_ok(
+        Phidget_openWaitForAttachment(
+          reinterpret_cast<PhidgetHandle>(wrist_motor_1_), 5000),
+        "Phidget_openWaitForAttachment wrist1"))
+  {
+    RCLCPP_WARN(
+      rclcpp::get_logger("Arm2026System"),
+      "Wrist motor 1 not attached. Continuing in fake-wrist mode.");
+
+    wrist_motor_1_attached_ = false;
+
+    if (wrist_motor_1_ != nullptr)
+    {
+      PhidgetStepper_delete(&wrist_motor_1_);
+      wrist_motor_1_ = nullptr;
+    }
+  }
+  else
+  {
+    if (!phidget_ok(
+          PhidgetStepper_setRescaleFactor(wrist_motor_1_, wrist_motor_1_rescale_factor_deg_),
+          "PhidgetStepper_setRescaleFactor wrist1"))
+    {
+      return hardware_interface::CallbackReturn::ERROR;
+    }
+
+    wrist_motor_1_attached_ = true;
+    RCLCPP_INFO(
+      rclcpp::get_logger("Arm2026System"),
+      "Wrist motor 1 attached on serial %d, hub port %d",
+      wrist_device_serial_,
+      wrist_motor_1_hub_port_);
+  }
+
+  // ---------------- Wrist motor 2 ----------------
+  if (!phidget_ok(PhidgetStepper_create(&wrist_motor_2_), "PhidgetStepper_create wrist2"))
+  {
+    return hardware_interface::CallbackReturn::ERROR;
+  }
+
+  if (!phidget_ok(
+        Phidget_setDeviceSerialNumber(
+          reinterpret_cast<PhidgetHandle>(wrist_motor_2_), wrist_device_serial_),
+        "Phidget_setDeviceSerialNumber wrist2"))
+  {
+    return hardware_interface::CallbackReturn::ERROR;
+  }
+
+  if (!phidget_ok(
+        Phidget_setHubPort(
+          reinterpret_cast<PhidgetHandle>(wrist_motor_2_), wrist_motor_2_hub_port_),
+        "Phidget_setHubPort wrist2"))
+  {
+    return hardware_interface::CallbackReturn::ERROR;
+  }
+
+  if (!phidget_ok(
+        Phidget_setChannel(
+          reinterpret_cast<PhidgetHandle>(wrist_motor_2_), wrist_channel_),
+        "Phidget_setChannel wrist2"))
+  {
+    return hardware_interface::CallbackReturn::ERROR;
+  }
+
+  if (!phidget_ok(
+        Phidget_openWaitForAttachment(
+          reinterpret_cast<PhidgetHandle>(wrist_motor_2_), 5000),
+        "Phidget_openWaitForAttachment wrist2"))
+  {
+    RCLCPP_WARN(
+      rclcpp::get_logger("Arm2026System"),
+      "Wrist motor 2 not attached. Continuing in fake-wrist mode.");
+
+    wrist_motor_2_attached_ = false;
+
+    if (wrist_motor_2_ != nullptr)
+    {
+      PhidgetStepper_delete(&wrist_motor_2_);
+      wrist_motor_2_ = nullptr;
+    }
+  }
+  else
+  {
+    if (!phidget_ok(
+          PhidgetStepper_setRescaleFactor(wrist_motor_2_, wrist_motor_2_rescale_factor_deg_),
+          "PhidgetStepper_setRescaleFactor wrist2"))
+    {
+      return hardware_interface::CallbackReturn::ERROR;
+    }
+
+    wrist_motor_2_attached_ = true;
+    RCLCPP_INFO(
+      rclcpp::get_logger("Arm2026System"),
+      "Wrist motor 2 attached on serial %d, hub port %d",
+      wrist_device_serial_,
+      wrist_motor_2_hub_port_);
+  }
 
   return hardware_interface::CallbackReturn::SUCCESS;
 }
@@ -214,25 +359,26 @@ hardware_interface::CallbackReturn Arm2026System::on_activate(
 {
   RCLCPP_INFO(rclcpp::get_logger("Arm2026System"), "Activating Arm2026System");
 
+  // Base
   if (base_stepper_ && base_stepper_attached_)
   {
     if (!phidget_ok(
           PhidgetStepper_setAcceleration(base_stepper_, base_acceleration_deg_),
-          "PhidgetStepper_setAcceleration"))
+          "PhidgetStepper_setAcceleration base"))
     {
       return hardware_interface::CallbackReturn::ERROR;
     }
 
     if (!phidget_ok(
           PhidgetStepper_setVelocityLimit(base_stepper_, base_velocity_limit_deg_),
-          "PhidgetStepper_setVelocityLimit"))
+          "PhidgetStepper_setVelocityLimit base"))
     {
       return hardware_interface::CallbackReturn::ERROR;
     }
 
     if (!phidget_ok(
           PhidgetStepper_setEngaged(base_stepper_, 1),
-          "PhidgetStepper_setEngaged"))
+          "PhidgetStepper_setEngaged base"))
     {
       return hardware_interface::CallbackReturn::ERROR;
     }
@@ -240,7 +386,7 @@ hardware_interface::CallbackReturn Arm2026System::on_activate(
     double base_pos_deg = 0.0;
     if (!phidget_ok(
           PhidgetStepper_getPosition(base_stepper_, &base_pos_deg),
-          "PhidgetStepper_getPosition"))
+          "PhidgetStepper_getPosition base"))
     {
       return hardware_interface::CallbackReturn::ERROR;
     }
@@ -250,7 +396,7 @@ hardware_interface::CallbackReturn Arm2026System::on_activate(
 
     if (!phidget_ok(
           PhidgetStepper_setTargetPosition(base_stepper_, base_pos_deg),
-          "PhidgetStepper_setTargetPosition"))
+          "PhidgetStepper_setTargetPosition base"))
     {
       return hardware_interface::CallbackReturn::ERROR;
     }
@@ -260,6 +406,57 @@ hardware_interface::CallbackReturn Arm2026System::on_activate(
     hw_states_[BASE_IDX] = hw_commands_[BASE_IDX];
   }
 
+  // Wrist motor 1
+  if (wrist_motor_1_ && wrist_motor_1_attached_)
+  {
+    if (!phidget_ok(
+          PhidgetStepper_setAcceleration(wrist_motor_1_, wrist_acceleration_deg_),
+          "PhidgetStepper_setAcceleration wrist1"))
+    {
+      return hardware_interface::CallbackReturn::ERROR;
+    }
+
+    if (!phidget_ok(
+          PhidgetStepper_setVelocityLimit(wrist_motor_1_, wrist_velocity_limit_deg_),
+          "PhidgetStepper_setVelocityLimit wrist1"))
+    {
+      return hardware_interface::CallbackReturn::ERROR;
+    }
+
+    if (!phidget_ok(
+          PhidgetStepper_setEngaged(wrist_motor_1_, 1),
+          "PhidgetStepper_setEngaged wrist1"))
+    {
+      return hardware_interface::CallbackReturn::ERROR;
+    }
+  }
+
+  // Wrist motor 2
+  if (wrist_motor_2_ && wrist_motor_2_attached_)
+  {
+    if (!phidget_ok(
+          PhidgetStepper_setAcceleration(wrist_motor_2_, wrist_acceleration_deg_),
+          "PhidgetStepper_setAcceleration wrist2"))
+    {
+      return hardware_interface::CallbackReturn::ERROR;
+    }
+
+    if (!phidget_ok(
+          PhidgetStepper_setVelocityLimit(wrist_motor_2_, wrist_velocity_limit_deg_),
+          "PhidgetStepper_setVelocityLimit wrist2"))
+    {
+      return hardware_interface::CallbackReturn::ERROR;
+    }
+
+    if (!phidget_ok(
+          PhidgetStepper_setEngaged(wrist_motor_2_, 1),
+          "PhidgetStepper_setEngaged wrist2"))
+    {
+      return hardware_interface::CallbackReturn::ERROR;
+    }
+  }
+
+  // Shoulder and elbow actuator states
   hw_states_[SHOULDER_IDX] = 0.0;
   hw_states_[ELBOW_IDX] = 0.0;
   hw_commands_[SHOULDER_IDX] = 0.0;
@@ -267,10 +464,15 @@ hardware_interface::CallbackReturn Arm2026System::on_activate(
 
   actuator_command_shoulder_ = 0.0;
   actuator_command_elbow_ = 0.0;
-
   actuator_state_shoulder_ = 0.0;
   actuator_state_elbow_ = 0.0;
   actuator_state_received_.store(false);
+
+  // Wrist logical joints
+  hw_states_[WRIST_ROLL_IDX] = 0.0;
+  hw_states_[WRIST_TWIST_IDX] = 0.0;
+  hw_commands_[WRIST_ROLL_IDX] = 0.0;
+  hw_commands_[WRIST_TWIST_IDX] = 0.0;
 
   return hardware_interface::CallbackReturn::SUCCESS;
 }
@@ -282,11 +484,29 @@ hardware_interface::CallbackReturn Arm2026System::on_deactivate(
 
   if (base_stepper_)
   {
-    phidget_ok(PhidgetStepper_setEngaged(base_stepper_, 0), "PhidgetStepper_setEngaged(0)");
-    phidget_ok(Phidget_close(reinterpret_cast<PhidgetHandle>(base_stepper_)), "Phidget_close");
-    phidget_ok(PhidgetStepper_delete(&base_stepper_), "PhidgetStepper_delete");
+    phidget_ok(PhidgetStepper_setEngaged(base_stepper_, 0), "PhidgetStepper_setEngaged(0) base");
+    phidget_ok(Phidget_close(reinterpret_cast<PhidgetHandle>(base_stepper_)), "Phidget_close base");
+    phidget_ok(PhidgetStepper_delete(&base_stepper_), "PhidgetStepper_delete base");
     base_stepper_ = nullptr;
     base_stepper_attached_ = false;
+  }
+
+  if (wrist_motor_1_)
+  {
+    phidget_ok(PhidgetStepper_setEngaged(wrist_motor_1_, 0), "PhidgetStepper_setEngaged(0) wrist1");
+    phidget_ok(Phidget_close(reinterpret_cast<PhidgetHandle>(wrist_motor_1_)), "Phidget_close wrist1");
+    phidget_ok(PhidgetStepper_delete(&wrist_motor_1_), "PhidgetStepper_delete wrist1");
+    wrist_motor_1_ = nullptr;
+    wrist_motor_1_attached_ = false;
+  }
+
+  if (wrist_motor_2_)
+  {
+    phidget_ok(PhidgetStepper_setEngaged(wrist_motor_2_, 0), "PhidgetStepper_setEngaged(0) wrist2");
+    phidget_ok(Phidget_close(reinterpret_cast<PhidgetHandle>(wrist_motor_2_)), "Phidget_close wrist2");
+    phidget_ok(PhidgetStepper_delete(&wrist_motor_2_), "PhidgetStepper_delete wrist2");
+    wrist_motor_2_ = nullptr;
+    wrist_motor_2_attached_ = false;
   }
 
   executor_running_.store(false);
@@ -308,44 +528,27 @@ hardware_interface::CallbackReturn Arm2026System::on_deactivate(
   return hardware_interface::CallbackReturn::SUCCESS;
 }
 
-void Arm2026System::actuator_state_callback(
-  const std_msgs::msg::Float64MultiArray::SharedPtr msg)
-{
-  if (msg->data.size() < 2)
-  {
-    RCLCPP_WARN(
-      rclcpp::get_logger("Arm2026System"),
-      "Actuator state message too short");
-    return;
-  }
-
-  actuator_state_shoulder_ = msg->data[0];
-  actuator_state_elbow_ = msg->data[1];
-  actuator_state_received_.store(true);
-}
-
 hardware_interface::return_type Arm2026System::read(
   const rclcpp::Time &,
   const rclcpp::Duration &)
 {
-  // Base joint
+  // Base
   if (base_stepper_ && base_stepper_attached_)
   {
     double base_pos_deg = 0.0;
     if (phidget_ok(
           PhidgetStepper_getPosition(base_stepper_, &base_pos_deg),
-          "PhidgetStepper_getPosition"))
+          "PhidgetStepper_getPosition base"))
     {
       hw_states_[BASE_IDX] = base_pos_deg * M_PI / 180.0;
     }
   }
   else
   {
-    // Fake-base mode when no Phidget is connected
     hw_states_[BASE_IDX] = hw_commands_[BASE_IDX];
   }
 
-  // Shoulder and elbow
+  // Shoulder and elbow from ESP32
   if (actuator_state_received_.load())
   {
     hw_states_[SHOULDER_IDX] = actuator_state_shoulder_;
@@ -356,6 +559,10 @@ hardware_interface::return_type Arm2026System::read(
     hw_states_[SHOULDER_IDX] = hw_commands_[SHOULDER_IDX];
     hw_states_[ELBOW_IDX] = hw_commands_[ELBOW_IDX];
   }
+
+  // Wrist logical states
+  hw_states_[WRIST_ROLL_IDX] = hw_commands_[WRIST_ROLL_IDX];
+  hw_states_[WRIST_TWIST_IDX] = hw_commands_[WRIST_TWIST_IDX];
 
   return hardware_interface::return_type::OK;
 }
@@ -373,16 +580,22 @@ hardware_interface::return_type Arm2026System::write(
   hw_commands_[ELBOW_IDX] =
     clampf(hw_commands_[ELBOW_IDX], elbow_min_, elbow_max_);
 
-  // Base command to Phidget when attached
+  hw_commands_[WRIST_ROLL_IDX] =
+    clampf(hw_commands_[WRIST_ROLL_IDX], wrist_roll_min_, wrist_roll_max_);
+
+  hw_commands_[WRIST_TWIST_IDX] =
+    clampf(hw_commands_[WRIST_TWIST_IDX], wrist_twist_min_, wrist_twist_max_);
+
+  // Base to Phidget
   if (base_stepper_ && base_stepper_attached_)
   {
     const double base_target_deg = hw_commands_[BASE_IDX] * 180.0 / M_PI;
     phidget_ok(
       PhidgetStepper_setTargetPosition(base_stepper_, base_target_deg),
-      "PhidgetStepper_setTargetPosition");
+      "PhidgetStepper_setTargetPosition base");
   }
 
-  // Shoulder + elbow targets to ESP32
+  // Shoulder and elbow to ESP32
   actuator_command_shoulder_ = hw_commands_[SHOULDER_IDX];
   actuator_command_elbow_ = hw_commands_[ELBOW_IDX];
 
@@ -391,6 +604,30 @@ hardware_interface::return_type Arm2026System::write(
     std_msgs::msg::Float64MultiArray msg;
     msg.data = {actuator_command_shoulder_, actuator_command_elbow_};
     actuator_cmd_pub_->publish(msg);
+  }
+
+  // Differential wrist mapping
+  const double wrist_roll_cmd = hw_commands_[WRIST_ROLL_IDX];
+  const double wrist_twist_cmd = hw_commands_[WRIST_TWIST_IDX];
+
+  const double wrist_motor_1_cmd = wrist_roll_cmd + wrist_twist_cmd;
+  const double wrist_motor_2_cmd = wrist_roll_cmd - wrist_twist_cmd;
+
+  const double wrist_motor_1_cmd_deg = wrist_motor_1_cmd * 180.0 / M_PI;
+  const double wrist_motor_2_cmd_deg = wrist_motor_2_cmd * 180.0 / M_PI;
+
+  if (wrist_motor_1_ && wrist_motor_1_attached_)
+  {
+    phidget_ok(
+      PhidgetStepper_setTargetPosition(wrist_motor_1_, wrist_motor_1_cmd_deg),
+      "PhidgetStepper_setTargetPosition wrist1");
+  }
+
+  if (wrist_motor_2_ && wrist_motor_2_attached_)
+  {
+    phidget_ok(
+      PhidgetStepper_setTargetPosition(wrist_motor_2_, wrist_motor_2_cmd_deg),
+      "PhidgetStepper_setTargetPosition wrist2");
   }
 
   return hardware_interface::return_type::OK;

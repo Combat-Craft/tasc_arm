@@ -56,16 +56,18 @@ private:
   bool phidget_ok(PhidgetReturnCode code, const char * context) const;
   double clampf(double x, double lo, double hi) const;
 
-  static constexpr std::size_t NUM_JOINTS = 3;
+  static constexpr std::size_t NUM_JOINTS = 5;
   static constexpr std::size_t BASE_IDX = 0;
   static constexpr std::size_t SHOULDER_IDX = 1;
   static constexpr std::size_t ELBOW_IDX = 2;
+  static constexpr std::size_t WRIST_ROLL_IDX = 3;
+  static constexpr std::size_t WRIST_TWIST_IDX = 4;
 
   std::vector<double> hw_commands_;
   std::vector<double> hw_states_;
   std::vector<std::string> joint_names_;
 
-  // Joint limits from URDF
+  // Joint limits
   double base_min_ = -3.14;
   double base_max_ =  3.14;
 
@@ -74,6 +76,12 @@ private:
 
   double elbow_min_ = -1.57;
   double elbow_max_ =  1.57;
+
+  double wrist_roll_min_ = -1.57;
+  double wrist_roll_max_ =  1.57;
+
+  double wrist_twist_min_ = -1.57;
+  double wrist_twist_max_ =  1.57;
 
   // ROS2 bridge for ESP32 linear actuators
   rclcpp::Node::SharedPtr comms_node_;
@@ -84,7 +92,9 @@ private:
   rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr actuator_cmd_pub_;
   rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr actuator_state_sub_;
 
-  // shoulder, elbow
+  // Current ESP32 command/state bridge
+  // data[0] = shoulder target/state
+  // data[1] = elbow target/state
   double actuator_command_shoulder_ = 0.0;
   double actuator_command_elbow_ = 0.0;
 
@@ -101,12 +111,30 @@ private:
   int base_hub_port_ = 0;
   int base_channel_ = 0;
 
-  // You measured this experimentally
-  double base_rescale_factor_deg_ = 0.00146103896; // Calculation: 360.0 / (200.0 * 16.0 * 77.0)
+  // Wrist differential Phidget steppers
+  PhidgetStepperHandle wrist_motor_1_ = nullptr;
+  PhidgetStepperHandle wrist_motor_2_ = nullptr;
+  bool wrist_motor_1_attached_ = false;
+  bool wrist_motor_2_attached_ = false;
 
-  // URDF velocity is 1.0 rad/s for base
-  double base_velocity_limit_deg_ = 30;
-  double base_acceleration_deg_ = 40;
+  int wrist_device_serial_ = 766944;
+  int wrist_motor_1_hub_port_ = 1;
+  int wrist_motor_2_hub_port_ = 2;
+  int wrist_channel_ = 0;
+
+  // Rescale factors in deg/count
+  double base_rescale_factor_deg_ = 0.00146103896;
+
+  // Placeholder wrist rescale factors, tune later if needed
+  double wrist_motor_1_rescale_factor_deg_ = 0.00146103896;
+  double wrist_motor_2_rescale_factor_deg_ = 0.00146103896;
+
+  // Motion tuning in Phidget rescaled units
+  double base_velocity_limit_deg_ = 30.0;
+  double base_acceleration_deg_ = 40.0;
+
+  double wrist_velocity_limit_deg_ = 30.0;
+  double wrist_acceleration_deg_ = 40.0;
 };
 
 }  // namespace arm_2026

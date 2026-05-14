@@ -14,4 +14,6 @@ position_controller:
       - base_yaw
       - shoulder_extension
       - elbow_extension
+      - wrist_roll
+      - wrist_twist
     interface_name: position

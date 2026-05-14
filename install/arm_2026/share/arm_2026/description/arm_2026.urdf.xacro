@@ -37,6 +37,24 @@
     </visual>
   </link>
 
+  <link name="wrist_roll_link">
+    <visual>
+      <origin xyz="0.08 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.02" length="0.16"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="wrist_twist_link">
+    <visual>
+      <origin xyz="0.06 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.12 0.025 0.025"/>
+      </geometry>
+    </visual>
+  </link>
+
   <joint name="base_yaw" type="revolute">
     <parent link="base_link"/>
     <child link="base_link_1"/>
@@ -61,6 +79,22 @@
     <limit lower="-1.57" upper="1.57" effort="10" velocity="0.2"/>
   </joint>
 
+  <joint name="wrist_roll" type="revolute">
+    <parent link="elbow_link"/>
+    <child link="wrist_roll_link"/>
+    <origin xyz="0.20 0 0" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-1.57" upper="1.57" effort="10" velocity="0.5"/>
+  </joint>
+
+  <joint name="wrist_twist" type="revolute">
+    <parent link="wrist_roll_link"/>
+    <child link="wrist_twist_link"/>
+    <origin xyz="0.16 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.57" upper="1.57" effort="10" velocity="0.5"/>
+  </joint>
+
   <ros2_control name="Arm2026Hardware" type="system">
     <hardware>
       <plugin>arm_2026/Arm2026System</plugin>
@@ -77,6 +111,16 @@
     </joint>
 
     <joint name="elbow_extension">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+
+    <joint name="wrist_roll">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+
+    <joint name="wrist_twist">
       <command_interface name="position"/>
       <state_interface name="position"/>
     </joint>

@@ -66,9 +66,9 @@ public:
     publish_controller_commands_ = this->declare_parameter<bool>(
       "publish_controller_commands", true);
     publish_direct_actuator_targets_ = this->declare_parameter<bool>(
-      "publish_direct_actuator_targets", false);
+      "publish_direct_actuator_targets", true);
     require_joint_state_before_motion_ = this->declare_parameter<bool>(
-      "require_joint_state_before_motion", true);
+      "require_joint_state_before_motion", false);
 
     command_pub_ = create_publisher<std_msgs::msg::Float64MultiArray>(
       "/position_controller/commands", 10);
@@ -116,6 +116,8 @@ private:
       "  q/a : base + / -\n"
       "  w/s : shoulder + / -\n"
       "  e/d : elbow + / -\n"
+      "  r/f : wrist_twist + / -\n"
+      "  t/g : wrist_roll + / -\n"
       "  z/x : decrease / increase step size\n"
       "  space : publish current target again\n"
       "  h : show help\n"
@@ -133,9 +135,14 @@ private:
   void print_status() const
   {
     std::printf(
-      "Target [rad] base=%.3f shoulder=%.3f elbow=%.3f  |  step=%.3f rad (%.1f deg)\n",
-      target_positions_[0], target_positions_[1], target_positions_[2],
-      step_size_rad_, step_size_rad_ * 180.0 / M_PI);
+      "Target [rad] base=%.3f shoulder=%.3f elbow=%.3f wrist_roll=%.3f wrist_twist=%.3f  |  step=%.3f rad (%.1f deg)\n",
+      target_positions_[0],
+      target_positions_[1],
+      target_positions_[2],
+      target_positions_[3],
+      target_positions_[4],
+      step_size_rad_,
+      step_size_rad_ * 180.0 / M_PI);
     std::fflush(stdout);
   }
 
@@ -152,7 +159,10 @@ private:
     const int ready = select(STDIN_FILENO + 1, &read_set, nullptr, nullptr, &timeout);
     if (ready < 0) {
       if (errno != EINTR) {
-        RCLCPP_WARN(get_logger(), "select() failed while reading keyboard input: %s", std::strerror(errno));
+        RCLCPP_WARN(
+          get_logger(),
+          "select() failed while reading keyboard input: %s",
+          std::strerror(errno));
       }
       return false;
     }
@@ -167,13 +177,18 @@ private:
 
   void joint_state_callback(const sensor_msgs::msg::JointState::SharedPtr msg)
   {
-    const std::array<std::string, 3> joint_names{
-      "base_yaw", "shoulder_extension", "elbow_extension"};
+    const std::array<std::string, 5> joint_names{
+      "base_yaw",
+      "shoulder_extension",
+      "elbow_extension",
+      "wrist_roll",
+      "wrist_twist"};
 
     bool any_joint_updated = false;
     for (std::size_t target_index = 0; target_index < joint_names.size(); ++target_index) {
       for (std::size_t msg_index = 0; msg_index < msg->name.size(); ++msg_index) {
-        if (msg->name[msg_index] == joint_names[target_index] && msg_index < msg->position.size()) {
+        if (msg->name[msg_index] == joint_names[target_index] &&
+            msg_index < msg->position.size()) {
           measured_positions_[target_index] = msg->position[msg_index];
           any_joint_updated = true;
           break;
@@ -209,6 +224,18 @@ private:
         return true;
       case 'd':
         nudge_joint(2, -step_size_rad_);
+        return true;
+      case 'r':
+        nudge_joint(4, step_size_rad_);
+        return true;
+      case 'f':
+        nudge_joint(4, -step_size_rad_);
+        return true;
+      case 't':
+        nudge_joint(3, step_size_rad_);
+        return true;
+      case 'g':
+        nudge_joint(3, -step_size_rad_);
         return true;
       case 'z':
         step_size_rad_ = std::max(min_step_size_rad_, step_size_rad_ / 2.0);
@@ -271,14 +298,16 @@ private:
   rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr actuator_target_pub_;
   rclcpp::Subscription<sensor_msgs::msg::JointState>::SharedPtr joint_state_sub_;
 
-  std::array<double, 3> measured_positions_{{0.0, 0.0, 0.0}};
-  std::array<double, 3> target_positions_{{0.0, 0.0, 0.0}};
-  const std::array<double, 3> joint_mins_{{-3.14, -1.57, -1.57}};
-  const std::array<double, 3> joint_maxs_{{3.14, 1.57, 1.57}};
+  std::array<double, 5> measured_positions_{{0.0, 0.0, 0.0, 0.0, 0.0}};
+  std::array<double, 5> target_positions_{{0.0, 0.0, 0.0, 0.0, 0.0}};
+
+  const std::array<double, 5> joint_mins_{{-3.14, -1.57, -1.57, -1.57, -1.57}};
+  const std::array<double, 5> joint_maxs_{{ 3.14,  1.57,  1.57,  1.57,  1.57}};
 
   double step_size_rad_{5.0 * M_PI / 180.0};
   const double min_step_size_rad_{1.0 * M_PI / 180.0};
   const double max_step_size_rad_{45.0 * M_PI / 180.0};
+
   bool have_joint_state_{false};
   bool publish_controller_commands_{true};
   bool publish_direct_actuator_targets_{true};
