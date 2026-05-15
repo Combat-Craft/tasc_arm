@@ -5,86 +5,51 @@
 #include <rclc/rclc.h>
 #include <rclc/executor.h>
 
-#include <std_msgs/msg/float64_multi_array.h>
+#include <std_msgs/msg/float32_multi_array.h>
 
 #define LED_PIN 13
 
-// -----------------------------------------------------------------------------
-// Joint setup
-// 0 = shoulder_extension
-// 1 = elbow_extension
-// -----------------------------------------------------------------------------
+// We have 2 actuator channels:
+// [0] shoulder
+// [1] elbow
 static const int NJ = 2;
 
-// Joint limits in radians, matching your URDF
-static const double RAD_MIN[NJ] = {-1.57, -1.57};
-static const double RAD_MAX[NJ] = { 1.57,  1.57};
+// BTS7960 pins
+static const int SHOULDER_RPWM = 18;
+static const int SHOULDER_LPWM = 19;
 
-// Startup estimated position
-static const double RAD_HOME[NJ] = {0.0, 0.0};
+static const int ELBOW_RPWM = 23;
+static const int ELBOW_LPWM = 22;
 
-// If one actuator moves the wrong way, flip its sign to -1.0
-static const double DIRECTION_SIGN[NJ] = {1.0, 1.0};
+// PWM settings
+static const int PWM_FREQ = 1000;
+static const int PWM_RESOLUTION = 8;   // 0..255
+static const int PWM_MAX_CMD = 180;    // cap speed a bit for safety
+static const float DEADZONE = 0.10f;
 
-// Open-loop speed estimate in rad/s at the chosen PWM below
-// Tune these after testing
-static const double ACTUATOR_SPEED_RAD_PER_SEC[NJ] = {0.35, 0.35};
+// Stop actuators if teleop/agent stops sending fresh commands.
+static const unsigned long CMD_TIMEOUT_MS = 300;
 
-// Stop once estimated position is within this error band
-static const double POSITION_DEADBAND_RAD = 0.03;
-
-// If no new command arrives for this long, stop motors for safety
-static const unsigned long COMMAND_TIMEOUT_MS = 1000;
-
-// -----------------------------------------------------------------------------
-// BTS7960 pin setup
-// Shoulder actuator
-// -----------------------------------------------------------------------------
-const int SHOULDER_RPWM_PIN = 22;
-const int SHOULDER_LPWM_PIN = 23;
-
-// Elbow actuator
-const int ELBOW_RPWM_PIN = 18;
-const int ELBOW_LPWM_PIN = 19;
-
-// PWM setup
-const int PWM_FREQ = 1000;
-const int PWM_RESOLUTION = 8;
-const int DRIVE_PWM = 180;
-
-// -----------------------------------------------------------------------------
 // micro-ROS objects
-// -----------------------------------------------------------------------------
 rcl_node_t node;
 rclc_support_t support;
 rcl_allocator_t allocator;
 rcl_subscription_t sub;
-rcl_publisher_t pub;
-rcl_timer_t timer;
 rclc_executor_t executor;
 
-std_msgs__msg__Float64MultiArray sub_msg;
-std_msgs__msg__Float64MultiArray pub_msg;
+std_msgs__msg__Float32MultiArray msg;
 
-// Backing storage for variable-length arrays
-static double sub_data_buf[NJ];
-static double pub_data_buf[NJ];
+// Backing array for msg.data
+static float msg_data_buf[NJ];
 
-// Commanded targets and estimated states, in radians
-static double target_rad[NJ] = {0.0, 0.0};
-static double est_rad[NJ] = {0.0, 0.0};
+// Latest command values
+static float actuator_cmd[NJ] = {0.0f, 0.0f};
+static unsigned long last_cmd_ms = 0;
 
-// Timing
-static unsigned long last_update_ms = 0;
-static unsigned long last_command_ms = 0;
+#define RCCHECK(fn) { rcl_ret_t temp_rc = fn; if (temp_rc != RCL_RET_OK) { error_loop(); } }
+#define RCSOFTCHECK(fn) { rcl_ret_t temp_rc = fn; if (temp_rc != RCL_RET_OK) {} }
 
-#define RCCHECK(fn) { rcl_ret_t rc = fn; if (rc != RCL_RET_OK) error_loop(); }
-#define RCSOFTCHECK(fn) { rcl_ret_t rc = fn; (void)rc; }
-
-// -----------------------------------------------------------------------------
-// Utility
-// -----------------------------------------------------------------------------
-void error_loop()
+static void error_loop()
 {
   while (1) {
     digitalWrite(LED_PIN, !digitalRead(LED_PIN));
@@ -92,256 +57,171 @@ void error_loop()
   }
 }
 
-double clampf(double x, double lo, double hi)
+static float clampf(float x, float lo, float hi)
 {
   if (x < lo) return lo;
   if (x > hi) return hi;
   return x;
 }
 
-// -----------------------------------------------------------------------------
-// Motor helpers
-// -----------------------------------------------------------------------------
-void stopMotorPins(int rpwm_pin, int lpwm_pin)
+static int cmdToPwm(float cmd)
+{
+  cmd = fabs(cmd);
+  if (cmd < DEADZONE) return 0;
+
+  int pwm = (int)(cmd * PWM_MAX_CMD);
+  if (pwm < 80) pwm = 80;  // small minimum to overcome stiction
+  if (pwm > 255) pwm = 255;
+  return pwm;
+}
+
+static void stopMotor(int rpwm_pin, int lpwm_pin)
 {
   ledcWrite(rpwm_pin, 0);
   ledcWrite(lpwm_pin, 0);
 }
 
-void moveForwardPins(int rpwm_pin, int lpwm_pin, int speed_val)
+static void moveForward(int rpwm_pin, int lpwm_pin, int pwm_val)
 {
-  ledcWrite(rpwm_pin, speed_val);
+  ledcWrite(rpwm_pin, pwm_val);
   ledcWrite(lpwm_pin, 0);
 }
 
-void moveReversePins(int rpwm_pin, int lpwm_pin, int speed_val)
+static void moveReverse(int rpwm_pin, int lpwm_pin, int pwm_val)
 {
   ledcWrite(rpwm_pin, 0);
-  ledcWrite(lpwm_pin, speed_val);
+  ledcWrite(lpwm_pin, pwm_val);
 }
 
-void stopJoint(int joint_idx)
+static void driveMotorFromCmd(float cmd, int rpwm_pin, int lpwm_pin)
 {
-  if (joint_idx == 0) {
-    stopMotorPins(SHOULDER_RPWM_PIN, SHOULDER_LPWM_PIN);
-  } else {
-    stopMotorPins(ELBOW_RPWM_PIN, ELBOW_LPWM_PIN);
-  }
-}
+  cmd = clampf(cmd, -1.0f, 1.0f);
 
-void driveJointForward(int joint_idx)
-{
-  if (joint_idx == 0) {
-    moveForwardPins(SHOULDER_RPWM_PIN, SHOULDER_LPWM_PIN, DRIVE_PWM);
-  } else {
-    moveForwardPins(ELBOW_RPWM_PIN, ELBOW_LPWM_PIN, DRIVE_PWM);
-  }
-}
+  int pwm_val = cmdToPwm(cmd);
 
-void driveJointReverse(int joint_idx)
-{
-  if (joint_idx == 0) {
-    moveReversePins(SHOULDER_RPWM_PIN, SHOULDER_LPWM_PIN, DRIVE_PWM);
-  } else {
-    moveReversePins(ELBOW_RPWM_PIN, ELBOW_LPWM_PIN, DRIVE_PWM);
-  }
-}
-
-void stopAllMotors()
-{
-  stopJoint(0);
-  stopJoint(1);
-}
-
-// -----------------------------------------------------------------------------
-// Open-loop controller
-// -----------------------------------------------------------------------------
-void updateJointOpenLoop(int joint_idx, double dt_sec)
-{
-  double error = target_rad[joint_idx] - est_rad[joint_idx];
-
-  if (fabs(error) <= POSITION_DEADBAND_RAD) {
-    stopJoint(joint_idx);
+  if (fabs(cmd) < DEADZONE) {
+    stopMotor(rpwm_pin, lpwm_pin);
     return;
   }
 
-  // Convert desired motion sign into actuator drive direction
-  double signed_error = error * DIRECTION_SIGN[joint_idx];
-
-  if (signed_error > 0.0) {
-    driveJointForward(joint_idx);
-    est_rad[joint_idx] += ACTUATOR_SPEED_RAD_PER_SEC[joint_idx] * dt_sec;
+  if (cmd > 0.0f) {
+    moveForward(rpwm_pin, lpwm_pin, pwm_val);
   } else {
-    driveJointReverse(joint_idx);
-    est_rad[joint_idx] -= ACTUATOR_SPEED_RAD_PER_SEC[joint_idx] * dt_sec;
+    moveReverse(rpwm_pin, lpwm_pin, pwm_val);
   }
-
-  est_rad[joint_idx] = clampf(est_rad[joint_idx], RAD_MIN[joint_idx], RAD_MAX[joint_idx]);
 }
 
-void updateController()
+static void applyCommand()
 {
-  unsigned long now_ms = millis();
-
-  if (last_update_ms == 0) {
-    last_update_ms = now_ms;
-    return;
-  }
-
-  double dt_sec = (now_ms - last_update_ms) / 1000.0;
-  last_update_ms = now_ms;
-
-  // If commands stop arriving, stop everything
-  if ((now_ms - last_command_ms) > COMMAND_TIMEOUT_MS) {
-    stopAllMotors();
-    return;
-  }
-
-  updateJointOpenLoop(0, dt_sec);
-  updateJointOpenLoop(1, dt_sec);
+  driveMotorFromCmd(actuator_cmd[0], SHOULDER_RPWM, SHOULDER_LPWM);
+  driveMotorFromCmd(actuator_cmd[1], ELBOW_RPWM, ELBOW_LPWM);
 }
 
-// -----------------------------------------------------------------------------
+static void stopAllMotors()
+{
+  actuator_cmd[0] = 0.0f;
+  actuator_cmd[1] = 0.0f;
+  stopMotor(SHOULDER_RPWM, SHOULDER_LPWM);
+  stopMotor(ELBOW_RPWM, ELBOW_LPWM);
+}
+
 // micro-ROS subscription callback
-// Expects [shoulder_extension, elbow_extension] in radians
-// -----------------------------------------------------------------------------
-void sub_callback(const void * msgin)
+static void sub_callback(const void * msgin)
 {
-  const std_msgs__msg__Float64MultiArray * m =
-    (const std_msgs__msg__Float64MultiArray *)msgin;
+  const std_msgs__msg__Float32MultiArray * m =
+    (const std_msgs__msg__Float32MultiArray *)msgin;
 
-  if (m->data.size < NJ) {
+  // Expect at least 2 values: shoulder, elbow
+  if (m->data.size < (size_t)NJ) {
     return;
   }
 
-  target_rad[0] = clampf(m->data.data[0], RAD_MIN[0], RAD_MAX[0]);
-  target_rad[1] = clampf(m->data.data[1], RAD_MIN[1], RAD_MAX[1]);
+  for (int i = 0; i < NJ; i++) {
+    actuator_cmd[i] = clampf(m->data.data[i], -1.0f, 1.0f);
+  }
 
-  last_command_ms = millis();
+  last_cmd_ms = millis();
+  applyCommand();
 
   digitalWrite(LED_PIN, !digitalRead(LED_PIN));
 
-  Serial.print("Received targets: shoulder=");
-  Serial.print(target_rad[0], 4);
-  Serial.print("  elbow=");
-  Serial.println(target_rad[1], 4);
+  Serial.print("Shoulder cmd: ");
+  Serial.print(actuator_cmd[0], 3);
+  Serial.print(" | Elbow cmd: ");
+  Serial.println(actuator_cmd[1], 3);
 }
 
-// -----------------------------------------------------------------------------
-// Publish estimated joint states back to ROS2
-// -----------------------------------------------------------------------------
-void timer_callback(rcl_timer_t * timer, int64_t last_call_time)
-{
-  (void)last_call_time;
-
-  if (timer == NULL) {
-    return;
-  }
-
-  pub_data_buf[0] = est_rad[0];
-  pub_data_buf[1] = est_rad[1];
-
-  pub_msg.data.size = NJ;
-  RCSOFTCHECK(rcl_publish(&pub, &pub_msg, NULL));
-}
-
-// -----------------------------------------------------------------------------
-// Setup
-// -----------------------------------------------------------------------------
 void setup()
 {
+  // Use the same transport style as your old working code
+  set_microros_transports();
+
   pinMode(LED_PIN, OUTPUT);
   digitalWrite(LED_PIN, HIGH);
 
   Serial.begin(115200);
-  delay(2000);
+  delay(1000);
 
-  // Attach PWM outputs for both BTS7960 modules
-  if (!ledcAttach(SHOULDER_RPWM_PIN, PWM_FREQ, PWM_RESOLUTION)) {
-    Serial.println("Failed to attach SHOULDER_RPWM_PIN");
+  // New ESP32 core 3.x style
+  if (!ledcAttach(SHOULDER_RPWM, PWM_FREQ, PWM_RESOLUTION)) {
+    Serial.println("Failed to attach SHOULDER_RPWM");
     while (true) {}
   }
 
-  if (!ledcAttach(SHOULDER_LPWM_PIN, PWM_FREQ, PWM_RESOLUTION)) {
-    Serial.println("Failed to attach SHOULDER_LPWM_PIN");
+  if (!ledcAttach(SHOULDER_LPWM, PWM_FREQ, PWM_RESOLUTION)) {
+    Serial.println("Failed to attach SHOULDER_LPWM");
     while (true) {}
   }
 
-  if (!ledcAttach(ELBOW_RPWM_PIN, PWM_FREQ, PWM_RESOLUTION)) {
-    Serial.println("Failed to attach ELBOW_RPWM_PIN");
+  if (!ledcAttach(ELBOW_RPWM, PWM_FREQ, PWM_RESOLUTION)) {
+    Serial.println("Failed to attach ELBOW_RPWM");
     while (true) {}
   }
 
-  if (!ledcAttach(ELBOW_LPWM_PIN, PWM_FREQ, PWM_RESOLUTION)) {
-    Serial.println("Failed to attach ELBOW_LPWM_PIN");
+  if (!ledcAttach(ELBOW_LPWM, PWM_FREQ, PWM_RESOLUTION)) {
+    Serial.println("Failed to attach ELBOW_LPWM");
     while (true) {}
   }
 
   stopAllMotors();
 
-  // Initialize estimated state
-  for (int i = 0; i < NJ; i++) {
-    est_rad[i] = RAD_HOME[i];
-    target_rad[i] = RAD_HOME[i];
-  }
-
-  last_update_ms = millis();
-  last_command_ms = millis();
-
-  set_microros_transports();
+  delay(2000);
 
   allocator = rcl_get_default_allocator();
 
   RCCHECK(rclc_support_init(&support, 0, NULL, &allocator));
-  RCCHECK(rclc_node_init_default(&node, "arm_2026_esp32", "", &support));
+  RCCHECK(rclc_node_init_default(&node, "arm_2026_actuator_bridge", "", &support));
 
-  // Subscriber message setup
-  sub_msg.data.data = sub_data_buf;
-  sub_msg.data.size = 0;
-  sub_msg.data.capacity = NJ;
+  // Prepare msg memory to avoid allocations
+  msg.data.data = msg_data_buf;
+  msg.data.size = 0;
+  msg.data.capacity = NJ;
 
-  // Publisher message setup
-  pub_msg.data.data = pub_data_buf;
-  pub_msg.data.size = NJ;
-  pub_msg.data.capacity = NJ;
-
-  // Subscribe to desired actuator targets from the ROS2 hardware plugin
+  // Subscriber: shoulder/elbow direct actuator commands from keyboard teleop.
   RCCHECK(rclc_subscription_init_default(
     &sub,
     &node,
-    ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Float64MultiArray),
-    "/arm_actuator_targets"
+    ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Float32MultiArray),
+    "/arm_actuator_drive_cmd"
   ));
 
-  // Publish estimated actuator states back to the ROS2 hardware plugin
-  RCCHECK(rclc_publisher_init_default(
-    &pub,
-    &node,
-    ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Float64MultiArray),
-    "/arm_actuator_states"
-  ));
+  RCCHECK(rclc_executor_init(&executor, &support.context, 1, &allocator));
+  RCCHECK(rclc_executor_add_subscription(&executor, &sub, &msg, &sub_callback, ON_NEW_DATA));
 
-  // Publish state at 50 Hz
-  RCCHECK(rclc_timer_init_default(
-    &timer,
-    &support,
-    RCL_MS_TO_NS(20),
-    timer_callback
-  ));
+  last_cmd_ms = millis();
 
-  RCCHECK(rclc_executor_init(&executor, &support.context, 2, &allocator));
-  RCCHECK(rclc_executor_add_subscription(&executor, &sub, &sub_msg, &sub_callback, ON_NEW_DATA));
-  RCCHECK(rclc_executor_add_timer(&executor, &timer));
-
-  Serial.println("micro-ROS actuator bridge ready");
+  Serial.println("ESP32 actuator micro-ROS node ready.");
+  Serial.println("Subscribed to /arm_actuator_drive_cmd");
 }
 
-// -----------------------------------------------------------------------------
-// Main loop
-// -----------------------------------------------------------------------------
 void loop()
 {
   RCSOFTCHECK(rclc_executor_spin_some(&executor, RCL_MS_TO_NS(10)));
-  updateController();
+
+  if ((millis() - last_cmd_ms) > CMD_TIMEOUT_MS) {
+    stopAllMotors();
+    last_cmd_ms = millis();
+  }
+
   delay(10);
 }

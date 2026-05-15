@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <array>
 #include <cerrno>
+#include <chrono>
 #include <cmath>
 #include <cstdio>
 #include <cstring>
@@ -75,7 +76,7 @@ public:
       "/position_controller/commands", 10);
 
     actuator_cmd_pub_ = create_publisher<std_msgs::msg::Float32MultiArray>(
-      "/arm_actuator_cmd", 10);
+      "/arm_actuator_drive_cmd", 10);
 
     joint_state_sub_ = create_subscription<sensor_msgs::msg::JointState>(
       "/joint_states", 10,
@@ -104,8 +105,12 @@ public:
         }
       }
 
+      update_actuator_hold_command();
       loop_rate.sleep();
     }
+
+    actuator_drive_cmd_ = {0.0f, 0.0f};
+    publish_actuator_drive_command();
   }
 
 private:
@@ -116,8 +121,8 @@ private:
       "Keyboard teleop for arm_2026\n"
       "Commands:\n"
       "  q/a : base + / -\n"
-      "  w/s : shoulder + / -\n"
-      "  e/d : elbow + / -\n"
+      "  w/s : shoulder retract / extend while held\n"
+      "  e/d : elbow retract / extend while held\n"
       "  r/f : wrist_twist + / -\n"
       "  t/g : wrist_roll + / -\n"
       "  z/x : decrease / increase step size\n"
@@ -127,7 +132,7 @@ private:
       "  Ctrl-C : quit\n"
       "\n");
     std::printf(
-      "Publish modes: /position_controller/commands=%s, /arm_actuator_cmd=%s, require_joint_state=%s\n",
+      "Publish modes: /position_controller/commands=%s, /arm_actuator_drive_cmd=%s, require_joint_state=%s\n",
       publish_controller_commands_ ? "on" : "off",
       publish_direct_actuator_cmd_ ? "on" : "off",
       require_joint_state_before_motion_ ? "on" : "off");
@@ -216,16 +221,16 @@ private:
         nudge_joint(0, -step_size_rad_);
         return true;
       case 'w':
-        nudge_joint(1, step_size_rad_);
+        set_actuator_drive(0, 1.0f);
         return true;
       case 's':
-        nudge_joint(1, -step_size_rad_);
+        set_actuator_drive(0, -1.0f);
         return true;
       case 'e':
-        nudge_joint(2, step_size_rad_);
+        set_actuator_drive(1, 1.0f);
         return true;
       case 'd':
-        nudge_joint(2, -step_size_rad_);
+        set_actuator_drive(1, -1.0f);
         return true;
       case 'r':
         nudge_joint(4, step_size_rad_);
@@ -279,11 +284,44 @@ private:
     publish_target();
   }
 
-  static float rad_to_bridge_cmd(double rad_value)
+  void set_actuator_drive(std::size_t actuator_index, float command)
   {
-    if (rad_value > 1.0) return 1.0f;
-    if (rad_value < -1.0) return -1.0f;
-    return static_cast<float>(rad_value);
+    if (actuator_index >= actuator_drive_cmd_.size()) {
+      return;
+    }
+
+    actuator_drive_cmd_[actuator_index] = command;
+    actuator_drive_deadline_ = std::chrono::steady_clock::now() + actuator_key_timeout_;
+    publish_actuator_drive_command();
+  }
+
+  void update_actuator_hold_command()
+  {
+    const bool any_actuator_active =
+      std::fabs(actuator_drive_cmd_[0]) > 0.0f ||
+      std::fabs(actuator_drive_cmd_[1]) > 0.0f;
+
+    if (!any_actuator_active) {
+      return;
+    }
+
+    const auto now = std::chrono::steady_clock::now();
+    if (now > actuator_drive_deadline_) {
+      actuator_drive_cmd_ = {0.0f, 0.0f};
+    }
+
+    publish_actuator_drive_command();
+  }
+
+  void publish_actuator_drive_command()
+  {
+    if (!publish_direct_actuator_cmd_ || !actuator_cmd_pub_) {
+      return;
+    }
+
+    std_msgs::msg::Float32MultiArray actuator_msg;
+    actuator_msg.data.assign(actuator_drive_cmd_.begin(), actuator_drive_cmd_.end());
+    actuator_cmd_pub_->publish(actuator_msg);
   }
 
   void publish_target()
@@ -292,15 +330,6 @@ private:
       std_msgs::msg::Float64MultiArray msg;
       msg.data.assign(target_positions_.begin(), target_positions_.end());
       command_pub_->publish(msg);
-    }
-
-    if (publish_direct_actuator_cmd_ && actuator_cmd_pub_) {
-      std_msgs::msg::Float32MultiArray actuator_msg;
-      actuator_msg.data = {
-        rad_to_bridge_cmd(target_positions_[1]),
-        rad_to_bridge_cmd(target_positions_[2])
-      };
-      actuator_cmd_pub_->publish(actuator_msg);
     }
 
     print_status();
@@ -312,6 +341,7 @@ private:
 
   std::array<double, 5> measured_positions_{{0.0, 0.0, 0.0, 0.0, 0.0}};
   std::array<double, 5> target_positions_{{0.0, 0.0, 0.0, 0.0, 0.0}};
+  std::array<float, 2> actuator_drive_cmd_{{0.0f, 0.0f}};
 
   const std::array<double, 5> joint_mins_{{-3.14, -1.57, -1.57, -1.57, -1.57}};
   const std::array<double, 5> joint_maxs_{{ 3.14,  1.57,  1.57,  1.57,  1.57}};
@@ -319,6 +349,8 @@ private:
   double step_size_rad_{5.0 * M_PI / 180.0};
   const double min_step_size_rad_{1.0 * M_PI / 180.0};
   const double max_step_size_rad_{45.0 * M_PI / 180.0};
+  const std::chrono::milliseconds actuator_key_timeout_{650};
+  std::chrono::steady_clock::time_point actuator_drive_deadline_{};
 
   bool have_joint_state_{false};
   bool publish_controller_commands_{true};
