@@ -12,6 +12,12 @@
 namespace arm_2026
 {
 
+Arm2026System::~Arm2026System()
+{
+  cleanup_phidgets();
+  cleanup_ros_bridge();
+}
+
 hardware_interface::CallbackReturn Arm2026System::on_init(
   const hardware_interface::HardwareInfo & info)
 {
@@ -125,6 +131,55 @@ void Arm2026System::actuator_state_callback(
   actuator_state_shoulder_ = static_cast<double>(msg->data[0]);
   actuator_state_elbow_ = static_cast<double>(msg->data[1]);
   actuator_state_received_.store(true);
+}
+
+void Arm2026System::cleanup_phidgets()
+{
+  if (base_stepper_)
+  {
+    phidget_ok(PhidgetStepper_setEngaged(base_stepper_, 0), "PhidgetStepper_setEngaged(0) base");
+    phidget_ok(Phidget_close(reinterpret_cast<PhidgetHandle>(base_stepper_)), "Phidget_close base");
+    phidget_ok(PhidgetStepper_delete(&base_stepper_), "PhidgetStepper_delete base");
+    base_stepper_ = nullptr;
+    base_stepper_attached_ = false;
+  }
+
+  if (wrist_motor_1_)
+  {
+    phidget_ok(PhidgetStepper_setEngaged(wrist_motor_1_, 0), "PhidgetStepper_setEngaged(0) wrist1");
+    phidget_ok(Phidget_close(reinterpret_cast<PhidgetHandle>(wrist_motor_1_)), "Phidget_close wrist1");
+    phidget_ok(PhidgetStepper_delete(&wrist_motor_1_), "PhidgetStepper_delete wrist1");
+    wrist_motor_1_ = nullptr;
+    wrist_motor_1_attached_ = false;
+  }
+
+  if (wrist_motor_2_)
+  {
+    phidget_ok(PhidgetStepper_setEngaged(wrist_motor_2_, 0), "PhidgetStepper_setEngaged(0) wrist2");
+    phidget_ok(Phidget_close(reinterpret_cast<PhidgetHandle>(wrist_motor_2_)), "Phidget_close wrist2");
+    phidget_ok(PhidgetStepper_delete(&wrist_motor_2_), "PhidgetStepper_delete wrist2");
+    wrist_motor_2_ = nullptr;
+    wrist_motor_2_attached_ = false;
+  }
+}
+
+void Arm2026System::cleanup_ros_bridge()
+{
+  executor_running_.store(false);
+  if (executor_thread_.joinable())
+  {
+    executor_thread_.join();
+  }
+
+  if (executor_ && comms_node_)
+  {
+    executor_->remove_node(comms_node_);
+  }
+
+  actuator_cmd_pub_.reset();
+  actuator_state_sub_.reset();
+  executor_.reset();
+  comms_node_.reset();
 }
 
 hardware_interface::CallbackReturn Arm2026System::on_configure(
@@ -480,48 +535,8 @@ hardware_interface::CallbackReturn Arm2026System::on_deactivate(
 {
   RCLCPP_INFO(rclcpp::get_logger("Arm2026System"), "Deactivating Arm2026System");
 
-  if (base_stepper_)
-  {
-    phidget_ok(PhidgetStepper_setEngaged(base_stepper_, 0), "PhidgetStepper_setEngaged(0) base");
-    phidget_ok(Phidget_close(reinterpret_cast<PhidgetHandle>(base_stepper_)), "Phidget_close base");
-    phidget_ok(PhidgetStepper_delete(&base_stepper_), "PhidgetStepper_delete base");
-    base_stepper_ = nullptr;
-    base_stepper_attached_ = false;
-  }
-
-  if (wrist_motor_1_)
-  {
-    phidget_ok(PhidgetStepper_setEngaged(wrist_motor_1_, 0), "PhidgetStepper_setEngaged(0) wrist1");
-    phidget_ok(Phidget_close(reinterpret_cast<PhidgetHandle>(wrist_motor_1_)), "Phidget_close wrist1");
-    phidget_ok(PhidgetStepper_delete(&wrist_motor_1_), "PhidgetStepper_delete wrist1");
-    wrist_motor_1_ = nullptr;
-    wrist_motor_1_attached_ = false;
-  }
-
-  if (wrist_motor_2_)
-  {
-    phidget_ok(PhidgetStepper_setEngaged(wrist_motor_2_, 0), "PhidgetStepper_setEngaged(0) wrist2");
-    phidget_ok(Phidget_close(reinterpret_cast<PhidgetHandle>(wrist_motor_2_)), "Phidget_close wrist2");
-    phidget_ok(PhidgetStepper_delete(&wrist_motor_2_), "PhidgetStepper_delete wrist2");
-    wrist_motor_2_ = nullptr;
-    wrist_motor_2_attached_ = false;
-  }
-
-  executor_running_.store(false);
-  if (executor_thread_.joinable())
-  {
-    executor_thread_.join();
-  }
-
-  if (executor_ && comms_node_)
-  {
-    executor_->remove_node(comms_node_);
-  }
-
-  actuator_cmd_pub_.reset();
-  actuator_state_sub_.reset();
-  executor_.reset();
-  comms_node_.reset();
+  cleanup_phidgets();
+  cleanup_ros_bridge();
 
   return hardware_interface::CallbackReturn::SUCCESS;
 }

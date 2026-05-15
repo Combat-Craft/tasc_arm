@@ -27,6 +27,8 @@ class Arm2026System : public hardware_interface::SystemInterface
 public:
   RCLCPP_SHARED_PTR_DEFINITIONS(Arm2026System)
 
+  ~Arm2026System() override;
+
   hardware_interface::CallbackReturn on_init(
     const hardware_interface::HardwareInfo & info) override;
 
@@ -52,6 +54,8 @@ public:
 
 private:
   void actuator_state_callback(const std_msgs::msg::Float32MultiArray::SharedPtr msg);
+  void cleanup_phidgets();
+  void cleanup_ros_bridge();
 
   bool phidget_ok(PhidgetReturnCode code, const char * context) const;
   double clampf(double x, double lo, double hi) const;
