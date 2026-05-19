@@ -1,0 +1,18 @@
+[35m[1mConsolidate compiler generated dependencies of target arm_control[0m
+[100%] Built target arm_control
+-- Install configuration: ""
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_control/share/arm_control/plugin.xml
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_control/lib/libarm_control.so
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_control/include
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_control/include/arm_control
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_control/share/arm_control/plugin.xml
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_control/share/arm_control/config
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_control/share/arm_control/config/controllers.yaml
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control/keyboard_teleop.py
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control/keyboard_cartesian_ik_teleop.py
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control/ps5_arm_teleop.py
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control/ps5_cartesian_ik_teleop.py
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control/logitech_joystick_ik.py
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control/joint_state_offset.py
+-- Installing: /home/ibrahim/tasc_arm/install/arm_control/share/arm_control/package.dsv
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_control/share/arm_control/package.xml

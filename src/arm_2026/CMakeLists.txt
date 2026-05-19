@@ -26,6 +26,10 @@ add_executable(arm_2026_keyboard_teleop
   arm_2026/keyboard_teleop.cpp
 )
 
+add_executable(arm_2026_joystick_teleop
+  arm_2026/joystick_teleop.cpp
+)
+
 target_include_directories(${PROJECT_NAME} PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>
@@ -40,6 +44,12 @@ ament_target_dependencies(${PROJECT_NAME}
 )
 
 ament_target_dependencies(arm_2026_keyboard_teleop
+  rclcpp
+  sensor_msgs
+  std_msgs
+)
+
+ament_target_dependencies(arm_2026_joystick_teleop
   rclcpp
   sensor_msgs
   std_msgs
@@ -66,6 +76,7 @@ install(
 install(
   TARGETS ${PROJECT_NAME}
   arm_2026_keyboard_teleop
+  arm_2026_joystick_teleop
   EXPORT export_${PROJECT_NAME}
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib

@@ -1,0 +1,48 @@
+[0.032s] Invoking command in '/home/ibrahim/tasc_arm/build/arm_2026': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ibrahim/tasc_arm/install/arm_bringup:/opt/ros/humble /usr/bin/cmake --build /home/ibrahim/tasc_arm/build/arm_2026 -- -j4 -l4
+[0.150s] [35m[1mConsolidate compiler generated dependencies of target arm_2026_keyboard_teleop[0m
+[0.187s] [ 33%] Built target arm_2026
+[0.188s] [ 66%] Built target arm_2026_joystick_teleop
+[0.200s] [ 83%] [32mBuilding CXX object CMakeFiles/arm_2026_keyboard_teleop.dir/arm_2026/keyboard_teleop.cpp.o[0m
+[18.695s] [100%] [32m[1mLinking CXX executable arm_2026_keyboard_teleop[0m
+[19.463s] [100%] Built target arm_2026_keyboard_teleop
+[19.484s] Invoked command in '/home/ibrahim/tasc_arm/build/arm_2026' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ibrahim/tasc_arm/install/arm_bringup:/opt/ros/humble /usr/bin/cmake --build /home/ibrahim/tasc_arm/build/arm_2026 -- -j4 -l4
+[19.504s] Invoking command in '/home/ibrahim/tasc_arm/build/arm_2026': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ibrahim/tasc_arm/install/arm_bringup:/opt/ros/humble /usr/bin/cmake --install /home/ibrahim/tasc_arm/build/arm_2026
+[19.518s] -- Install configuration: ""
+[19.519s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/plugin.xml
+[19.519s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/include
+[19.519s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/include/arm_2026
+[19.520s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/include/arm_2026/arm_2026_system.hpp
+[19.520s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/plugin.xml
+[19.520s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/lib/libarm_2026.so
+[19.520s] -- Installing: /home/ibrahim/tasc_arm/install/arm_2026/lib/arm_2026/arm_2026_keyboard_teleop
+[19.527s] -- Set runtime path of "/home/ibrahim/tasc_arm/install/arm_2026/lib/arm_2026/arm_2026_keyboard_teleop" to ""
+[19.530s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/lib/arm_2026/arm_2026_joystick_teleop
+[19.530s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/description
+[19.530s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/description/arm_2026.urdf.xacro
+[19.531s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/config
+[19.531s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/config/controllers.yaml
+[19.532s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/launch
+[19.532s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/launch/bringup.launch.py
+[19.532s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/environment/library_path.sh
+[19.533s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/environment/library_path.dsv
+[19.533s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/ament_index/resource_index/package_run_dependencies/arm_2026
+[19.534s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/ament_index/resource_index/parent_prefix_path/arm_2026
+[19.534s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/environment/ament_prefix_path.sh
+[19.534s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/environment/ament_prefix_path.dsv
+[19.534s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/environment/path.sh
+[19.534s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/environment/path.dsv
+[19.535s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/local_setup.bash
+[19.535s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/local_setup.sh
+[19.535s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/local_setup.zsh
+[19.535s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/local_setup.dsv
+[19.535s] -- Installing: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/package.dsv
+[19.535s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/ament_index/resource_index/packages/arm_2026
+[19.535s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/ament_index/resource_index/hardware_interface__pluginlib__plugin/arm_2026
+[19.535s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/cmake/export_arm_2026Export.cmake
+[19.535s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/cmake/export_arm_2026Export-noconfig.cmake
+[19.535s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/cmake/ament_cmake_export_targets-extras.cmake
+[19.535s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/cmake/ament_cmake_export_dependencies-extras.cmake
+[19.535s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/cmake/arm_2026Config.cmake
+[19.535s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/cmake/arm_2026Config-version.cmake
+[19.535s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/package.xml
+[19.539s] Invoked command in '/home/ibrahim/tasc_arm/build/arm_2026' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ibrahim/tasc_arm/install/arm_bringup:/opt/ros/humble /usr/bin/cmake --install /home/ibrahim/tasc_arm/build/arm_2026

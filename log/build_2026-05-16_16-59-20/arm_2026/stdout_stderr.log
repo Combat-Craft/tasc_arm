@@ -1,0 +1,42 @@
+[35m[1mConsolidate compiler generated dependencies of target arm_2026_keyboard_teleop[0m
+[ 50%] Built target arm_2026
+[ 75%] [32mBuilding CXX object CMakeFiles/arm_2026_keyboard_teleop.dir/arm_2026/keyboard_teleop.cpp.o[0m
+[100%] [32m[1mLinking CXX executable arm_2026_keyboard_teleop[0m
+[100%] Built target arm_2026_keyboard_teleop
+-- Install configuration: ""
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/plugin.xml
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/include
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/include/arm_2026
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/include/arm_2026/arm_2026_system.hpp
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/plugin.xml
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/lib/libarm_2026.so
+-- Installing: /home/ibrahim/tasc_arm/install/arm_2026/lib/arm_2026/arm_2026_keyboard_teleop
+-- Set runtime path of "/home/ibrahim/tasc_arm/install/arm_2026/lib/arm_2026/arm_2026_keyboard_teleop" to ""
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/description
+-- Installing: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/description/arm_2026.urdf.xacro
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/config
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/config/controllers.yaml
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/launch
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/launch/bringup.launch.py
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/environment/library_path.sh
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/environment/library_path.dsv
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/ament_index/resource_index/package_run_dependencies/arm_2026
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/ament_index/resource_index/parent_prefix_path/arm_2026
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/environment/ament_prefix_path.sh
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/environment/ament_prefix_path.dsv
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/environment/path.sh
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/environment/path.dsv
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/local_setup.bash
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/local_setup.sh
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/local_setup.zsh
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/local_setup.dsv
+-- Installing: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/package.dsv
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/ament_index/resource_index/packages/arm_2026
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/ament_index/resource_index/hardware_interface__pluginlib__plugin/arm_2026
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/cmake/export_arm_2026Export.cmake
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/cmake/export_arm_2026Export-noconfig.cmake
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/cmake/ament_cmake_export_targets-extras.cmake
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/cmake/ament_cmake_export_dependencies-extras.cmake
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/cmake/arm_2026Config.cmake
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/cmake/arm_2026Config-version.cmake
+-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/package.xml

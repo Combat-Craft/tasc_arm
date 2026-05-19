@@ -1,0 +1,839 @@
+[0.000000] (-) TimerEvent: {}
+[0.000408] (arm_2026) JobQueued: {'identifier': 'arm_2026', 'dependencies': OrderedDict()}
+[0.000484] (arm_bringup) JobQueued: {'identifier': 'arm_bringup', 'dependencies': OrderedDict()}
+[0.000528] (arm_control) JobQueued: {'identifier': 'arm_control', 'dependencies': OrderedDict()}
+[0.000565] (arm_description) JobQueued: {'identifier': 'arm_description', 'dependencies': OrderedDict()}
+[0.000602] (phidgets_hardware) JobQueued: {'identifier': 'phidgets_hardware', 'dependencies': OrderedDict()}
+[0.000641] (arm_2026) JobStarted: {'identifier': 'arm_2026'}
+[0.031641] (arm_bringup) JobStarted: {'identifier': 'arm_bringup'}
+[0.048536] (arm_control) JobStarted: {'identifier': 'arm_control'}
+[0.058285] (arm_description) JobStarted: {'identifier': 'arm_description'}
+[0.070462] (arm_2026) JobProgress: {'identifier': 'arm_2026', 'progress': 'cmake'}
+[0.073324] (arm_2026) Command: {'cmd': ['/usr/bin/cmake', '/home/ibrahim/tasc_arm/src/arm_2026', '-DCMAKE_INSTALL_PREFIX=/home/ibrahim/tasc_arm/install/arm_2026'], 'cwd': '/home/ibrahim/tasc_arm/build/arm_2026', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'ibrahim'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/ibrahim'), ('OLDPWD', '/home/ibrahim'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('DBUS_STARTER_BUS_TYPE', 'session'), ('SYSTEMD_EXEC_PID', '1245'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus,guid=e10dacedb7c01d73216b92b86a08afcf'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'ibrahim'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'ibrahim'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/ibrahim-virtual-machine:@/tmp/.ICE-unix/1245,unix/ibrahim-virtual-machine:/tmp/.ICE-unix/1245'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/31a6396c_0071_41ee_9383_2f6f31aafd38'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('RMW_IMPLEMENTATION', 'rmw_cyclonedds_cpp'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.BOQLP3'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.104'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('ROS_DOMAIN_ID', '1'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/ibrahim/tasc_arm/build/arm_2026'), ('TURTLEBOT3_MODEL', 'waffle'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('DBUS_STARTER_ADDRESS', 'unix:path=/run/user/1000/bus,guid=e10dacedb7c01d73216b92b86a08afcf'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.098022] (-) TimerEvent: {}
+[0.199155] (-) TimerEvent: {}
+[0.300248] (-) TimerEvent: {}
+[0.402444] (-) TimerEvent: {}
+[0.503620] (-) TimerEvent: {}
+[0.604813] (-) TimerEvent: {}
+[0.706609] (-) TimerEvent: {}
+[0.807855] (-) TimerEvent: {}
+[0.908709] (-) TimerEvent: {}
+[0.935445] (arm_control) JobProgress: {'identifier': 'arm_control', 'progress': 'cmake'}
+[0.942473] (arm_control) Command: {'cmd': ['/usr/bin/cmake', '/home/ibrahim/tasc_arm/src/arm_control', '-DCMAKE_INSTALL_PREFIX=/home/ibrahim/tasc_arm/install/arm_control'], 'cwd': '/home/ibrahim/tasc_arm/build/arm_control', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'ibrahim'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/ibrahim'), ('OLDPWD', '/home/ibrahim'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('DBUS_STARTER_BUS_TYPE', 'session'), ('SYSTEMD_EXEC_PID', '1245'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus,guid=e10dacedb7c01d73216b92b86a08afcf'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'ibrahim'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'ibrahim'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/ibrahim-virtual-machine:@/tmp/.ICE-unix/1245,unix/ibrahim-virtual-machine:/tmp/.ICE-unix/1245'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/31a6396c_0071_41ee_9383_2f6f31aafd38'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('RMW_IMPLEMENTATION', 'rmw_cyclonedds_cpp'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.BOQLP3'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.104'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('ROS_DOMAIN_ID', '1'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/ibrahim/tasc_arm/build/arm_control'), ('TURTLEBOT3_MODEL', 'waffle'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('DBUS_STARTER_ADDRESS', 'unix:path=/run/user/1000/bus,guid=e10dacedb7c01d73216b92b86a08afcf'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[0.951623] (arm_2026) StdoutLine: {'line': b'-- The C compiler identification is GNU 11.4.0\n'}
+[0.951902] (arm_description) JobProgress: {'identifier': 'arm_description', 'progress': 'cmake'}
+[0.955102] (arm_description) Command: {'cmd': ['/usr/bin/cmake', '/home/ibrahim/tasc_arm/src/arm_description', '-DCMAKE_INSTALL_PREFIX=/home/ibrahim/tasc_arm/install/arm_description'], 'cwd': '/home/ibrahim/tasc_arm/build/arm_description', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'ibrahim'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/ibrahim'), ('OLDPWD', '/home/ibrahim'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('DBUS_STARTER_BUS_TYPE', 'session'), ('SYSTEMD_EXEC_PID', '1245'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus,guid=e10dacedb7c01d73216b92b86a08afcf'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'ibrahim'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'ibrahim'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/ibrahim-virtual-machine:@/tmp/.ICE-unix/1245,unix/ibrahim-virtual-machine:/tmp/.ICE-unix/1245'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/31a6396c_0071_41ee_9383_2f6f31aafd38'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('RMW_IMPLEMENTATION', 'rmw_cyclonedds_cpp'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.BOQLP3'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.104'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('ROS_DOMAIN_ID', '1'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/ibrahim/tasc_arm/build/arm_description'), ('TURTLEBOT3_MODEL', 'waffle'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('DBUS_STARTER_ADDRESS', 'unix:path=/run/user/1000/bus,guid=e10dacedb7c01d73216b92b86a08afcf'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[1.012242] (-) TimerEvent: {}
+[1.074775] (arm_control) StdoutLine: {'line': b'-- The C compiler identification is GNU 11.4.0\n'}
+[1.113071] (-) TimerEvent: {}
+[1.213761] (-) TimerEvent: {}
+[1.291523] (arm_description) StdoutLine: {'line': b'-- The C compiler identification is GNU 11.4.0\n'}
+[1.315203] (-) TimerEvent: {}
+[1.397678] (arm_control) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 11.4.0\n'}
+[1.420174] (-) TimerEvent: {}
+[1.483969] (arm_control) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[1.520400] (-) TimerEvent: {}
+[1.622066] (-) TimerEvent: {}
+[1.691793] (arm_2026) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 11.4.0\n'}
+[1.704590] (arm_description) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 11.4.0\n'}
+[1.712253] (arm_2026) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[1.722894] (-) TimerEvent: {}
+[1.730862] (arm_description) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[1.824437] (-) TimerEvent: {}
+[1.925358] (-) TimerEvent: {}
+[1.940871] (arm_2026) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[1.953568] (arm_control) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[1.966649] (arm_2026) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[1.972102] (arm_2026) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[1.980175] (arm_2026) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[1.983231] (arm_control) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[1.984403] (arm_control) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[1.987451] (arm_description) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[1.991542] (arm_control) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[1.997280] (arm_2026) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[2.006623] (arm_control) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[2.026734] (arm_description) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[2.027302] (-) TimerEvent: {}
+[2.027723] (arm_description) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[2.029523] (arm_description) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[2.039323] (arm_description) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[2.127702] (-) TimerEvent: {}
+[2.228565] (-) TimerEvent: {}
+[2.287723] (arm_2026) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[2.297577] (arm_control) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[2.312489] (arm_2026) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[2.312893] (arm_2026) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[2.313035] (arm_2026) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[2.318992] (arm_control) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[2.319890] (arm_control) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[2.321277] (arm_control) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[2.329793] (-) TimerEvent: {}
+[2.336192] (arm_description) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[2.347712] (arm_control) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[2.350821] (arm_2026) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[2.351531] (arm_description) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[2.354521] (arm_description) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[2.354974] (arm_description) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[2.358314] (arm_description) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[2.430020] (-) TimerEvent: {}
+[2.533353] (-) TimerEvent: {}
+[2.634359] (-) TimerEvent: {}
+[2.735314] (-) TimerEvent: {}
+[2.759479] (arm_control) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter \n'}
+[2.835928] (-) TimerEvent: {}
+[2.898874] (arm_2026) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter \n'}
+[2.937755] (-) TimerEvent: {}
+[3.042297] (-) TimerEvent: {}
+[3.062491] (arm_description) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter \n'}
+[3.144590] (-) TimerEvent: {}
+[3.201531] (arm_control) StdoutLine: {'line': b'-- Found rclcpp: 16.0.14 (/opt/ros/humble/share/rclcpp/cmake)\n'}
+[3.247155] (-) TimerEvent: {}
+[3.291289] (arm_2026) StdoutLine: {'line': b'-- Found rclcpp: 16.0.14 (/opt/ros/humble/share/rclcpp/cmake)\n'}
+[3.347867] (-) TimerEvent: {}
+[3.390427] (arm_bringup) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../build/arm_bringup', 'build', '--build-base', '/home/ibrahim/tasc_arm/build/arm_bringup/build', 'install', '--record', '/home/ibrahim/tasc_arm/build/arm_bringup/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/ibrahim/tasc_arm/src/arm_bringup', 'env': {'LESSOPEN': '| /usr/bin/lesspipe %s', 'LANGUAGE': 'en_CA:en', 'USER': 'ibrahim', 'XDG_SESSION_TYPE': 'wayland', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib', 'HOME': '/home/ibrahim', 'OLDPWD': '/home/ibrahim', 'DESKTOP_SESSION': 'ubuntu', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'DBUS_STARTER_BUS_TYPE': 'session', 'SYSTEMD_EXEC_PID': '1245', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus,guid=e10dacedb7c01d73216b92b86a08afcf', 'COLORTERM': 'truecolor', 'IM_CONFIG_PHASE': '1', 'WAYLAND_DISPLAY': 'wayland-0', 'ROS_DISTRO': 'humble', 'LOGNAME': 'ibrahim', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'XDG_SESSION_CLASS': 'user', 'USERNAME': 'ibrahim', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin', 'SESSION_MANAGER': 'local/ibrahim-virtual-machine:@/tmp/.ICE-unix/1245,unix/ibrahim-virtual-machine:/tmp/.ICE-unix/1245', 'XDG_MENU_PREFIX': 'gnome-', 'GNOME_TERMINAL_SCREEN': '/org/gnome/Terminal/screen/31a6396c_0071_41ee_9383_2f6f31aafd38', 'GNOME_SETUP_DISPLAY': ':1', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':0', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'RMW_IMPLEMENTATION': 'rmw_cyclonedds_cpp', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu', 'XAUTHORITY': '/run/user/1000/.mutter-Xwaylandauth.BOQLP3', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'GNOME_TERMINAL_SERVICE': ':1.104', 'SSH_AGENT_LAUNCHER': 'gnome-keyring', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'ROS_DOMAIN_ID': '1', 'AMENT_PREFIX_PATH': '/opt/ros/humble', 'SHELL': '/bin/bash', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/ibrahim/tasc_arm/build/arm_bringup', 'TURTLEBOT3_MODEL': 'waffle', 'LC_ALL': 'en_US.UTF-8', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu:/etc/xdg', 'DBUS_STARTER_ADDRESS': 'unix:path=/run/user/1000/bus,guid=e10dacedb7c01d73216b92b86a08afcf', 'XDG_DATA_DIRS': '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/ibrahim/tasc_arm/build/arm_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ibrahim/tasc_arm/install/arm_bringup/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages', 'COLCON': '1', 'VTE_VERSION': '6800'}, 'shell': False}
+[3.409624] (arm_description) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.12.14 (/opt/ros/humble/share/ament_lint_auto/cmake)\n'}
+[3.448970] (-) TimerEvent: {}
+[3.496305] (arm_control) StdoutLine: {'line': b'-- Found rosidl_generator_c: 3.1.7 (/opt/ros/humble/share/rosidl_generator_c/cmake)\n'}
+[3.500546] (arm_2026) StdoutLine: {'line': b'-- Found rosidl_generator_c: 3.1.7 (/opt/ros/humble/share/rosidl_generator_c/cmake)\n'}
+[3.514709] (arm_2026) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.7 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[3.515516] (arm_control) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.7 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[3.549914] (-) TimerEvent: {}
+[3.552420] (arm_control) StdoutLine: {'line': b'-- Found rosidl_generator_cpp: 3.1.7 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)\n'}
+[3.553019] (arm_2026) StdoutLine: {'line': b'-- Found rosidl_generator_cpp: 3.1.7 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)\n'}
+[3.615062] (arm_control) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[3.618079] (arm_2026) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[3.651458] (-) TimerEvent: {}
+[3.699481] (arm_description) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[3.709581] (arm_description) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[3.716078] (arm_control) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[3.716446] (arm_2026) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[3.726602] (arm_description) StdoutLine: {'line': b'-- Configuring done\n'}
+[3.737020] (arm_description) StdoutLine: {'line': b'-- Generating done\n'}
+[3.750549] (arm_description) StdoutLine: {'line': b'-- Build files have been written to: /home/ibrahim/tasc_arm/build/arm_description\n'}
+[3.751822] (-) TimerEvent: {}
+[3.775077] (arm_description) CommandEnded: {'returncode': 0}
+[3.776236] (arm_description) JobProgress: {'identifier': 'arm_description', 'progress': 'build'}
+[3.782319] (arm_description) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/ibrahim/tasc_arm/build/arm_description', '--', '-j4', '-l4'], 'cwd': '/home/ibrahim/tasc_arm/build/arm_description', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'ibrahim'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/ibrahim'), ('OLDPWD', '/home/ibrahim'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('DBUS_STARTER_BUS_TYPE', 'session'), ('SYSTEMD_EXEC_PID', '1245'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus,guid=e10dacedb7c01d73216b92b86a08afcf'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'ibrahim'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'ibrahim'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/ibrahim-virtual-machine:@/tmp/.ICE-unix/1245,unix/ibrahim-virtual-machine:/tmp/.ICE-unix/1245'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/31a6396c_0071_41ee_9383_2f6f31aafd38'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('RMW_IMPLEMENTATION', 'rmw_cyclonedds_cpp'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.BOQLP3'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.104'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('ROS_DOMAIN_ID', '1'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/ibrahim/tasc_arm/build/arm_description'), ('TURTLEBOT3_MODEL', 'waffle'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('DBUS_STARTER_ADDRESS', 'unix:path=/run/user/1000/bus,guid=e10dacedb7c01d73216b92b86a08afcf'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[3.852587] (-) TimerEvent: {}
+[3.905302] (arm_description) CommandEnded: {'returncode': 0}
+[3.906829] (arm_description) JobProgress: {'identifier': 'arm_description', 'progress': 'install'}
+[3.936095] (arm_description) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/ibrahim/tasc_arm/build/arm_description'], 'cwd': '/home/ibrahim/tasc_arm/build/arm_description', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'ibrahim'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/ibrahim'), ('OLDPWD', '/home/ibrahim'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('DBUS_STARTER_BUS_TYPE', 'session'), ('SYSTEMD_EXEC_PID', '1245'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus,guid=e10dacedb7c01d73216b92b86a08afcf'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'ibrahim'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'ibrahim'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/ibrahim-virtual-machine:@/tmp/.ICE-unix/1245,unix/ibrahim-virtual-machine:/tmp/.ICE-unix/1245'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/31a6396c_0071_41ee_9383_2f6f31aafd38'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('RMW_IMPLEMENTATION', 'rmw_cyclonedds_cpp'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.BOQLP3'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.104'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('ROS_DOMAIN_ID', '1'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/ibrahim/tasc_arm/build/arm_description'), ('TURTLEBOT3_MODEL', 'waffle'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('DBUS_STARTER_ADDRESS', 'unix:path=/run/user/1000/bus,guid=e10dacedb7c01d73216b92b86a08afcf'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[3.952983] (-) TimerEvent: {}
+[3.953842] (arm_2026) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)\n'}
+[3.954482] (arm_control) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)\n'}
+[3.963350] (arm_bringup) StdoutLine: {'line': b'running egg_info\n'}
+[3.966279] (arm_bringup) StdoutLine: {'line': b'creating ../../build/arm_bringup/arm_bringup.egg-info\n'}
+[3.966735] (arm_bringup) StdoutLine: {'line': b'writing ../../build/arm_bringup/arm_bringup.egg-info/PKG-INFO\n'}
+[3.969773] (arm_bringup) StdoutLine: {'line': b'writing dependency_links to ../../build/arm_bringup/arm_bringup.egg-info/dependency_links.txt\n'}
+[3.970169] (arm_bringup) StdoutLine: {'line': b'writing entry points to ../../build/arm_bringup/arm_bringup.egg-info/entry_points.txt\n'}
+[3.970528] (arm_bringup) StdoutLine: {'line': b'writing requirements to ../../build/arm_bringup/arm_bringup.egg-info/requires.txt\n'}
+[3.970718] (arm_bringup) StdoutLine: {'line': b'writing top-level names to ../../build/arm_bringup/arm_bringup.egg-info/top_level.txt\n'}
+[3.970925] (arm_bringup) StdoutLine: {'line': b"writing manifest file '../../build/arm_bringup/arm_bringup.egg-info/SOURCES.txt'\n"}
+[3.971256] (arm_bringup) StdoutLine: {'line': b"reading manifest file '../../build/arm_bringup/arm_bringup.egg-info/SOURCES.txt'\n"}
+[3.972554] (arm_2026) StdoutLine: {'line': b'-- Found rmw_cyclonedds_cpp: 1.3.4 (/opt/ros/humble/share/rmw_cyclonedds_cpp/cmake)\n'}
+[3.972787] (arm_control) StdoutLine: {'line': b'-- Found rmw_cyclonedds_cpp: 1.3.4 (/opt/ros/humble/share/rmw_cyclonedds_cpp/cmake)\n'}
+[3.980687] (arm_bringup) StdoutLine: {'line': b"writing manifest file '../../build/arm_bringup/arm_bringup.egg-info/SOURCES.txt'\n"}
+[3.982862] (arm_bringup) StdoutLine: {'line': b'running build\n'}
+[3.988076] (arm_bringup) StdoutLine: {'line': b'running build_py\n'}
+[3.988365] (arm_description) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[3.988518] (arm_description) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_description/share/arm_description/urdf\n'}
+[3.988631] (arm_description) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_description/share/arm_description/meshes\n'}
+[3.988734] (arm_bringup) StdoutLine: {'line': b'creating /home/ibrahim/tasc_arm/build/arm_bringup/build\n'}
+[3.988844] (arm_bringup) StdoutLine: {'line': b'creating /home/ibrahim/tasc_arm/build/arm_bringup/build/lib\n'}
+[3.988953] (arm_bringup) StdoutLine: {'line': b'creating /home/ibrahim/tasc_arm/build/arm_bringup/build/lib/arm_bringup\n'}
+[3.989060] (arm_bringup) StdoutLine: {'line': b'copying arm_bringup/__init__.py -> /home/ibrahim/tasc_arm/build/arm_bringup/build/lib/arm_bringup\n'}
+[3.989164] (arm_bringup) StdoutLine: {'line': b'running install\n'}
+[3.989263] (arm_bringup) StdoutLine: {'line': b'running install_lib\n'}
+[3.989358] (arm_description) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_description/share/arm_description/package.dsv\n'}
+[3.989463] (arm_bringup) StdoutLine: {'line': b'creating /home/ibrahim/tasc_arm/install/arm_bringup/lib/python3.10/site-packages/arm_bringup\n'}
+[3.989566] (arm_bringup) StdoutLine: {'line': b'copying /home/ibrahim/tasc_arm/build/arm_bringup/build/lib/arm_bringup/__init__.py -> /home/ibrahim/tasc_arm/install/arm_bringup/lib/python3.10/site-packages/arm_bringup\n'}
+[3.989676] (arm_bringup) StdoutLine: {'line': b'byte-compiling /home/ibrahim/tasc_arm/install/arm_bringup/lib/python3.10/site-packages/arm_bringup/__init__.py to __init__.cpython-310.pyc\n'}
+[3.989772] (arm_bringup) StdoutLine: {'line': b'running install_data\n'}
+[3.989866] (arm_bringup) StdoutLine: {'line': b'copying resource/arm_bringup -> /home/ibrahim/tasc_arm/install/arm_bringup/share/ament_index/resource_index/packages\n'}
+[3.989975] (arm_bringup) StdoutLine: {'line': b'copying package.xml -> /home/ibrahim/tasc_arm/install/arm_bringup/share/arm_bringup\n'}
+[3.990074] (arm_bringup) StdoutLine: {'line': b'copying launch/bringup.launch.py -> /home/ibrahim/tasc_arm/install/arm_bringup/share/arm_bringup/launch\n'}
+[3.993751] (arm_bringup) StdoutLine: {'line': b'running install_egg_info\n'}
+[3.994490] (arm_bringup) StdoutLine: {'line': b'Copying ../../build/arm_bringup/arm_bringup.egg-info to /home/ibrahim/tasc_arm/install/arm_bringup/lib/python3.10/site-packages/arm_bringup-0.0.0-py3.10.egg-info\n'}
+[3.994661] (arm_bringup) StdoutLine: {'line': b'running install_scripts\n'}
+[3.996989] (arm_description) CommandEnded: {'returncode': 0}
+[4.055143] (arm_bringup) StdoutLine: {'line': b"writing list of installed files to '/home/ibrahim/tasc_arm/build/arm_bringup/install.log'\n"}
+[4.055847] (-) TimerEvent: {}
+[4.132935] (arm_description) JobEnded: {'identifier': 'arm_description', 'rc': 0}
+[4.136277] (phidgets_hardware) JobStarted: {'identifier': 'phidgets_hardware'}
+[4.136461] (arm_control) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_cyclonedds_cpp' as default\n"}
+[4.136707] (arm_2026) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_cyclonedds_cpp' as default\n"}
+[4.148954] (arm_bringup) CommandEnded: {'returncode': 0}
+[4.158777] (-) TimerEvent: {}
+[4.174227] (arm_bringup) JobEnded: {'identifier': 'arm_bringup', 'rc': 0}
+[4.180262] (arm_control) StdoutLine: {'line': b'-- Looking for pthread.h\n'}
+[4.189541] (phidgets_hardware) JobProgress: {'identifier': 'phidgets_hardware', 'progress': 'cmake'}
+[4.189650] (arm_2026) StdoutLine: {'line': b'-- Looking for pthread.h\n'}
+[4.190000] (phidgets_hardware) Command: {'cmd': ['/usr/bin/cmake', '/home/ibrahim/tasc_arm/src/phidgets_hardware', '-DCMAKE_INSTALL_PREFIX=/home/ibrahim/tasc_arm/install/phidgets_hardware'], 'cwd': '/home/ibrahim/tasc_arm/build/phidgets_hardware', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'ibrahim'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/ibrahim'), ('OLDPWD', '/home/ibrahim'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('DBUS_STARTER_BUS_TYPE', 'session'), ('SYSTEMD_EXEC_PID', '1245'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus,guid=e10dacedb7c01d73216b92b86a08afcf'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'ibrahim'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'ibrahim'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/ibrahim-virtual-machine:@/tmp/.ICE-unix/1245,unix/ibrahim-virtual-machine:/tmp/.ICE-unix/1245'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/31a6396c_0071_41ee_9383_2f6f31aafd38'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('RMW_IMPLEMENTATION', 'rmw_cyclonedds_cpp'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.BOQLP3'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.104'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('ROS_DOMAIN_ID', '1'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/ibrahim/tasc_arm/build/phidgets_hardware'), ('TURTLEBOT3_MODEL', 'waffle'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('DBUS_STARTER_ADDRESS', 'unix:path=/run/user/1000/bus,guid=e10dacedb7c01d73216b92b86a08afcf'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[4.259422] (-) TimerEvent: {}
+[4.355444] (phidgets_hardware) StdoutLine: {'line': b'-- The C compiler identification is GNU 11.4.0\n'}
+[4.359865] (-) TimerEvent: {}
+[4.435082] (arm_2026) StdoutLine: {'line': b'-- Looking for pthread.h - found\n'}
+[4.435911] (arm_2026) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD\n'}
+[4.449836] (arm_control) StdoutLine: {'line': b'-- Looking for pthread.h - found\n'}
+[4.450268] (arm_control) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD\n'}
+[4.461858] (-) TimerEvent: {}
+[4.499539] (phidgets_hardware) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 11.4.0\n'}
+[4.517074] (phidgets_hardware) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[4.564309] (-) TimerEvent: {}
+[4.592605] (arm_2026) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success\n'}
+[4.599688] (arm_2026) StdoutLine: {'line': b'-- Found Threads: TRUE  \n'}
+[4.629071] (arm_control) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success\n'}
+[4.635238] (arm_control) StdoutLine: {'line': b'-- Found Threads: TRUE  \n'}
+[4.664994] (-) TimerEvent: {}
+[4.698464] (phidgets_hardware) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[4.718394] (phidgets_hardware) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[4.718900] (phidgets_hardware) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[4.719194] (phidgets_hardware) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[4.724093] (phidgets_hardware) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[4.765173] (-) TimerEvent: {}
+[4.817766] (arm_2026) StdoutLine: {'line': b'-- Found rclcpp_lifecycle: 16.0.14 (/opt/ros/humble/share/rclcpp_lifecycle/cmake)\n'}
+[4.822950] (arm_control) StdoutLine: {'line': b'-- Found rclcpp_lifecycle: 16.0.14 (/opt/ros/humble/share/rclcpp_lifecycle/cmake)\n'}
+[4.866426] (-) TimerEvent: {}
+[4.926076] (phidgets_hardware) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[4.937477] (phidgets_hardware) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[4.939845] (phidgets_hardware) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[4.940232] (phidgets_hardware) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[4.944460] (phidgets_hardware) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[4.945765] (arm_control) StdoutLine: {'line': b'-- Found hardware_interface: 2.51.0 (/opt/ros/humble/share/hardware_interface/cmake)\n'}
+[4.946555] (arm_2026) StdoutLine: {'line': b'-- Found hardware_interface: 2.51.0 (/opt/ros/humble/share/hardware_interface/cmake)\n'}
+[4.967351] (-) TimerEvent: {}
+[5.071936] (-) TimerEvent: {}
+[5.173375] (-) TimerEvent: {}
+[5.265696] (phidgets_hardware) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter \n'}
+[5.277838] (-) TimerEvent: {}
+[5.378581] (-) TimerEvent: {}
+[5.461079] (phidgets_hardware) StdoutLine: {'line': b'-- Found rclcpp: 16.0.14 (/opt/ros/humble/share/rclcpp/cmake)\n'}
+[5.482622] (-) TimerEvent: {}
+[5.513010] (arm_2026) StdoutLine: {'line': b'-- Found controller_manager: 2.51.0 (/opt/ros/humble/share/controller_manager/cmake)\n'}
+[5.550585] (phidgets_hardware) StdoutLine: {'line': b'-- Found rosidl_generator_c: 3.1.7 (/opt/ros/humble/share/rosidl_generator_c/cmake)\n'}
+[5.566569] (phidgets_hardware) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.7 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[5.585639] (phidgets_hardware) StdoutLine: {'line': b'-- Found rosidl_generator_cpp: 3.1.7 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)\n'}
+[5.586086] (-) TimerEvent: {}
+[5.609709] (phidgets_hardware) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[5.654125] (phidgets_hardware) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[5.680648] (arm_control) StdoutLine: {'line': b'-- Configuring done\n'}
+[5.686419] (-) TimerEvent: {}
+[5.700492] (arm_2026) StdoutLine: {'line': b'-- Found robot_state_publisher: 3.0.3 (/opt/ros/humble/share/robot_state_publisher/cmake)\n'}
+[5.761578] (arm_2026) StdoutLine: {'line': b'-- Found eigen3_cmake_module: 0.1.1 (/opt/ros/humble/share/eigen3_cmake_module/cmake)\n'}
+[5.767517] (phidgets_hardware) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)\n'}
+[5.768355] (arm_2026) StdoutLine: {'line': b'-- Found Eigen3: TRUE (found version "3.4.0") \n'}
+[5.768780] (arm_2026) StdoutLine: {'line': b'-- Ensuring Eigen3 include directory is part of orocos-kdl CMake target\n'}
+[5.772036] (phidgets_hardware) StdoutLine: {'line': b'-- Found rmw_cyclonedds_cpp: 1.3.4 (/opt/ros/humble/share/rmw_cyclonedds_cpp/cmake)\n'}
+[5.786997] (-) TimerEvent: {}
+[5.811864] (phidgets_hardware) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_cyclonedds_cpp' as default\n"}
+[5.836983] (phidgets_hardware) StdoutLine: {'line': b'-- Looking for pthread.h\n'}
+[5.887377] (-) TimerEvent: {}
+[5.967431] (arm_control) StdoutLine: {'line': b'-- Generating done\n'}
+[5.978625] (arm_control) StdoutLine: {'line': b'-- Build files have been written to: /home/ibrahim/tasc_arm/build/arm_control\n'}
+[5.988938] (-) TimerEvent: {}
+[6.008599] (arm_control) CommandEnded: {'returncode': 0}
+[6.009340] (arm_control) JobProgress: {'identifier': 'arm_control', 'progress': 'build'}
+[6.009387] (arm_control) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/ibrahim/tasc_arm/build/arm_control', '--', '-j4', '-l4'], 'cwd': '/home/ibrahim/tasc_arm/build/arm_control', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'ibrahim'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/ibrahim'), ('OLDPWD', '/home/ibrahim'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('DBUS_STARTER_BUS_TYPE', 'session'), ('SYSTEMD_EXEC_PID', '1245'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus,guid=e10dacedb7c01d73216b92b86a08afcf'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'ibrahim'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'ibrahim'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/ibrahim-virtual-machine:@/tmp/.ICE-unix/1245,unix/ibrahim-virtual-machine:/tmp/.ICE-unix/1245'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/31a6396c_0071_41ee_9383_2f6f31aafd38'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('RMW_IMPLEMENTATION', 'rmw_cyclonedds_cpp'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.BOQLP3'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.104'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('ROS_DOMAIN_ID', '1'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/ibrahim/tasc_arm/build/arm_control'), ('TURTLEBOT3_MODEL', 'waffle'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('DBUS_STARTER_ADDRESS', 'unix:path=/run/user/1000/bus,guid=e10dacedb7c01d73216b92b86a08afcf'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[6.067559] (phidgets_hardware) StdoutLine: {'line': b'-- Looking for pthread.h - found\n'}
+[6.067983] (phidgets_hardware) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD\n'}
+[6.090861] (-) TimerEvent: {}
+[6.147755] (arm_control) StdoutLine: {'line': b'[ 50%] \x1b[32mBuilding CXX object CMakeFiles/arm_control.dir/src/mini_arm_hardware.cpp.o\x1b[0m\n'}
+[6.186407] (arm_2026) StdoutLine: {'line': b'-- Found xacro: 2.0.13 (/opt/ros/humble/share/xacro/cmake)\n'}
+[6.192544] (-) TimerEvent: {}
+[6.264526] (phidgets_hardware) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success\n'}
+[6.269927] (phidgets_hardware) StdoutLine: {'line': b'-- Found Threads: TRUE  \n'}
+[6.294852] (-) TimerEvent: {}
+[6.396645] (-) TimerEvent: {}
+[6.401580] (arm_2026) StdoutLine: {'line': b'-- Configuring done\n'}
+[6.420790] (phidgets_hardware) StdoutLine: {'line': b'-- Found hardware_interface: 2.51.0 (/opt/ros/humble/share/hardware_interface/cmake)\n'}
+[6.479619] (arm_2026) StdoutLine: {'line': b'-- Generating done\n'}
+[6.493627] (arm_2026) StdoutLine: {'line': b'-- Build files have been written to: /home/ibrahim/tasc_arm/build/arm_2026\n'}
+[6.497654] (-) TimerEvent: {}
+[6.510374] (arm_2026) CommandEnded: {'returncode': 0}
+[6.513068] (arm_2026) JobProgress: {'identifier': 'arm_2026', 'progress': 'build'}
+[6.514210] (arm_2026) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/ibrahim/tasc_arm/build/arm_2026', '--', '-j4', '-l4'], 'cwd': '/home/ibrahim/tasc_arm/build/arm_2026', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'ibrahim'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/ibrahim'), ('OLDPWD', '/home/ibrahim'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('DBUS_STARTER_BUS_TYPE', 'session'), ('SYSTEMD_EXEC_PID', '1245'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus,guid=e10dacedb7c01d73216b92b86a08afcf'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'ibrahim'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'ibrahim'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/ibrahim-virtual-machine:@/tmp/.ICE-unix/1245,unix/ibrahim-virtual-machine:/tmp/.ICE-unix/1245'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/31a6396c_0071_41ee_9383_2f6f31aafd38'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('RMW_IMPLEMENTATION', 'rmw_cyclonedds_cpp'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.BOQLP3'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.104'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('ROS_DOMAIN_ID', '1'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/ibrahim/tasc_arm/build/arm_2026'), ('TURTLEBOT3_MODEL', 'waffle'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('DBUS_STARTER_ADDRESS', 'unix:path=/run/user/1000/bus,guid=e10dacedb7c01d73216b92b86a08afcf'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[6.601894] (-) TimerEvent: {}
+[6.674162] (arm_2026) StdoutLine: {'line': b'[ 25%] \x1b[32mBuilding CXX object CMakeFiles/arm_2026.dir/src/arm_2026_system.cpp.o\x1b[0m\n'}
+[6.683025] (arm_2026) StdoutLine: {'line': b'[ 50%] \x1b[32mBuilding CXX object CMakeFiles/arm_2026_keyboard_teleop.dir/arm_2026/keyboard_teleop.cpp.o\x1b[0m\n'}
+[6.702305] (-) TimerEvent: {}
+[6.803082] (-) TimerEvent: {}
+[6.826202] (phidgets_hardware) StdoutLine: {'line': b'-- Found controller_manager: 2.51.0 (/opt/ros/humble/share/controller_manager/cmake)\n'}
+[6.904610] (-) TimerEvent: {}
+[7.006618] (-) TimerEvent: {}
+[7.110613] (-) TimerEvent: {}
+[7.119533] (phidgets_hardware) StdoutLine: {'line': b'-- Configuring done\n'}
+[7.179835] (phidgets_hardware) StdoutLine: {'line': b'-- Generating done\n'}
+[7.188228] (phidgets_hardware) StdoutLine: {'line': b'-- Build files have been written to: /home/ibrahim/tasc_arm/build/phidgets_hardware\n'}
+[7.211114] (-) TimerEvent: {}
+[7.229294] (phidgets_hardware) CommandEnded: {'returncode': 0}
+[7.230844] (phidgets_hardware) JobProgress: {'identifier': 'phidgets_hardware', 'progress': 'build'}
+[7.230979] (phidgets_hardware) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/ibrahim/tasc_arm/build/phidgets_hardware', '--', '-j4', '-l4'], 'cwd': '/home/ibrahim/tasc_arm/build/phidgets_hardware', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'ibrahim'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/ibrahim'), ('OLDPWD', '/home/ibrahim'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('DBUS_STARTER_BUS_TYPE', 'session'), ('SYSTEMD_EXEC_PID', '1245'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus,guid=e10dacedb7c01d73216b92b86a08afcf'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'ibrahim'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'ibrahim'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/ibrahim-virtual-machine:@/tmp/.ICE-unix/1245,unix/ibrahim-virtual-machine:/tmp/.ICE-unix/1245'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/31a6396c_0071_41ee_9383_2f6f31aafd38'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('RMW_IMPLEMENTATION', 'rmw_cyclonedds_cpp'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.BOQLP3'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.104'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('ROS_DOMAIN_ID', '1'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/ibrahim/tasc_arm/build/phidgets_hardware'), ('TURTLEBOT3_MODEL', 'waffle'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('DBUS_STARTER_ADDRESS', 'unix:path=/run/user/1000/bus,guid=e10dacedb7c01d73216b92b86a08afcf'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[7.311868] (-) TimerEvent: {}
+[7.369218] (phidgets_hardware) StdoutLine: {'line': b'[ 50%] \x1b[32mBuilding CXX object CMakeFiles/phidgets_hardware.dir/src/phidgets_stepper_hardware.cpp.o\x1b[0m\n'}
+[7.413041] (-) TimerEvent: {}
+[7.513824] (-) TimerEvent: {}
+[7.618573] (-) TimerEvent: {}
+[7.719665] (-) TimerEvent: {}
+[7.820592] (-) TimerEvent: {}
+[7.924970] (-) TimerEvent: {}
+[8.026591] (-) TimerEvent: {}
+[8.128767] (-) TimerEvent: {}
+[8.231195] (-) TimerEvent: {}
+[8.334217] (-) TimerEvent: {}
+[8.435469] (-) TimerEvent: {}
+[8.540636] (-) TimerEvent: {}
+[8.642198] (-) TimerEvent: {}
+[8.743134] (-) TimerEvent: {}
+[8.843938] (-) TimerEvent: {}
+[8.944772] (-) TimerEvent: {}
+[9.052249] (-) TimerEvent: {}
+[9.154468] (-) TimerEvent: {}
+[9.255503] (-) TimerEvent: {}
+[9.356306] (-) TimerEvent: {}
+[9.458143] (-) TimerEvent: {}
+[9.561336] (-) TimerEvent: {}
+[9.664233] (-) TimerEvent: {}
+[9.765234] (-) TimerEvent: {}
+[9.866014] (-) TimerEvent: {}
+[9.969269] (-) TimerEvent: {}
+[10.071195] (-) TimerEvent: {}
+[10.173554] (-) TimerEvent: {}
+[10.274526] (-) TimerEvent: {}
+[10.375463] (-) TimerEvent: {}
+[10.477685] (-) TimerEvent: {}
+[10.580959] (-) TimerEvent: {}
+[10.682572] (-) TimerEvent: {}
+[10.784461] (-) TimerEvent: {}
+[10.887764] (-) TimerEvent: {}
+[10.990326] (-) TimerEvent: {}
+[11.091660] (-) TimerEvent: {}
+[11.192844] (-) TimerEvent: {}
+[11.295755] (-) TimerEvent: {}
+[11.396708] (-) TimerEvent: {}
+[11.497710] (-) TimerEvent: {}
+[11.599895] (-) TimerEvent: {}
+[11.704289] (-) TimerEvent: {}
+[11.805433] (-) TimerEvent: {}
+[11.906346] (-) TimerEvent: {}
+[12.007127] (-) TimerEvent: {}
+[12.107955] (-) TimerEvent: {}
+[12.211777] (-) TimerEvent: {}
+[12.312688] (-) TimerEvent: {}
+[12.413976] (-) TimerEvent: {}
+[12.514808] (-) TimerEvent: {}
+[12.618662] (-) TimerEvent: {}
+[12.719559] (-) TimerEvent: {}
+[12.820893] (-) TimerEvent: {}
+[12.924414] (-) TimerEvent: {}
+[13.025171] (-) TimerEvent: {}
+[13.125844] (-) TimerEvent: {}
+[13.229747] (-) TimerEvent: {}
+[13.331858] (-) TimerEvent: {}
+[13.434736] (-) TimerEvent: {}
+[13.536252] (-) TimerEvent: {}
+[13.639002] (-) TimerEvent: {}
+[13.740403] (-) TimerEvent: {}
+[13.843653] (-) TimerEvent: {}
+[13.944260] (-) TimerEvent: {}
+[14.050513] (-) TimerEvent: {}
+[14.157059] (-) TimerEvent: {}
+[14.258503] (-) TimerEvent: {}
+[14.359911] (-) TimerEvent: {}
+[14.464530] (-) TimerEvent: {}
+[14.565760] (-) TimerEvent: {}
+[14.666495] (-) TimerEvent: {}
+[14.768910] (-) TimerEvent: {}
+[14.870578] (-) TimerEvent: {}
+[14.973154] (-) TimerEvent: {}
+[15.076872] (-) TimerEvent: {}
+[15.178046] (-) TimerEvent: {}
+[15.279578] (-) TimerEvent: {}
+[15.381919] (-) TimerEvent: {}
+[15.483821] (-) TimerEvent: {}
+[15.586893] (-) TimerEvent: {}
+[15.687709] (-) TimerEvent: {}
+[15.788966] (-) TimerEvent: {}
+[15.894299] (-) TimerEvent: {}
+[15.995322] (-) TimerEvent: {}
+[16.096595] (-) TimerEvent: {}
+[16.198721] (-) TimerEvent: {}
+[16.304272] (-) TimerEvent: {}
+[16.408741] (-) TimerEvent: {}
+[16.509699] (-) TimerEvent: {}
+[16.610553] (-) TimerEvent: {}
+[16.711789] (-) TimerEvent: {}
+[16.813144] (-) TimerEvent: {}
+[16.914211] (-) TimerEvent: {}
+[17.015557] (-) TimerEvent: {}
+[17.119244] (-) TimerEvent: {}
+[17.220472] (-) TimerEvent: {}
+[17.324733] (-) TimerEvent: {}
+[17.429408] (-) TimerEvent: {}
+[17.530775] (-) TimerEvent: {}
+[17.631817] (-) TimerEvent: {}
+[17.735553] (-) TimerEvent: {}
+[17.836318] (-) TimerEvent: {}
+[17.937003] (-) TimerEvent: {}
+[18.037939] (-) TimerEvent: {}
+[18.139801] (-) TimerEvent: {}
+[18.244196] (-) TimerEvent: {}
+[18.344897] (-) TimerEvent: {}
+[18.449978] (-) TimerEvent: {}
+[18.551081] (-) TimerEvent: {}
+[18.652300] (-) TimerEvent: {}
+[18.755602] (-) TimerEvent: {}
+[18.856789] (-) TimerEvent: {}
+[18.958786] (-) TimerEvent: {}
+[19.060149] (-) TimerEvent: {}
+[19.162073] (-) TimerEvent: {}
+[19.265654] (-) TimerEvent: {}
+[19.366468] (-) TimerEvent: {}
+[19.468291] (-) TimerEvent: {}
+[19.572270] (-) TimerEvent: {}
+[19.673143] (-) TimerEvent: {}
+[19.777172] (-) TimerEvent: {}
+[19.878165] (-) TimerEvent: {}
+[19.981762] (-) TimerEvent: {}
+[20.082582] (-) TimerEvent: {}
+[20.185069] (-) TimerEvent: {}
+[20.286449] (-) TimerEvent: {}
+[20.390277] (-) TimerEvent: {}
+[20.491316] (-) TimerEvent: {}
+[20.592327] (-) TimerEvent: {}
+[20.695402] (-) TimerEvent: {}
+[20.796072] (-) TimerEvent: {}
+[20.896904] (-) TimerEvent: {}
+[21.000404] (-) TimerEvent: {}
+[21.101196] (-) TimerEvent: {}
+[21.201998] (-) TimerEvent: {}
+[21.304909] (-) TimerEvent: {}
+[21.405810] (-) TimerEvent: {}
+[21.509155] (-) TimerEvent: {}
+[21.610292] (-) TimerEvent: {}
+[21.711387] (-) TimerEvent: {}
+[21.814560] (-) TimerEvent: {}
+[21.917587] (-) TimerEvent: {}
+[22.018590] (-) TimerEvent: {}
+[22.119569] (-) TimerEvent: {}
+[22.220442] (-) TimerEvent: {}
+[22.322379] (-) TimerEvent: {}
+[22.425338] (-) TimerEvent: {}
+[22.526613] (-) TimerEvent: {}
+[22.628759] (-) TimerEvent: {}
+[22.732849] (-) TimerEvent: {}
+[22.833756] (-) TimerEvent: {}
+[22.934549] (-) TimerEvent: {}
+[23.036825] (-) TimerEvent: {}
+[23.139259] (-) TimerEvent: {}
+[23.240809] (-) TimerEvent: {}
+[23.343057] (-) TimerEvent: {}
+[23.444698] (-) TimerEvent: {}
+[23.547694] (-) TimerEvent: {}
+[23.649605] (-) TimerEvent: {}
+[23.751448] (-) TimerEvent: {}
+[23.852308] (-) TimerEvent: {}
+[23.953463] (-) TimerEvent: {}
+[24.054508] (-) TimerEvent: {}
+[24.156912] (-) TimerEvent: {}
+[24.260768] (-) TimerEvent: {}
+[24.366390] (-) TimerEvent: {}
+[24.467061] (-) TimerEvent: {}
+[24.567963] (-) TimerEvent: {}
+[24.672387] (-) TimerEvent: {}
+[24.778578] (-) TimerEvent: {}
+[24.879477] (-) TimerEvent: {}
+[24.981583] (-) TimerEvent: {}
+[25.082774] (-) TimerEvent: {}
+[25.187035] (-) TimerEvent: {}
+[25.292323] (-) TimerEvent: {}
+[25.393313] (-) TimerEvent: {}
+[25.495377] (-) TimerEvent: {}
+[25.596609] (-) TimerEvent: {}
+[25.700603] (-) TimerEvent: {}
+[25.801736] (-) TimerEvent: {}
+[25.905085] (-) TimerEvent: {}
+[26.005801] (-) TimerEvent: {}
+[26.111162] (-) TimerEvent: {}
+[26.215282] (-) TimerEvent: {}
+[26.320968] (-) TimerEvent: {}
+[26.421750] (-) TimerEvent: {}
+[26.524672] (-) TimerEvent: {}
+[26.625844] (-) TimerEvent: {}
+[26.729595] (-) TimerEvent: {}
+[26.830727] (-) TimerEvent: {}
+[26.935244] (-) TimerEvent: {}
+[27.037456] (-) TimerEvent: {}
+[27.138660] (-) TimerEvent: {}
+[27.241327] (-) TimerEvent: {}
+[27.342924] (-) TimerEvent: {}
+[27.446016] (-) TimerEvent: {}
+[27.551364] (-) TimerEvent: {}
+[27.652344] (-) TimerEvent: {}
+[27.753039] (-) TimerEvent: {}
+[27.859031] (-) TimerEvent: {}
+[27.959847] (-) TimerEvent: {}
+[28.063285] (-) TimerEvent: {}
+[28.164624] (-) TimerEvent: {}
+[28.267898] (-) TimerEvent: {}
+[28.370089] (-) TimerEvent: {}
+[28.471495] (-) TimerEvent: {}
+[28.574715] (-) TimerEvent: {}
+[28.675757] (-) TimerEvent: {}
+[28.777509] (-) TimerEvent: {}
+[28.881838] (-) TimerEvent: {}
+[28.983051] (-) TimerEvent: {}
+[29.089364] (-) TimerEvent: {}
+[29.190613] (-) TimerEvent: {}
+[29.292019] (-) TimerEvent: {}
+[29.392863] (-) TimerEvent: {}
+[29.494161] (-) TimerEvent: {}
+[29.595387] (-) TimerEvent: {}
+[29.698391] (-) TimerEvent: {}
+[29.800425] (-) TimerEvent: {}
+[29.903867] (-) TimerEvent: {}
+[30.009753] (-) TimerEvent: {}
+[30.110914] (-) TimerEvent: {}
+[30.215096] (-) TimerEvent: {}
+[30.317041] (-) TimerEvent: {}
+[30.420328] (-) TimerEvent: {}
+[30.521349] (-) TimerEvent: {}
+[30.624392] (-) TimerEvent: {}
+[30.725244] (-) TimerEvent: {}
+[30.828829] (-) TimerEvent: {}
+[30.930152] (-) TimerEvent: {}
+[31.032802] (-) TimerEvent: {}
+[31.134083] (-) TimerEvent: {}
+[31.237219] (-) TimerEvent: {}
+[31.337946] (-) TimerEvent: {}
+[31.438705] (-) TimerEvent: {}
+[31.542957] (-) TimerEvent: {}
+[31.644053] (-) TimerEvent: {}
+[31.745108] (-) TimerEvent: {}
+[31.846829] (-) TimerEvent: {}
+[31.950406] (-) TimerEvent: {}
+[32.051281] (-) TimerEvent: {}
+[32.152139] (-) TimerEvent: {}
+[32.255649] (-) TimerEvent: {}
+[32.360947] (-) TimerEvent: {}
+[32.464018] (-) TimerEvent: {}
+[32.565410] (-) TimerEvent: {}
+[32.666939] (-) TimerEvent: {}
+[32.770193] (-) TimerEvent: {}
+[32.871100] (-) TimerEvent: {}
+[32.972274] (-) TimerEvent: {}
+[33.073696] (-) TimerEvent: {}
+[33.176537] (-) TimerEvent: {}
+[33.277729] (-) TimerEvent: {}
+[33.380235] (-) TimerEvent: {}
+[33.480981] (-) TimerEvent: {}
+[33.584943] (-) TimerEvent: {}
+[33.685799] (-) TimerEvent: {}
+[33.786901] (-) TimerEvent: {}
+[33.889539] (-) TimerEvent: {}
+[33.991402] (-) TimerEvent: {}
+[34.092067] (-) TimerEvent: {}
+[34.193370] (-) TimerEvent: {}
+[34.299362] (-) TimerEvent: {}
+[34.402342] (-) TimerEvent: {}
+[34.503299] (-) TimerEvent: {}
+[34.604115] (-) TimerEvent: {}
+[34.706436] (-) TimerEvent: {}
+[34.807631] (-) TimerEvent: {}
+[34.911584] (-) TimerEvent: {}
+[35.013929] (-) TimerEvent: {}
+[35.114655] (-) TimerEvent: {}
+[35.218953] (-) TimerEvent: {}
+[35.319995] (-) TimerEvent: {}
+[35.421362] (-) TimerEvent: {}
+[35.522495] (-) TimerEvent: {}
+[35.624133] (-) TimerEvent: {}
+[35.725343] (-) TimerEvent: {}
+[35.830443] (-) TimerEvent: {}
+[35.931747] (-) TimerEvent: {}
+[36.032602] (-) TimerEvent: {}
+[36.135610] (-) TimerEvent: {}
+[36.236562] (-) TimerEvent: {}
+[36.339293] (-) TimerEvent: {}
+[36.440968] (-) TimerEvent: {}
+[36.543885] (-) TimerEvent: {}
+[36.644574] (-) TimerEvent: {}
+[36.745494] (-) TimerEvent: {}
+[36.850685] (-) TimerEvent: {}
+[36.951344] (-) TimerEvent: {}
+[37.054671] (-) TimerEvent: {}
+[37.155728] (-) TimerEvent: {}
+[37.256489] (-) TimerEvent: {}
+[37.266522] (phidgets_hardware) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX shared library libphidgets_hardware.so\x1b[0m\n'}
+[37.358667] (-) TimerEvent: {}
+[37.462938] (-) TimerEvent: {}
+[37.567725] (-) TimerEvent: {}
+[37.668838] (-) TimerEvent: {}
+[37.770735] (-) TimerEvent: {}
+[37.872183] (-) TimerEvent: {}
+[37.973236] (-) TimerEvent: {}
+[38.076644] (-) TimerEvent: {}
+[38.179512] (-) TimerEvent: {}
+[38.285319] (-) TimerEvent: {}
+[38.386199] (-) TimerEvent: {}
+[38.435013] (phidgets_hardware) StdoutLine: {'line': b'[100%] Built target phidgets_hardware\n'}
+[38.474644] (phidgets_hardware) CommandEnded: {'returncode': 0}
+[38.475560] (phidgets_hardware) JobProgress: {'identifier': 'phidgets_hardware', 'progress': 'install'}
+[38.475633] (phidgets_hardware) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/ibrahim/tasc_arm/build/phidgets_hardware'], 'cwd': '/home/ibrahim/tasc_arm/build/phidgets_hardware', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'ibrahim'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/ibrahim'), ('OLDPWD', '/home/ibrahim'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('DBUS_STARTER_BUS_TYPE', 'session'), ('SYSTEMD_EXEC_PID', '1245'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus,guid=e10dacedb7c01d73216b92b86a08afcf'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'ibrahim'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'ibrahim'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/ibrahim-virtual-machine:@/tmp/.ICE-unix/1245,unix/ibrahim-virtual-machine:/tmp/.ICE-unix/1245'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/31a6396c_0071_41ee_9383_2f6f31aafd38'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('RMW_IMPLEMENTATION', 'rmw_cyclonedds_cpp'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.BOQLP3'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.104'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('ROS_DOMAIN_ID', '1'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/ibrahim/tasc_arm/build/phidgets_hardware'), ('TURTLEBOT3_MODEL', 'waffle'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('DBUS_STARTER_ADDRESS', 'unix:path=/run/user/1000/bus,guid=e10dacedb7c01d73216b92b86a08afcf'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[38.487050] (-) TimerEvent: {}
+[38.501281] (phidgets_hardware) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[38.501698] (phidgets_hardware) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/phidgets_hardware_plugin.xml\n'}
+[38.501864] (phidgets_hardware) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/phidgets_hardware/lib/libphidgets_hardware.so\n'}
+[38.502439] (phidgets_hardware) StdoutLine: {'line': b'-- Set runtime path of "/home/ibrahim/tasc_arm/install/phidgets_hardware/lib/libphidgets_hardware.so" to ""\n'}
+[38.502751] (phidgets_hardware) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/include\n'}
+[38.502889] (phidgets_hardware) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/include/phidgets_hardware\n'}
+[38.503067] (phidgets_hardware) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/phidgets_hardware/include/phidgets_hardware/phidgets_stepper_hardware.hpp\n'}
+[38.503410] (phidgets_hardware) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/description\n'}
+[38.503529] (phidgets_hardware) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/description/phidgets_single_motor.urdf.xacro\n'}
+[38.503806] (phidgets_hardware) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/config\n'}
+[38.503976] (phidgets_hardware) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/config/ros2_control_controllers.yaml\n'}
+[38.504240] (phidgets_hardware) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/launch\n'}
+[38.504374] (phidgets_hardware) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/launch/bringup_single_motor.launch.py\n'}
+[38.504653] (phidgets_hardware) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/phidgets_hardware_plugin.xml\n'}
+[38.504940] (phidgets_hardware) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/phidgets_hardware/lib/phidgets_hardware/keyboard_teleop.py\n'}
+[38.505233] (phidgets_hardware) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/phidgets_hardware/lib/phidgets_hardware/logitech_teleop.py\n'}
+[38.505534] (phidgets_hardware) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/phidgets_hardware/lib/phidgets_hardware/ps5_teleop.py\n'}
+[38.508049] (phidgets_hardware) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/ament_index/resource_index/package_run_dependencies/phidgets_hardware\n'}
+[38.508374] (phidgets_hardware) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/ament_index/resource_index/parent_prefix_path/phidgets_hardware\n'}
+[38.508777] (phidgets_hardware) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/environment/ament_prefix_path.sh\n'}
+[38.509099] (phidgets_hardware) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/environment/ament_prefix_path.dsv\n'}
+[38.509451] (phidgets_hardware) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/environment/path.sh\n'}
+[38.509853] (phidgets_hardware) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/environment/path.dsv\n'}
+[38.513259] (phidgets_hardware) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/local_setup.bash\n'}
+[38.513503] (phidgets_hardware) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/local_setup.sh\n'}
+[38.513629] (phidgets_hardware) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/local_setup.zsh\n'}
+[38.513728] (phidgets_hardware) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/local_setup.dsv\n'}
+[38.513823] (phidgets_hardware) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/package.dsv\n'}
+[38.513937] (phidgets_hardware) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/ament_index/resource_index/packages/phidgets_hardware\n'}
+[38.514033] (phidgets_hardware) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/ament_index/resource_index/hardware_interface__pluginlib__plugin/phidgets_hardware\n'}
+[38.514130] (phidgets_hardware) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/cmake/phidgets_hardwareConfig.cmake\n'}
+[38.514220] (phidgets_hardware) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/cmake/phidgets_hardwareConfig-version.cmake\n'}
+[38.514312] (phidgets_hardware) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/phidgets_hardware/share/phidgets_hardware/package.xml\n'}
+[38.527903] (phidgets_hardware) CommandEnded: {'returncode': 0}
+[38.589984] (-) TimerEvent: {}
+[38.652061] (phidgets_hardware) JobEnded: {'identifier': 'phidgets_hardware', 'rc': 0}
+[38.690202] (-) TimerEvent: {}
+[38.791061] (-) TimerEvent: {}
+[38.892700] (-) TimerEvent: {}
+[38.995453] (-) TimerEvent: {}
+[39.097188] (-) TimerEvent: {}
+[39.199782] (-) TimerEvent: {}
+[39.303639] (-) TimerEvent: {}
+[39.406972] (-) TimerEvent: {}
+[39.509164] (-) TimerEvent: {}
+[39.614786] (-) TimerEvent: {}
+[39.716284] (-) TimerEvent: {}
+[39.817440] (-) TimerEvent: {}
+[39.918143] (-) TimerEvent: {}
+[40.019341] (-) TimerEvent: {}
+[40.122078] (-) TimerEvent: {}
+[40.223176] (-) TimerEvent: {}
+[40.328723] (-) TimerEvent: {}
+[40.430952] (-) TimerEvent: {}
+[40.532164] (-) TimerEvent: {}
+[40.633379] (-) TimerEvent: {}
+[40.736294] (-) TimerEvent: {}
+[40.838797] (-) TimerEvent: {}
+[40.940450] (-) TimerEvent: {}
+[41.042560] (-) TimerEvent: {}
+[41.143980] (-) TimerEvent: {}
+[41.248556] (-) TimerEvent: {}
+[41.350350] (-) TimerEvent: {}
+[41.451492] (-) TimerEvent: {}
+[41.552399] (-) TimerEvent: {}
+[41.659095] (-) TimerEvent: {}
+[41.681597] (arm_control) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX shared library libarm_control.so\x1b[0m\n'}
+[41.761146] (-) TimerEvent: {}
+[41.862752] (-) TimerEvent: {}
+[41.964144] (-) TimerEvent: {}
+[42.066529] (-) TimerEvent: {}
+[42.172221] (-) TimerEvent: {}
+[42.273684] (-) TimerEvent: {}
+[42.374599] (-) TimerEvent: {}
+[42.379810] (arm_control) StdoutLine: {'line': b'[100%] Built target arm_control\n'}
+[42.416115] (arm_control) CommandEnded: {'returncode': 0}
+[42.422528] (arm_control) JobProgress: {'identifier': 'arm_control', 'progress': 'install'}
+[42.422630] (arm_control) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/ibrahim/tasc_arm/build/arm_control'], 'cwd': '/home/ibrahim/tasc_arm/build/arm_control', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'ibrahim'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/ibrahim'), ('OLDPWD', '/home/ibrahim'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('DBUS_STARTER_BUS_TYPE', 'session'), ('SYSTEMD_EXEC_PID', '1245'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus,guid=e10dacedb7c01d73216b92b86a08afcf'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'ibrahim'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'ibrahim'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/ibrahim-virtual-machine:@/tmp/.ICE-unix/1245,unix/ibrahim-virtual-machine:/tmp/.ICE-unix/1245'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/31a6396c_0071_41ee_9383_2f6f31aafd38'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('RMW_IMPLEMENTATION', 'rmw_cyclonedds_cpp'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.BOQLP3'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.104'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('ROS_DOMAIN_ID', '1'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/ibrahim/tasc_arm/build/arm_control'), ('TURTLEBOT3_MODEL', 'waffle'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('DBUS_STARTER_ADDRESS', 'unix:path=/run/user/1000/bus,guid=e10dacedb7c01d73216b92b86a08afcf'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[42.453462] (arm_control) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[42.453914] (arm_control) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_control/share/arm_control/plugin.xml\n'}
+[42.455367] (arm_control) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_control/lib/libarm_control.so\n'}
+[42.458225] (arm_control) StdoutLine: {'line': b'-- Set runtime path of "/home/ibrahim/tasc_arm/install/arm_control/lib/libarm_control.so" to ""\n'}
+[42.458490] (arm_control) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_control/include\n'}
+[42.458660] (arm_control) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_control/include/arm_control\n'}
+[42.458831] (arm_control) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_control/share/arm_control/plugin.xml\n'}
+[42.458919] (arm_control) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_control/share/arm_control/config\n'}
+[42.459003] (arm_control) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_control/share/arm_control/config/controllers.yaml\n'}
+[42.459074] (arm_control) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control/keyboard_teleop.py\n'}
+[42.459192] (arm_control) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control/keyboard_cartesian_ik_teleop.py\n'}
+[42.459268] (arm_control) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control/ps5_arm_teleop.py\n'}
+[42.459339] (arm_control) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control/ps5_cartesian_ik_teleop.py\n'}
+[42.459400] (arm_control) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control/logitech_joystick_ik.py\n'}
+[42.459457] (arm_control) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_control/lib/arm_control/joint_state_offset.py\n'}
+[42.460938] (arm_control) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_control/share/arm_control/package.dsv\n'}
+[42.461153] (arm_control) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_control/share/arm_control/package.xml\n'}
+[42.464673] (arm_control) CommandEnded: {'returncode': 0}
+[42.477718] (-) TimerEvent: {}
+[42.556268] (arm_control) JobEnded: {'identifier': 'arm_control', 'rc': 0}
+[42.579660] (-) TimerEvent: {}
+[42.680775] (-) TimerEvent: {}
+[42.786908] (-) TimerEvent: {}
+[42.888943] (-) TimerEvent: {}
+[42.989682] (-) TimerEvent: {}
+[43.090439] (-) TimerEvent: {}
+[43.191679] (-) TimerEvent: {}
+[43.294880] (-) TimerEvent: {}
+[43.395889] (-) TimerEvent: {}
+[43.497244] (-) TimerEvent: {}
+[43.598483] (-) TimerEvent: {}
+[43.699673] (-) TimerEvent: {}
+[43.800536] (-) TimerEvent: {}
+[43.901434] (-) TimerEvent: {}
+[44.004741] (-) TimerEvent: {}
+[44.105702] (-) TimerEvent: {}
+[44.206844] (-) TimerEvent: {}
+[44.309604] (-) TimerEvent: {}
+[44.413400] (-) TimerEvent: {}
+[44.517793] (-) TimerEvent: {}
+[44.619320] (-) TimerEvent: {}
+[44.723169] (-) TimerEvent: {}
+[44.824138] (-) TimerEvent: {}
+[44.927892] (-) TimerEvent: {}
+[45.031898] (-) TimerEvent: {}
+[45.136967] (-) TimerEvent: {}
+[45.238013] (-) TimerEvent: {}
+[45.343194] (-) TimerEvent: {}
+[45.448204] (-) TimerEvent: {}
+[45.550792] (-) TimerEvent: {}
+[45.652898] (-) TimerEvent: {}
+[45.753944] (-) TimerEvent: {}
+[45.855028] (-) TimerEvent: {}
+[45.956140] (-) TimerEvent: {}
+[46.057426] (-) TimerEvent: {}
+[46.158569] (-) TimerEvent: {}
+[46.259400] (-) TimerEvent: {}
+[46.360986] (-) TimerEvent: {}
+[46.461959] (-) TimerEvent: {}
+[46.562887] (-) TimerEvent: {}
+[46.663611] (-) TimerEvent: {}
+[46.765110] (-) TimerEvent: {}
+[46.865947] (-) TimerEvent: {}
+[46.966676] (-) TimerEvent: {}
+[47.068959] (-) TimerEvent: {}
+[47.174723] (-) TimerEvent: {}
+[47.276548] (-) TimerEvent: {}
+[47.383175] (-) TimerEvent: {}
+[47.487672] (-) TimerEvent: {}
+[47.589838] (-) TimerEvent: {}
+[47.690474] (-) TimerEvent: {}
+[47.791822] (-) TimerEvent: {}
+[47.893042] (-) TimerEvent: {}
+[47.994061] (-) TimerEvent: {}
+[48.095364] (-) TimerEvent: {}
+[48.196477] (-) TimerEvent: {}
+[48.297531] (-) TimerEvent: {}
+[48.400237] (-) TimerEvent: {}
+[48.501641] (-) TimerEvent: {}
+[48.602741] (-) TimerEvent: {}
+[48.703721] (-) TimerEvent: {}
+[48.804898] (-) TimerEvent: {}
+[48.905858] (-) TimerEvent: {}
+[49.006949] (-) TimerEvent: {}
+[49.108458] (-) TimerEvent: {}
+[49.211129] (-) TimerEvent: {}
+[49.312890] (-) TimerEvent: {}
+[49.414867] (-) TimerEvent: {}
+[49.516397] (-) TimerEvent: {}
+[49.627781] (-) TimerEvent: {}
+[49.736661] (-) TimerEvent: {}
+[49.837843] (-) TimerEvent: {}
+[49.940098] (-) TimerEvent: {}
+[50.044377] (-) TimerEvent: {}
+[50.146579] (-) TimerEvent: {}
+[50.273091] (-) TimerEvent: {}
+[50.375078] (-) TimerEvent: {}
+[50.476152] (-) TimerEvent: {}
+[50.577952] (-) TimerEvent: {}
+[50.682636] (-) TimerEvent: {}
+[50.786710] (-) TimerEvent: {}
+[50.888488] (-) TimerEvent: {}
+[50.989854] (-) TimerEvent: {}
+[51.090763] (-) TimerEvent: {}
+[51.201257] (-) TimerEvent: {}
+[51.303109] (-) TimerEvent: {}
+[51.409738] (-) TimerEvent: {}
+[51.515729] (-) TimerEvent: {}
+[51.617520] (-) TimerEvent: {}
+[51.718770] (-) TimerEvent: {}
+[51.821284] (-) TimerEvent: {}
+[51.922660] (-) TimerEvent: {}
+[52.023534] (-) TimerEvent: {}
+[52.124131] (-) TimerEvent: {}
+[52.143292] (arm_2026) StdoutLine: {'line': b'[ 75%] \x1b[32m\x1b[1mLinking CXX executable arm_2026_keyboard_teleop\x1b[0m\n'}
+[52.224573] (-) TimerEvent: {}
+[52.325896] (-) TimerEvent: {}
+[52.399876] (arm_2026) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX shared library libarm_2026.so\x1b[0m\n'}
+[52.428026] (-) TimerEvent: {}
+[52.529983] (-) TimerEvent: {}
+[52.631038] (-) TimerEvent: {}
+[52.732683] (-) TimerEvent: {}
+[52.835367] (-) TimerEvent: {}
+[52.937399] (-) TimerEvent: {}
+[53.041829] (-) TimerEvent: {}
+[53.137311] (arm_2026) StdoutLine: {'line': b'[100%] Built target arm_2026_keyboard_teleop\n'}
+[53.142528] (-) TimerEvent: {}
+[53.244306] (-) TimerEvent: {}
+[53.345823] (-) TimerEvent: {}
+[53.447155] (-) TimerEvent: {}
+[53.549433] (-) TimerEvent: {}
+[53.650914] (-) TimerEvent: {}
+[53.681704] (arm_2026) StdoutLine: {'line': b'[100%] Built target arm_2026\n'}
+[53.705568] (arm_2026) CommandEnded: {'returncode': 0}
+[53.707590] (arm_2026) JobProgress: {'identifier': 'arm_2026', 'progress': 'install'}
+[53.710319] (arm_2026) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/ibrahim/tasc_arm/build/arm_2026'], 'cwd': '/home/ibrahim/tasc_arm/build/arm_2026', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('LANGUAGE', 'en_CA:en'), ('USER', 'ibrahim'), ('XDG_SESSION_TYPE', 'wayland'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/ibrahim'), ('OLDPWD', '/home/ibrahim'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('DBUS_STARTER_BUS_TYPE', 'session'), ('SYSTEMD_EXEC_PID', '1245'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus,guid=e10dacedb7c01d73216b92b86a08afcf'), ('COLORTERM', 'truecolor'), ('IM_CONFIG_PHASE', '1'), ('WAYLAND_DISPLAY', 'wayland-0'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'ibrahim'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'ibrahim'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin'), ('SESSION_MANAGER', 'local/ibrahim-virtual-machine:@/tmp/.ICE-unix/1245,unix/ibrahim-virtual-machine:/tmp/.ICE-unix/1245'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/31a6396c_0071_41ee_9383_2f6f31aafd38'), ('GNOME_SETUP_DISPLAY', ':1'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('RMW_IMPLEMENTATION', 'rmw_cyclonedds_cpp'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/.mutter-Xwaylandauth.BOQLP3'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.104'), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('ROS_DOMAIN_ID', '1'), ('AMENT_PREFIX_PATH', '/opt/ros/humble'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/ibrahim/tasc_arm/build/arm_2026'), ('TURTLEBOT3_MODEL', 'waffle'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('DBUS_STARTER_ADDRESS', 'unix:path=/run/user/1000/bus,guid=e10dacedb7c01d73216b92b86a08afcf'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('COLCON', '1'), ('VTE_VERSION', '6800'), ('CMAKE_PREFIX_PATH', '/opt/ros/humble')]), 'shell': False}
+[53.722143] (arm_2026) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[53.723225] (arm_2026) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/plugin.xml\n'}
+[53.723522] (arm_2026) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/include\n'}
+[53.723670] (arm_2026) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/include/arm_2026\n'}
+[53.723807] (arm_2026) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/include/arm_2026/arm_2026_system.hpp\n'}
+[53.723938] (arm_2026) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/plugin.xml\n'}
+[53.724065] (arm_2026) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_2026/lib/libarm_2026.so\n'}
+[53.731115] (arm_2026) StdoutLine: {'line': b'-- Set runtime path of "/home/ibrahim/tasc_arm/install/arm_2026/lib/libarm_2026.so" to ""\n'}
+[53.731360] (arm_2026) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_2026/lib/arm_2026/arm_2026_keyboard_teleop\n'}
+[53.735526] (arm_2026) StdoutLine: {'line': b'-- Set runtime path of "/home/ibrahim/tasc_arm/install/arm_2026/lib/arm_2026/arm_2026_keyboard_teleop" to ""\n'}
+[53.735925] (arm_2026) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/description\n'}
+[53.736416] (arm_2026) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/description/arm_2026.urdf.xacro\n'}
+[53.736746] (arm_2026) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/config\n'}
+[53.737098] (arm_2026) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/config/controllers.yaml\n'}
+[53.737448] (arm_2026) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/launch\n'}
+[53.737739] (arm_2026) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/launch/bringup.launch.py\n'}
+[53.737863] (arm_2026) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/environment/library_path.sh\n'}
+[53.737991] (arm_2026) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/environment/library_path.dsv\n'}
+[53.738081] (arm_2026) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_2026/share/ament_index/resource_index/package_run_dependencies/arm_2026\n'}
+[53.738215] (arm_2026) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_2026/share/ament_index/resource_index/parent_prefix_path/arm_2026\n'}
+[53.738330] (arm_2026) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/environment/ament_prefix_path.sh\n'}
+[53.738427] (arm_2026) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/environment/ament_prefix_path.dsv\n'}
+[53.738511] (arm_2026) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/environment/path.sh\n'}
+[53.745041] (arm_2026) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/environment/path.dsv\n'}
+[53.745390] (arm_2026) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/local_setup.bash\n'}
+[53.745519] (arm_2026) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/local_setup.sh\n'}
+[53.745618] (arm_2026) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/local_setup.zsh\n'}
+[53.745714] (arm_2026) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/local_setup.dsv\n'}
+[53.745806] (arm_2026) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/package.dsv\n'}
+[53.745897] (arm_2026) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_2026/share/ament_index/resource_index/packages/arm_2026\n'}
+[53.745991] (arm_2026) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_2026/share/ament_index/resource_index/hardware_interface__pluginlib__plugin/arm_2026\n'}
+[53.746680] (arm_2026) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/cmake/export_arm_2026Export.cmake\n'}
+[53.750559] (arm_2026) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/cmake/export_arm_2026Export-noconfig.cmake\n'}
+[53.751150] (arm_2026) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/cmake/ament_cmake_export_targets-extras.cmake\n'}
+[53.751328] (-) TimerEvent: {}
+[53.752014] (arm_2026) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/cmake/ament_cmake_export_dependencies-extras.cmake\n'}
+[53.752500] (arm_2026) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/cmake/arm_2026Config.cmake\n'}
+[53.752964] (arm_2026) StdoutLine: {'line': b'-- Installing: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/cmake/arm_2026Config-version.cmake\n'}
+[53.753129] (arm_2026) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/tasc_arm/install/arm_2026/share/arm_2026/package.xml\n'}
+[53.759240] (arm_2026) CommandEnded: {'returncode': 0}
+[53.803232] (arm_2026) JobEnded: {'identifier': 'arm_2026', 'rc': 0}
+[53.805432] (-) EventReactorShutdown: {}

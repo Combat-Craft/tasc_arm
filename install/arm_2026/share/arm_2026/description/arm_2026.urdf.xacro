@@ -37,20 +37,28 @@
     </visual>
   </link>
 
+  <!-- Main wrist housing -->
   <link name="wrist_roll_link">
     <visual>
-      <origin xyz="0.08 0 0" rpy="0 0 0"/>
+      <origin xyz="0.025 0 0" rpy="0 0 0"/>
       <geometry>
-        <cylinder radius="0.02" length="0.16"/>
+        <box size="0.05 0.06 0.06"/>
+      </geometry>
+    </visual>
+    <visual>
+      <origin xyz="0.025 0 0" rpy="0 1.5708 0"/>
+      <geometry>
+        <cylinder radius="0.018" length="0.05"/>
       </geometry>
     </visual>
   </link>
 
+  <!-- Front/output wrist piece, attached very closely -->
   <link name="wrist_twist_link">
     <visual>
-      <origin xyz="0.06 0 0" rpy="0 0 0"/>
+      <origin xyz="0.02 0 0" rpy="0 0 0"/>
       <geometry>
-        <box size="0.12 0.025 0.025"/>
+        <box size="0.04 0.045 0.045"/>
       </geometry>
     </visual>
   </link>
@@ -63,10 +71,11 @@
     <limit lower="-3.14" upper="3.14" effort="10" velocity="1.0"/>
   </joint>
 
+  <!-- Zero position now starts 45 degrees upward -->
   <joint name="shoulder_extension" type="revolute">
     <parent link="base_link_1"/>
     <child link="shoulder_link"/>
-    <origin xyz="0 0 0.10" rpy="0 0 0"/>
+    <origin xyz="0 0 0.10" rpy="0 -0.785398 0"/>
     <axis xyz="0 1 0"/>
     <limit lower="-1.57" upper="1.57" effort="10" velocity="0.2"/>
   </joint>
@@ -79,19 +88,21 @@
     <limit lower="-1.57" upper="1.57" effort="10" velocity="0.2"/>
   </joint>
 
+  <!-- Wrist module starts at forearm tip -->
   <joint name="wrist_roll" type="revolute">
     <parent link="elbow_link"/>
     <child link="wrist_roll_link"/>
     <origin xyz="0.20 0 0" rpy="0 0 0"/>
-    <axis xyz="1 0 0"/>
+    <axis xyz="0 1 0"/>
     <limit lower="-1.57" upper="1.57" effort="10" velocity="0.5"/>
   </joint>
 
+  <!-- Twist joint is almost co-located with wrist housing -->
   <joint name="wrist_twist" type="revolute">
     <parent link="wrist_roll_link"/>
     <child link="wrist_twist_link"/>
-    <origin xyz="0.16 0 0" rpy="0 0 0"/>
-    <axis xyz="0 0 1"/>
+    <origin xyz="0.03 0 0" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
     <limit lower="-1.57" upper="1.57" effort="10" velocity="0.5"/>
   </joint>
 

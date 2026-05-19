@@ -16,7 +16,7 @@ set(CMAKE_IMPORT_FILE_VERSION 1)
 set(_targetsDefined)
 set(_targetsNotDefined)
 set(_expectedTargets)
-foreach(_expectedTarget arm_2026::arm_2026 arm_2026::arm_2026_keyboard_teleop)
+foreach(_expectedTarget arm_2026::arm_2026 arm_2026::arm_2026_keyboard_teleop arm_2026::arm_2026_joystick_teleop)
   list(APPEND _expectedTargets ${_expectedTarget})
   if(NOT TARGET ${_expectedTarget})
     list(APPEND _targetsNotDefined ${_expectedTarget})
@@ -61,6 +61,9 @@ set_target_properties(arm_2026::arm_2026 PROPERTIES
 
 # Create imported target arm_2026::arm_2026_keyboard_teleop
 add_executable(arm_2026::arm_2026_keyboard_teleop IMPORTED)
+
+# Create imported target arm_2026::arm_2026_joystick_teleop
+add_executable(arm_2026::arm_2026_joystick_teleop IMPORTED)
 
 if(CMAKE_VERSION VERSION_LESS 2.8.12)
   message(FATAL_ERROR "This file relies on consumers using CMake 2.8.12 or greater.")

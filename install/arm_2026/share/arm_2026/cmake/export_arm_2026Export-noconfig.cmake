@@ -24,5 +24,14 @@ set_target_properties(arm_2026::arm_2026_keyboard_teleop PROPERTIES
 list(APPEND _IMPORT_CHECK_TARGETS arm_2026::arm_2026_keyboard_teleop )
 list(APPEND _IMPORT_CHECK_FILES_FOR_arm_2026::arm_2026_keyboard_teleop "${_IMPORT_PREFIX}/lib/arm_2026/arm_2026_keyboard_teleop" )
 
+# Import target "arm_2026::arm_2026_joystick_teleop" for configuration ""
+set_property(TARGET arm_2026::arm_2026_joystick_teleop APPEND PROPERTY IMPORTED_CONFIGURATIONS NOCONFIG)
+set_target_properties(arm_2026::arm_2026_joystick_teleop PROPERTIES
+  IMPORTED_LOCATION_NOCONFIG "${_IMPORT_PREFIX}/lib/arm_2026/arm_2026_joystick_teleop"
+  )
+
+list(APPEND _IMPORT_CHECK_TARGETS arm_2026::arm_2026_joystick_teleop )
+list(APPEND _IMPORT_CHECK_FILES_FOR_arm_2026::arm_2026_joystick_teleop "${_IMPORT_PREFIX}/lib/arm_2026/arm_2026_joystick_teleop" )
+
 # Commands beyond this point should not need to know the version.
 set(CMAKE_IMPORT_FILE_VERSION)

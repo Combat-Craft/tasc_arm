@@ -221,17 +221,21 @@ private:
         nudge_joint(0, -step_size_rad_);
         return true;
       case 'w':
-        set_actuator_drive(0, 1.0f);
-        return true;
+  	set_actuator_drive(0, 1.0f);
+  	nudge_joint(1, step_size_rad_);
+  	return true;
       case 's':
-        set_actuator_drive(0, -1.0f);
-        return true;
+  	set_actuator_drive(0, -1.0f);
+  	nudge_joint(1, -step_size_rad_);
+  	return true;
       case 'e':
-        set_actuator_drive(1, 1.0f);
-        return true;
+  	set_actuator_drive(1, 1.0f);
+  	nudge_joint(2, step_size_rad_);
+  	return true;
       case 'd':
-        set_actuator_drive(1, -1.0f);
-        return true;
+  	set_actuator_drive(1, -1.0f);
+  	nudge_joint(2, -step_size_rad_);
+  	return true;
       case 'r':
         nudge_joint(4, step_size_rad_);
         return true;

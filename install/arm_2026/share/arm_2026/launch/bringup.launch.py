@@ -1,17 +1,21 @@
 from launch import LaunchDescription
 from launch.actions import ExecuteProcess
-from launch_ros.actions import Node
 from launch.substitutions import Command, PathJoinSubstitution
+from launch_ros.actions import Node
+from launch_ros.parameter_descriptions import ParameterValue
 from launch_ros.substitutions import FindPackageShare
 
 
 def generate_launch_description():
     pkg_share = FindPackageShare("arm_2026")
 
-    robot_description_content = Command([
-        "xacro ",
-        PathJoinSubstitution([pkg_share, "description", "arm_2026.urdf.xacro"])
-    ])
+    robot_description_content = ParameterValue(
+        Command([
+            "xacro ",
+            PathJoinSubstitution([pkg_share, "description", "arm_2026.urdf.xacro"])
+        ]),
+        value_type=str
+    )
 
     controller_config = PathJoinSubstitution(
         [pkg_share, "config", "controllers.yaml"]
@@ -40,6 +44,18 @@ def generate_launch_description():
         output="screen"
     )
 
+    joy_node = Node(
+        package="joy",
+        executable="joy_node",
+        name="joy_node",
+        parameters=[{
+            "dev": "/dev/input/js0",
+            "deadzone": 0.05,
+            "autorepeat_rate": 20.0,
+        }],
+        output="screen"
+    )
+
     joint_state_broadcaster_spawner = ExecuteProcess(
         cmd=[
             "ros2", "run", "controller_manager", "spawner",
@@ -62,6 +78,7 @@ def generate_launch_description():
         control_node,
         robot_state_publisher,
         rviz_node,
+        joy_node,
         joint_state_broadcaster_spawner,
         position_controller_spawner
     ])
