@@ -1,8 +1,0 @@
-[0.283s] Invoking command in '/home/ibrahim/tasc_arm/build/arm_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ibrahim/tasc_arm/install/arm_bringup:/opt/ros/humble /usr/bin/cmake --build /home/ibrahim/tasc_arm/build/arm_description -- -j4 -l4
-[0.365s] Invoked command in '/home/ibrahim/tasc_arm/build/arm_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ibrahim/tasc_arm/install/arm_bringup:/opt/ros/humble /usr/bin/cmake --build /home/ibrahim/tasc_arm/build/arm_description -- -j4 -l4
-[0.384s] Invoking command in '/home/ibrahim/tasc_arm/build/arm_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ibrahim/tasc_arm/install/arm_bringup:/opt/ros/humble /usr/bin/cmake --install /home/ibrahim/tasc_arm/build/arm_description
-[0.405s] -- Install configuration: ""
-[0.405s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_description/share/arm_description/urdf
-[0.405s] -- Up-to-date: /home/ibrahim/tasc_arm/install/arm_description/share/arm_description/meshes
-[0.405s] -- Installing: /home/ibrahim/tasc_arm/install/arm_description/share/arm_description/package.dsv
-[0.412s] Invoked command in '/home/ibrahim/tasc_arm/build/arm_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ibrahim/tasc_arm/install/arm_bringup:/opt/ros/humble /usr/bin/cmake --install /home/ibrahim/tasc_arm/build/arm_description
