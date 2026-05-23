@@ -84,7 +84,7 @@ install(
 )
 
 install(
-  DIRECTORY description config launch
+  DIRECTORY description config launch meshes
   DESTINATION share/${PROJECT_NAME}
 )
 

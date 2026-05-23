@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="arm_2026_final">
+
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://arm_2026/meshes/base_link.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://arm_2026/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- New rotating base stage -->
+  <link name="base_rot_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.001 0.001 0.001" />
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="base_yaw" type="revolute">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="base_rot_link" />
+    <axis xyz="0 0 1" />
+    <limit lower="-3.14" upper="3.14" effort="10" velocity="1.0" />
+  </joint>
+
+  <link name="link_1">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://arm_2026/meshes/link_1.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://arm_2026/meshes/link_1.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="shoulder" type="revolute">
+    <origin xyz="0 0 0" rpy="1.5708 0 0" />
+    <parent link="base_rot_link" />
+    <child link="link_1" />
+    <axis xyz="1 0 0" />
+    <limit lower="-1.57" upper="1.57" effort="10" velocity="1.0" />
+  </joint>
+
+  <link name="link_2">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://arm_2026/meshes/link_2.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://arm_2026/meshes/link_2.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="elbow" type="revolute">
+    <origin xyz="0 -0.16667 0" rpy="0 0 0" />
+    <parent link="link_1" />
+    <child link="link_2" />
+    <axis xyz="1 0 0" />
+    <limit lower="-1.57" upper="1.57" effort="10" velocity="1.0" />
+  </joint>
+
+  <link name="link_3">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://arm_2026/meshes/link_3.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://arm_2026/meshes/link_3.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Treat this as wrist_roll -->
+  <joint name="wrist_roll" type="revolute">
+    <origin xyz="-0.39143 1.2513 -1.1418" rpy="-1.2093 -0.23508 3.1416" />
+    <parent link="link_2" />
+    <child link="link_3" />
+    <axis xyz="1 0 0" />
+    <limit lower="-1.57" upper="1.57" effort="10" velocity="1.0" />
+  </joint>
+
+  <link name="link_4">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://arm_2026/meshes/link_4.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://arm_2026/meshes/link_4.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Treat this as wrist_twist -->
+  <joint name="wrist_twist" type="revolute">
+    <origin xyz="0 0.01 0" rpy="0 0 0" />
+    <parent link="link_3" />
+    <child link="link_4" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1.57" upper="1.57" effort="10" velocity="1.0" />
+  </joint>
+
+  <link name="end_effector">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://arm_2026/meshes/end_effector.STL" />
+      </geometry>
+      <material name="">
+        <color rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://arm_2026/meshes/end_effector.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="claw" type="revolute">
+    <origin xyz="0.076812 -0.083324 0.31396" rpy="-2.8831 0.018003 1.5708" />
+    <parent link="link_4" />
+    <child link="end_effector" />
+    <axis xyz="1 0 0" />
+    <limit lower="-1.0" upper="1.0" effort="10" velocity="1.0" />
+  </joint>
+
+</robot>
