@@ -15,7 +15,6 @@
 
 #include "rclcpp/rclcpp.hpp"
 #include "sensor_msgs/msg/joint_state.hpp"
-#include "std_msgs/msg/float32_multi_array.hpp"
 #include "std_msgs/msg/float64_multi_array.hpp"
 
 namespace
@@ -67,16 +66,11 @@ public:
   {
     publish_controller_commands_ = this->declare_parameter<bool>(
       "publish_controller_commands", true);
-    publish_direct_actuator_cmd_ = this->declare_parameter<bool>(
-      "publish_direct_actuator_cmd", true);
     require_joint_state_before_motion_ = this->declare_parameter<bool>(
       "require_joint_state_before_motion", false);
 
     command_pub_ = create_publisher<std_msgs::msg::Float64MultiArray>(
       "/position_controller/commands", 10);
-
-    actuator_cmd_pub_ = create_publisher<std_msgs::msg::Float32MultiArray>(
-      "/arm_actuator_drive_cmd", 10);
 
     joint_state_sub_ = create_subscription<sensor_msgs::msg::JointState>(
       "/joint_states", 10,
@@ -93,7 +87,7 @@ public:
     }
 
     TerminalGuard terminal_guard;
-    rclcpp::WallRate loop_rate(30.0);
+    rclcpp::WallRate loop_rate(50.0);
 
     while (rclcpp::ok()) {
       rclcpp::spin_some(shared_from_this());
@@ -105,12 +99,13 @@ public:
         }
       }
 
-      update_actuator_hold_command();
+      update_hold_commands();
       loop_rate.sleep();
     }
 
-    actuator_drive_cmd_ = {0.0f, 0.0f};
-    publish_actuator_drive_command();
+    target_positions_[1] = 0.0;
+    target_positions_[2] = 0.0;
+    publish_target();
   }
 
 private:
@@ -121,8 +116,8 @@ private:
       "Keyboard teleop for arm_2026\n"
       "Commands:\n"
       "  q/a : base + / -\n"
-      "  w/s : shoulder retract / extend while held\n"
-      "  e/d : elbow retract / extend while held\n"
+      "  w/s : shoulder + / - while held\n"
+      "  e/d : elbow + / - while held\n"
       "  r/f : wrist_twist + / -\n"
       "  t/g : wrist_roll + / -\n"
       "  z/x : decrease / increase step size\n"
@@ -132,9 +127,8 @@ private:
       "  Ctrl-C : quit\n"
       "\n");
     std::printf(
-      "Publish modes: /position_controller/commands=%s, /arm_actuator_drive_cmd=%s, require_joint_state=%s\n",
+      "Publish mode: /position_controller/commands=%s, require_joint_state=%s\n",
       publish_controller_commands_ ? "on" : "off",
-      publish_direct_actuator_cmd_ ? "on" : "off",
       require_joint_state_before_motion_ ? "on" : "off");
     print_status();
   }
@@ -142,7 +136,7 @@ private:
   void print_status() const
   {
     std::printf(
-      "Target [rad] base=%.3f shoulder=%.3f elbow=%.3f wrist_roll=%.3f wrist_twist=%.3f  |  step=%.3f rad (%.1f deg)\n",
+      "Target [rad] base=%.3f shoulder=%.3f elbow=%.3f wrist_roll=%.3f wrist_twist=%.3f | step=%.3f rad (%.1f deg)\n",
       target_positions_[0],
       target_positions_[1],
       target_positions_[2],
@@ -206,6 +200,8 @@ private:
     if (!have_joint_state_ && any_joint_updated) {
       target_positions_ = measured_positions_;
       have_joint_state_ = true;
+      target_positions_[1] = 0.0;
+      target_positions_[2] = 0.0;
       RCLCPP_INFO(get_logger(), "Initialized teleop target from /joint_states.");
       print_status();
     }
@@ -221,21 +217,17 @@ private:
         nudge_joint(0, -step_size_rad_);
         return true;
       case 'w':
-  	set_actuator_drive(0, 1.0f);
-  	nudge_joint(1, step_size_rad_);
-  	return true;
+        set_hold_joint(1, 1.0);
+        return true;
       case 's':
-  	set_actuator_drive(0, -1.0f);
-  	nudge_joint(1, -step_size_rad_);
-  	return true;
+        set_hold_joint(1, -1.0);
+        return true;
       case 'e':
-  	set_actuator_drive(1, 1.0f);
-  	nudge_joint(2, step_size_rad_);
-  	return true;
+        set_hold_joint(2, 1.0);
+        return true;
       case 'd':
-  	set_actuator_drive(1, -1.0f);
-  	nudge_joint(2, -step_size_rad_);
-  	return true;
+        set_hold_joint(2, -1.0);
+        return true;
       case 'r':
         nudge_joint(4, step_size_rad_);
         return true;
@@ -261,6 +253,8 @@ private:
         return true;
       case 'c':
         target_positions_ = measured_positions_;
+        target_positions_[1] = 0.0;
+        target_positions_[2] = 0.0;
         publish_target();
         return true;
       case 'h':
@@ -288,44 +282,40 @@ private:
     publish_target();
   }
 
-  void set_actuator_drive(std::size_t actuator_index, float command)
+  void set_hold_joint(std::size_t joint_index, double value)
   {
-    if (actuator_index >= actuator_drive_cmd_.size()) {
+    if (!have_joint_state_ && require_joint_state_before_motion_) {
+      RCLCPP_WARN_THROTTLE(
+        get_logger(), *get_clock(), 2000,
+        "Waiting for /joint_states before accepting teleop commands.");
       return;
     }
 
-    actuator_drive_cmd_[actuator_index] = command;
-    actuator_drive_deadline_ = std::chrono::steady_clock::now() + actuator_key_timeout_;
-    publish_actuator_drive_command();
+    target_positions_[joint_index] = std::clamp(
+      value,
+      joint_mins_[joint_index],
+      joint_maxs_[joint_index]);
+
+    hold_deadline_[joint_index] = std::chrono::steady_clock::now() + hold_timeout_;
+    publish_target();
   }
 
-  void update_actuator_hold_command()
+  void update_hold_commands()
   {
-    const bool any_actuator_active =
-      std::fabs(actuator_drive_cmd_[0]) > 0.0f ||
-      std::fabs(actuator_drive_cmd_[1]) > 0.0f;
-
-    if (!any_actuator_active) {
-      return;
-    }
-
     const auto now = std::chrono::steady_clock::now();
-    if (now > actuator_drive_deadline_) {
-      actuator_drive_cmd_ = {0.0f, 0.0f};
+    bool changed = false;
+
+    for (std::size_t joint_index : {std::size_t(1), std::size_t(2)}) {
+      if (std::fabs(target_positions_[joint_index]) > 1e-9 &&
+          now > hold_deadline_[joint_index]) {
+        target_positions_[joint_index] = 0.0;
+        changed = true;
+      }
     }
 
-    publish_actuator_drive_command();
-  }
-
-  void publish_actuator_drive_command()
-  {
-    if (!publish_direct_actuator_cmd_ || !actuator_cmd_pub_) {
-      return;
+    if (changed) {
+      publish_target();
     }
-
-    std_msgs::msg::Float32MultiArray actuator_msg;
-    actuator_msg.data.assign(actuator_drive_cmd_.begin(), actuator_drive_cmd_.end());
-    actuator_cmd_pub_->publish(actuator_msg);
   }
 
   void publish_target()
@@ -340,25 +330,23 @@ private:
   }
 
   rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr command_pub_;
-  rclcpp::Publisher<std_msgs::msg::Float32MultiArray>::SharedPtr actuator_cmd_pub_;
   rclcpp::Subscription<sensor_msgs::msg::JointState>::SharedPtr joint_state_sub_;
 
   std::array<double, 5> measured_positions_{{0.0, 0.0, 0.0, 0.0, 0.0}};
   std::array<double, 5> target_positions_{{0.0, 0.0, 0.0, 0.0, 0.0}};
-  std::array<float, 2> actuator_drive_cmd_{{0.0f, 0.0f}};
+  std::array<std::chrono::steady_clock::time_point, 5> hold_deadline_{};
 
   const std::array<double, 5> joint_mins_{{-3.14, -1.57, -1.57, -1.57, -1.57}};
   const std::array<double, 5> joint_maxs_{{ 3.14,  1.57,  1.57,  1.57,  1.57}};
 
-  double step_size_rad_{5.0 * M_PI / 180.0};
+  double step_size_rad_{10.0 * M_PI / 180.0};
   const double min_step_size_rad_{1.0 * M_PI / 180.0};
   const double max_step_size_rad_{45.0 * M_PI / 180.0};
-  const std::chrono::milliseconds actuator_key_timeout_{650};
-  std::chrono::steady_clock::time_point actuator_drive_deadline_{};
+
+  const std::chrono::milliseconds hold_timeout_{180};
 
   bool have_joint_state_{false};
   bool publish_controller_commands_{true};
-  bool publish_direct_actuator_cmd_{true};
   bool require_joint_state_before_motion_{false};
 };
 

@@ -60,12 +60,21 @@ private:
   bool phidget_ok(PhidgetReturnCode code, const char * context) const;
   double clampf(double x, double lo, double hi) const;
 
+  bool open_actuator_serial();
+  void close_actuator_serial();
+  bool send_actuator_packet(uint8_t shoulder_cmd, uint8_t elbow_cmd);
+  uint8_t command_to_byte(double value) const;
+
   static constexpr std::size_t NUM_JOINTS = 5;
   static constexpr std::size_t BASE_IDX = 0;
   static constexpr std::size_t SHOULDER_IDX = 1;
   static constexpr std::size_t ELBOW_IDX = 2;
   static constexpr std::size_t WRIST_ROLL_IDX = 3;
   static constexpr std::size_t WRIST_TWIST_IDX = 4;
+
+  static constexpr uint8_t ACT_STOP = 0;
+  static constexpr uint8_t ACT_EXTEND = 1;
+  static constexpr uint8_t ACT_RETRACT = 2;
 
   std::vector<double> hw_commands_;
   std::vector<double> hw_states_;
@@ -87,18 +96,24 @@ private:
   double wrist_twist_min_ = -1.57;
   double wrist_twist_max_ =  1.57;
 
-  // ROS2 bridge for ESP32 linear actuators
+  // Threshold for mapping ROS actuator command to byte command
+  double actuator_command_deadband_ = 0.2;
+
+  // Estimated visualization state for linear actuators when no real feedback exists
+  double actuator_estimated_shoulder_pos_ = 0.0;
+  double actuator_estimated_elbow_pos_ = 0.0;
+  double actuator_estimated_speed_rad_s_ = 0.45;
+
+  // ROS2 bridge node remains for optional state feedback/logging
   rclcpp::Node::SharedPtr comms_node_;
   std::shared_ptr<rclcpp::executors::SingleThreadedExecutor> executor_;
   std::thread executor_thread_;
   std::atomic<bool> executor_running_{false};
 
-  rclcpp::Publisher<std_msgs::msg::Float32MultiArray>::SharedPtr actuator_cmd_pub_;
+  // Optional actuator state feedback subscription
   rclcpp::Subscription<std_msgs::msg::Float32MultiArray>::SharedPtr actuator_state_sub_;
 
-  // Current ESP32 command/state bridge
-  // data[0] = shoulder target/state
-  // data[1] = elbow target/state
+  // Current actuator command/state
   double actuator_command_shoulder_ = 0.0;
   double actuator_command_elbow_ = 0.0;
 
@@ -106,6 +121,11 @@ private:
   double actuator_state_elbow_ = 0.0;
 
   std::atomic<bool> actuator_state_received_{false};
+
+  // Direct serial connection to ESP32 actuator controller
+  int actuator_serial_fd_ = -1;
+  std::string actuator_serial_device_ = "/dev/ttyUSB0";
+  int actuator_serial_baud_ = 115200;
 
   // Base Phidget stepper
   PhidgetStepperHandle base_stepper_ = nullptr;
@@ -128,14 +148,12 @@ private:
 
   // Rescale factors in deg/count
   double base_rescale_factor_deg_ = 0.00146103896;
-
-  // Placeholder wrist rescale factors, tune later if needed
-  double wrist_motor_1_rescale_factor_deg_ = 0.00146103896;
-  double wrist_motor_2_rescale_factor_deg_ = 0.00146103896;
+  double wrist_motor_1_rescale_factor_deg_ = 0.00416666667;
+  double wrist_motor_2_rescale_factor_deg_ = 0.00416666667;
 
   // Motion tuning in Phidget rescaled units
-  double base_velocity_limit_deg_ = 30.0;
-  double base_acceleration_deg_ = 40.0;
+  double base_velocity_limit_deg_ = 8.0;
+  double base_acceleration_deg_ = 12.0;
 
   double wrist_velocity_limit_deg_ = 30.0;
   double wrist_acceleration_deg_ = 40.0;
