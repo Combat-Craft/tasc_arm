@@ -16,4 +16,5 @@ position_controller:
       - elbow_extension
       - wrist_roll
       - wrist_twist
+      - claw
     interface_name: position

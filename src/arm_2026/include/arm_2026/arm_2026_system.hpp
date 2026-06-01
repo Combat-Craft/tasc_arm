@@ -17,6 +17,7 @@
 #include "rclcpp/node.hpp"
 #include "rclcpp/executors/single_threaded_executor.hpp"
 #include "rclcpp_lifecycle/state.hpp"
+#include "std_msgs/msg/bool.hpp"
 #include "std_msgs/msg/float32_multi_array.hpp"
 
 namespace arm_2026
@@ -54,6 +55,7 @@ public:
 
 private:
   void actuator_state_callback(const std_msgs::msg::Float32MultiArray::SharedPtr msg);
+  void debug_mode_callback(const std_msgs::msg::Bool::SharedPtr msg);
   void cleanup_phidgets();
   void cleanup_ros_bridge();
 
@@ -65,12 +67,13 @@ private:
   bool send_actuator_packet(uint8_t shoulder_cmd, uint8_t elbow_cmd);
   uint8_t command_to_byte(double value) const;
 
-  static constexpr std::size_t NUM_JOINTS = 5;
+  static constexpr std::size_t NUM_JOINTS = 6;
   static constexpr std::size_t BASE_IDX = 0;
   static constexpr std::size_t SHOULDER_IDX = 1;
   static constexpr std::size_t ELBOW_IDX = 2;
   static constexpr std::size_t WRIST_ROLL_IDX = 3;
   static constexpr std::size_t WRIST_TWIST_IDX = 4;
+  static constexpr std::size_t CLAW_IDX = 5;
 
   static constexpr uint8_t ACT_STOP = 0;
   static constexpr uint8_t ACT_EXTEND = 1;
@@ -80,7 +83,6 @@ private:
   std::vector<double> hw_states_;
   std::vector<std::string> joint_names_;
 
-  // Joint limits
   double base_min_ = -3.14;
   double base_max_ =  3.14;
 
@@ -96,24 +98,23 @@ private:
   double wrist_twist_min_ = -1.57;
   double wrist_twist_max_ =  1.57;
 
-  // Threshold for mapping ROS actuator command to byte command
+  double claw_min_ = -1.57;
+  double claw_max_ =  1.57;
+
   double actuator_command_deadband_ = 0.2;
 
-  // Estimated visualization state for linear actuators when no real feedback exists
   double actuator_estimated_shoulder_pos_ = 0.0;
   double actuator_estimated_elbow_pos_ = 0.0;
   double actuator_estimated_speed_rad_s_ = 0.45;
 
-  // ROS2 bridge node remains for optional state feedback/logging
   rclcpp::Node::SharedPtr comms_node_;
   std::shared_ptr<rclcpp::executors::SingleThreadedExecutor> executor_;
   std::thread executor_thread_;
   std::atomic<bool> executor_running_{false};
 
-  // Optional actuator state feedback subscription
   rclcpp::Subscription<std_msgs::msg::Float32MultiArray>::SharedPtr actuator_state_sub_;
+  rclcpp::Subscription<std_msgs::msg::Bool>::SharedPtr debug_mode_sub_;
 
-  // Current actuator command/state
   double actuator_command_shoulder_ = 0.0;
   double actuator_command_elbow_ = 0.0;
 
@@ -121,13 +122,12 @@ private:
   double actuator_state_elbow_ = 0.0;
 
   std::atomic<bool> actuator_state_received_{false};
+  std::atomic<bool> debug_mode_enabled_{false};
 
-  // Direct serial connection to ESP32 actuator controller
   int actuator_serial_fd_ = -1;
   std::string actuator_serial_device_ = "/dev/ttyUSB0";
   int actuator_serial_baud_ = 115200;
 
-  // Base Phidget stepper
   PhidgetStepperHandle base_stepper_ = nullptr;
   bool base_stepper_attached_ = false;
 
@@ -135,7 +135,6 @@ private:
   int base_hub_port_ = 0;
   int base_channel_ = 0;
 
-  // Wrist differential Phidget steppers
   PhidgetStepperHandle wrist_motor_1_ = nullptr;
   PhidgetStepperHandle wrist_motor_2_ = nullptr;
   bool wrist_motor_1_attached_ = false;
@@ -146,17 +145,25 @@ private:
   int wrist_motor_2_hub_port_ = 2;
   int wrist_channel_ = 0;
 
-  // Rescale factors in deg/count
+  PhidgetStepperHandle claw_stepper_ = nullptr;
+  bool claw_stepper_attached_ = false;
+  int claw_device_serial_ = 766944;
+  int claw_hub_port_ = 3;
+  int claw_channel_ = 0;
+
   double base_rescale_factor_deg_ = 0.00146103896;
   double wrist_motor_1_rescale_factor_deg_ = 0.00416666667;
   double wrist_motor_2_rescale_factor_deg_ = 0.00416666667;
+  double claw_rescale_factor_deg_ = 0.00416666667;
 
-  // Motion tuning in Phidget rescaled units
   double base_velocity_limit_deg_ = 8.0;
   double base_acceleration_deg_ = 12.0;
 
   double wrist_velocity_limit_deg_ = 30.0;
   double wrist_acceleration_deg_ = 40.0;
+
+  double claw_velocity_limit_deg_ = 30.0;
+  double claw_acceleration_deg_ = 40.0;
 };
 
 }  // namespace arm_2026
