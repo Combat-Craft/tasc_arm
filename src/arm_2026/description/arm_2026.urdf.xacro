@@ -125,38 +125,38 @@
     <limit lower="-1.57" upper="1.57" effort="10" velocity="0.5"/>
   </joint>
 
-  <ros2_control name="Arm2026Hardware" type="system">
+    <ros2_control name="Arm2026Hardware" type="system">
     <hardware>
       <plugin>arm_2026/Arm2026System</plugin>
     </hardware>
 
     <joint name="base_yaw">
-      <command_interface name="position"/>
+      <command_interface name="velocity"/>
       <state_interface name="position"/>
     </joint>
 
     <joint name="shoulder_extension">
-      <command_interface name="position"/>
+      <command_interface name="velocity"/>
       <state_interface name="position"/>
     </joint>
 
     <joint name="elbow_extension">
-      <command_interface name="position"/>
+      <command_interface name="velocity"/>
       <state_interface name="position"/>
     </joint>
 
     <joint name="wrist_roll">
-      <command_interface name="position"/>
+      <command_interface name="velocity"/>
       <state_interface name="position"/>
     </joint>
 
     <joint name="wrist_twist">
-      <command_interface name="position"/>
+      <command_interface name="velocity"/>
       <state_interface name="position"/>
     </joint>
 
     <joint name="claw">
-      <command_interface name="position"/>
+      <command_interface name="velocity"/>
       <state_interface name="position"/>
     </joint>
   </ros2_control>

@@ -60,6 +60,8 @@ target_link_libraries(${PROJECT_NAME}
 )
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
+target_compile_features(arm_2026_keyboard_teleop PUBLIC cxx_std_17)
+target_compile_features(arm_2026_joystick_teleop PUBLIC cxx_std_17)
 
 pluginlib_export_plugin_description_file(hardware_interface plugin.xml)
 

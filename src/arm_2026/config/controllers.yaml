@@ -5,10 +5,10 @@ controller_manager:
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
-    position_controller:
+    manual_controller:
       type: forward_command_controller/ForwardCommandController
 
-position_controller:
+manual_controller:
   ros__parameters:
     joints:
       - base_yaw
@@ -17,4 +17,5 @@ position_controller:
       - wrist_roll
       - wrist_twist
       - claw
-    interface_name: position
+
+    interface_name: velocity
