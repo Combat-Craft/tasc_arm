@@ -3,6 +3,7 @@ from launch.substitutions import Command, PathJoinSubstitution
 from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
 from launch_ros.substitutions import FindPackageShare
+from launch.actions import ExecuteProcess, TimerAction
 
 
 def generate_launch_description():
@@ -37,13 +38,13 @@ def generate_launch_description():
         output="screen",
     )
 
-    robot_state_publisher_node = Node(
-        package="robot_state_publisher",
-        executable="robot_state_publisher",
-        parameters=[
-            {"robot_description": robot_description_content}
-        ],
-        output="screen",
+    robot_state_publisher = Node(
+    	package="robot_state_publisher",
+    	executable="robot_state_publisher",
+    	parameters=[
+    	    {"robot_description": robot_description_content}
+    	],
+    	output="screen"
     )
 
     rviz_node = Node(
@@ -64,33 +65,44 @@ def generate_launch_description():
         output="screen",
     )
 
-    joint_state_broadcaster_spawner = Node(
-        package="controller_manager",
-        executable="spawner",
-        arguments=[
+    joint_state_broadcaster_spawner = ExecuteProcess(
+        cmd=[
+            "ros2",
+            "run",
+            "controller_manager",
+            "spawner",
             "joint_state_broadcaster",
             "--controller-manager",
-            "/controller_manager",
+            "/controller_manager"
         ],
-        output="screen",
+        output="screen"
     )
 
-    position_controller_spawner = Node(
-        package="controller_manager",
-        executable="spawner",
-        arguments=[
-            "position_controller",
+    manual_controller_spawner = ExecuteProcess(
+        cmd=[
+            "ros2",
+            "run",
+            "controller_manager",
+            "spawner",
+            "manual_controller",
             "--controller-manager",
-            "/controller_manager",
+            "/controller_manager"
         ],
-        output="screen",
+        output="screen"
+    )
+
+    delayed_controller_spawners = TimerAction(
+        period=3.0,
+        actions=[
+            joint_state_broadcaster_spawner,
+            manual_controller_spawner
+        ]
     )
 
     return LaunchDescription([
         control_node,
-        robot_state_publisher_node,
+        robot_state_publisher,
         rviz_node,
         joy_node,
-        joint_state_broadcaster_spawner,
-        position_controller_spawner,
+        delayed_controller_spawners
     ])

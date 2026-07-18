@@ -1,7 +1,5 @@
 #include "arm_control/arm_2026_system.hpp"
 
-#include <functional>
-
 #include <algorithm>
 #include <chrono>
 #include <cmath>

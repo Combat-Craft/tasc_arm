@@ -1,5 +1,3 @@
-#include <functional>
-
 #include <algorithm>
 #include <array>
 #include <chrono>

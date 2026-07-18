@@ -15,15 +15,17 @@ find_package(std_msgs REQUIRED)
 
 find_library(PHIDGET22_LIB phidget22 REQUIRED)
 
+# Hardware plugin library
 add_library(arm_2026 SHARED
   src/arm_2026_system.cpp
 )
 
-add_executable(arm_2026_keyboard_teleop
+# Teleoperation executables
+add_executable(keyboard_teleop
   teleop/keyboard_teleop.cpp
 )
 
-add_executable(arm_2026_joystick_teleop
+add_executable(joystick_teleop
   teleop/joystick_teleop.cpp
 )
 
@@ -40,13 +42,13 @@ ament_target_dependencies(arm_2026
   std_msgs
 )
 
-ament_target_dependencies(arm_2026_keyboard_teleop
+ament_target_dependencies(keyboard_teleop
   rclcpp
   sensor_msgs
   std_msgs
 )
 
-ament_target_dependencies(arm_2026_joystick_teleop
+ament_target_dependencies(joystick_teleop
   rclcpp
   sensor_msgs
   std_msgs
@@ -57,6 +59,8 @@ target_link_libraries(arm_2026
 )
 
 target_compile_features(arm_2026 PUBLIC cxx_std_17)
+target_compile_features(keyboard_teleop PUBLIC cxx_std_17)
+target_compile_features(joystick_teleop PUBLIC cxx_std_17)
 
 pluginlib_export_plugin_description_file(
   hardware_interface
@@ -81,8 +85,8 @@ install(
 install(
   TARGETS
     arm_2026
-    arm_2026_keyboard_teleop
-    arm_2026_joystick_teleop
+    keyboard_teleop
+    joystick_teleop
   EXPORT export_${PROJECT_NAME}
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib

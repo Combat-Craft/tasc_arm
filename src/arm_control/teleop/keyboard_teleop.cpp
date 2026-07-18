@@ -1,5 +1,3 @@
-#include <functional>
-
 #include <sys/select.h>
 #include <termios.h>
 #include <unistd.h>
@@ -11,9 +9,9 @@
 #include <cmath>
 #include <cstdio>
 #include <cstring>
+#include <functional>
 #include <memory>
 #include <string>
-#include <vector>
 
 #include "rclcpp/rclcpp.hpp"
 #include "sensor_msgs/msg/joint_state.hpp"
@@ -67,20 +65,36 @@ public:
   KeyboardTeleop()
   : Node("arm_2026_keyboard_teleop")
   {
-    publish_controller_commands_ = this->declare_parameter<bool>(
+    publish_controller_commands_ = declare_parameter<bool>(
       "publish_controller_commands", true);
-    require_joint_state_before_motion_ = this->declare_parameter<bool>(
+
+    require_joint_state_before_motion_ = declare_parameter<bool>(
       "require_joint_state_before_motion", false);
 
-    command_pub_ = create_publisher<std_msgs::msg::Float64MultiArray>(
-      "/position_controller/commands", 10);
+    command_speed_rad_s_ = declare_parameter<double>(
+      "command_speed_rad_s", 0.25);
 
-    debug_pub_ = create_publisher<std_msgs::msg::Bool>(
-      "/arm_2026/debug_mode", 10);
+    hold_timeout_ms_ = declare_parameter<int>(
+      "hold_timeout_ms", 180);
 
-    joint_state_sub_ = create_subscription<sensor_msgs::msg::JointState>(
-      "/joint_states", 10,
-      std::bind(&KeyboardTeleop::joint_state_callback, this, std::placeholders::_1));
+    command_pub_ =
+      create_publisher<std_msgs::msg::Float64MultiArray>(
+        "/manual_controller/commands",
+        10);
+
+    debug_pub_ =
+      create_publisher<std_msgs::msg::Bool>(
+        "/arm_2026/debug_mode",
+        10);
+
+    joint_state_sub_ =
+      create_subscription<sensor_msgs::msg::JointState>(
+        "/joint_states",
+        10,
+        std::bind(
+          &KeyboardTeleop::joint_state_callback,
+          this,
+          std::placeholders::_1));
 
     print_help();
   }
@@ -88,7 +102,9 @@ public:
   void spin()
   {
     if (!isatty(STDIN_FILENO)) {
-      RCLCPP_ERROR(get_logger(), "Keyboard teleop requires a real terminal (TTY).");
+      RCLCPP_ERROR(
+        get_logger(),
+        "Keyboard teleop requires a real terminal (TTY).");
       return;
     }
 
@@ -99,6 +115,7 @@ public:
       rclcpp::spin_some(shared_from_this());
 
       char key = 0;
+
       if (read_key(key)) {
         if (!handle_key(key)) {
           break;
@@ -109,9 +126,7 @@ public:
       loop_rate.sleep();
     }
 
-    target_positions_[1] = 0.0;
-    target_positions_[2] = 0.0;
-    publish_target();
+    stop_all();
   }
 
 private:
@@ -122,38 +137,43 @@ private:
       "Keyboard teleop for arm_2026\n"
       "Commands:\n"
       "  q/a : base + / -\n"
-      "  w/s : shoulder + / - while held\n"
-      "  e/d : elbow + / - while held\n"
-      "  r/f : wrist_twist + / -\n"
-      "  t/g : wrist_roll + / -\n"
+      "  w/s : shoulder + / -\n"
+      "  e/d : elbow + / -\n"
+      "  r/f : wrist twist + / -\n"
+      "  t/g : wrist roll + / -\n"
       "  y/h : claw + / -\n"
-      "  z/x : decrease / increase step size\n"
-      "  p : toggle debug mode\n"
-      "  space : publish current target again\n"
-      "  h : claw -, not help\n"
-      "  c : reset target to current measured joints\n"
+      "  z/x : decrease / increase speed\n"
+      "  p   : toggle debug mode\n"
+      "  space or c : stop all joints\n"
       "  Ctrl-C : quit\n"
       "\n");
+
     std::printf(
-      "Publish mode: /position_controller/commands=%s, require_joint_state=%s, debug=%s\n",
-      publish_controller_commands_ ? "on" : "off",
-      require_joint_state_before_motion_ ? "on" : "off",
-      debug_mode_enabled_ ? "ON" : "OFF");
+      "Publishing to /manual_controller/commands: %s\n",
+      publish_controller_commands_ ? "yes" : "no");
+
+    std::printf(
+      "Require joint states: %s\n",
+      require_joint_state_before_motion_ ? "yes" : "no");
+
     print_status();
   }
 
   void print_status() const
   {
     std::printf(
-      "Target [rad] base=%.3f shoulder=%.3f elbow=%.3f wrist_roll=%.3f wrist_twist=%.3f claw=%.3f | step=%.3f rad (%.1f deg)\n",
-      target_positions_[0],
-      target_positions_[1],
-      target_positions_[2],
-      target_positions_[3],
-      target_positions_[4],
-      target_positions_[5],
-      step_size_rad_,
-      step_size_rad_ * 180.0 / M_PI);
+      "Velocity command [rad/s] "
+      "base=%.3f shoulder=%.3f elbow=%.3f "
+      "wrist_roll=%.3f wrist_twist=%.3f claw=%.3f "
+      "| selected speed=%.3f rad/s\n",
+      velocity_commands_[0],
+      velocity_commands_[1],
+      velocity_commands_[2],
+      velocity_commands_[3],
+      velocity_commands_[4],
+      velocity_commands_[5],
+      command_speed_rad_s_);
+
     std::fflush(stdout);
   }
 
@@ -161,11 +181,12 @@ private:
   {
     std::printf("\n");
     std::printf("########################################\n");
-    std::printf("#                                      #\n");
-    std::printf("#          DEBUG MODE %s           #\n", debug_mode_enabled_ ? "ON " : "OFF");
-    std::printf("#                                      #\n");
+    std::printf(
+      "#          DEBUG MODE %s             #\n",
+      debug_mode_enabled_ ? "ON " : "OFF");
     std::printf("########################################\n");
     std::printf("\n");
+
     std::fflush(stdout);
   }
 
@@ -179,7 +200,14 @@ private:
     timeout.tv_sec = 0;
     timeout.tv_usec = 0;
 
-    const int ready = select(STDIN_FILENO + 1, &read_set, nullptr, nullptr, &timeout);
+    const int ready =
+      select(
+        STDIN_FILENO + 1,
+        &read_set,
+        nullptr,
+        nullptr,
+        &timeout);
+
     if (ready < 0) {
       if (errno != EINTR) {
         RCLCPP_WARN(
@@ -187,6 +215,7 @@ private:
           "select() failed while reading keyboard input: %s",
           std::strerror(errno));
       }
+
       return false;
     }
 
@@ -194,36 +223,23 @@ private:
       return false;
     }
 
-    const ssize_t bytes_read = ::read(STDIN_FILENO, &key, 1);
+    const ssize_t bytes_read =
+      ::read(STDIN_FILENO, &key, 1);
+
     return bytes_read == 1;
   }
 
-  void joint_state_callback(const sensor_msgs::msg::JointState::SharedPtr msg)
+  void joint_state_callback(
+    const sensor_msgs::msg::JointState::SharedPtr msg)
   {
-    const std::array<std::string, 6> joint_names{
-      "base_yaw",
-      "shoulder_extension",
-      "elbow_extension",
-      "wrist_roll",
-      "wrist_twist",
-      "claw"};
-
-    bool any_joint_updated = false;
-    for (std::size_t target_index = 0; target_index < joint_names.size(); ++target_index) {
-      for (std::size_t msg_index = 0; msg_index < msg->name.size(); ++msg_index) {
-        if (msg->name[msg_index] == joint_names[target_index] &&
-            msg_index < msg->position.size()) {
-          measured_positions_[target_index] = msg->position[msg_index];
-          any_joint_updated = true;
-          break;
-        }
-      }
-    }
-
-    if (!have_joint_state_ && any_joint_updated) {
-      target_positions_ = measured_positions_;
+    if (!have_joint_state_ &&
+        !msg->name.empty() &&
+        !msg->position.empty()) {
       have_joint_state_ = true;
-      print_status();
+
+      RCLCPP_INFO(
+        get_logger(),
+        "Received initial /joint_states message.");
     }
   }
 
@@ -231,115 +247,139 @@ private:
   {
     switch (key) {
       case 'q':
-        nudge_joint(0, step_size_rad_);
+        set_hold_joint(BASE_IDX, command_speed_rad_s_);
         return true;
+
       case 'a':
-        nudge_joint(0, -step_size_rad_);
+        set_hold_joint(BASE_IDX, -command_speed_rad_s_);
         return true;
+
       case 'w':
-        set_hold_joint(1, 1.0);
+        set_hold_joint(SHOULDER_IDX, command_speed_rad_s_);
         return true;
+
       case 's':
-        set_hold_joint(1, -1.0);
+        set_hold_joint(SHOULDER_IDX, -command_speed_rad_s_);
         return true;
+
       case 'e':
-        set_hold_joint(2, 1.0);
+        set_hold_joint(ELBOW_IDX, command_speed_rad_s_);
         return true;
+
       case 'd':
-        set_hold_joint(2, -1.0);
+        set_hold_joint(ELBOW_IDX, -command_speed_rad_s_);
         return true;
+
       case 'r':
-        nudge_joint(4, step_size_rad_);
+        set_hold_joint(WRIST_TWIST_IDX, command_speed_rad_s_);
         return true;
+
       case 'f':
-        nudge_joint(4, -step_size_rad_);
+        set_hold_joint(WRIST_TWIST_IDX, -command_speed_rad_s_);
         return true;
+
       case 't':
-        nudge_joint(3, step_size_rad_);
+        set_hold_joint(WRIST_ROLL_IDX, command_speed_rad_s_);
         return true;
+
       case 'g':
-        nudge_joint(3, -step_size_rad_);
+        set_hold_joint(WRIST_ROLL_IDX, -command_speed_rad_s_);
         return true;
+
       case 'y':
-        nudge_joint(5, step_size_rad_);
+        set_hold_joint(CLAW_IDX, command_speed_rad_s_);
         return true;
+
       case 'h':
-        nudge_joint(5, -step_size_rad_);
+        set_hold_joint(CLAW_IDX, -command_speed_rad_s_);
         return true;
+
       case 'z':
-        step_size_rad_ = std::max(min_step_size_rad_, step_size_rad_ / 2.0);
+        command_speed_rad_s_ =
+          std::max(
+            min_command_speed_rad_s_,
+            command_speed_rad_s_ / 2.0);
+
         print_status();
         return true;
+
       case 'x':
-        step_size_rad_ = std::min(max_step_size_rad_, step_size_rad_ * 2.0);
+        command_speed_rad_s_ =
+          std::min(
+            max_command_speed_rad_s_,
+            command_speed_rad_s_ * 2.0);
+
         print_status();
         return true;
+
       case 'p':
         toggle_debug_mode();
         return true;
+
       case ' ':
-        publish_target();
-        return true;
       case 'c':
-        target_positions_ = measured_positions_;
-        publish_target();
+        stop_all();
         return true;
+
       default:
         return true;
     }
   }
 
-  void nudge_joint(std::size_t joint_index, double delta)
+  void set_hold_joint(
+    std::size_t joint_index,
+    double velocity)
   {
-    if (!have_joint_state_ && require_joint_state_before_motion_) {
+    if (!have_joint_state_ &&
+        require_joint_state_before_motion_) {
       RCLCPP_WARN_THROTTLE(
-        get_logger(), *get_clock(), 2000,
-        "Waiting for /joint_states before accepting teleop commands.");
+        get_logger(),
+        *get_clock(),
+        2000,
+        "Waiting for /joint_states before accepting commands.");
+
       return;
     }
 
-    if (debug_mode_enabled_) {
-      target_positions_[joint_index] += delta;
-    } else {
-      target_positions_[joint_index] = std::clamp(
-        target_positions_[joint_index] + delta,
-        joint_mins_[joint_index],
-        joint_maxs_[joint_index]);
-    }
+    velocity_commands_[joint_index] =
+      std::clamp(
+        velocity,
+        -max_command_speed_rad_s_,
+        max_command_speed_rad_s_);
 
-    publish_target();
-  }
+    hold_deadlines_[joint_index] =
+      std::chrono::steady_clock::now() +
+      std::chrono::milliseconds(hold_timeout_ms_);
 
-  void set_hold_joint(std::size_t joint_index, double value)
-  {
-    if (!have_joint_state_ && require_joint_state_before_motion_) {
-      RCLCPP_WARN_THROTTLE(
-        get_logger(), *get_clock(), 2000,
-        "Waiting for /joint_states before accepting teleop commands.");
-      return;
-    }
-
-    target_positions_[joint_index] = value;
-    hold_deadline_[joint_index] = std::chrono::steady_clock::now() + hold_timeout_;
-    publish_target();
+    publish_commands();
   }
 
   void update_hold_commands()
   {
-    const auto now = std::chrono::steady_clock::now();
-    bool changed = false;
+    const auto now =
+      std::chrono::steady_clock::now();
 
-    for (std::size_t joint_index : {std::size_t(1), std::size_t(2)}) {
-      if (std::fabs(target_positions_[joint_index]) > 1e-9 &&
-          now > hold_deadline_[joint_index]) {
-        target_positions_[joint_index] = 0.0;
-        changed = true;
+    bool command_changed = false;
+
+    for (std::size_t i = 0;
+         i < velocity_commands_.size();
+         ++i) {
+      if (std::fabs(velocity_commands_[i]) > 1e-9 &&
+          now > hold_deadlines_[i]) {
+        velocity_commands_[i] = 0.0;
+        command_changed = true;
       }
     }
 
-    if (changed) {
-      publish_target();
+    if (command_changed) {
+      publish_commands();
     }
+  }
+
+  void stop_all()
+  {
+    velocity_commands_.fill(0.0);
+    publish_commands();
   }
 
   void toggle_debug_mode()
@@ -351,36 +391,54 @@ private:
     debug_pub_->publish(msg);
 
     print_debug_banner();
-    print_status();
   }
 
-  void publish_target()
+  void publish_commands()
   {
     if (publish_controller_commands_ && command_pub_) {
       std_msgs::msg::Float64MultiArray msg;
-      msg.data.assign(target_positions_.begin(), target_positions_.end());
+
+      msg.data.assign(
+        velocity_commands_.begin(),
+        velocity_commands_.end());
+
       command_pub_->publish(msg);
     }
 
     print_status();
   }
 
-  rclcpp::Publisher<std_msgs::msg::Float64MultiArray>::SharedPtr command_pub_;
-  rclcpp::Publisher<std_msgs::msg::Bool>::SharedPtr debug_pub_;
-  rclcpp::Subscription<sensor_msgs::msg::JointState>::SharedPtr joint_state_sub_;
+  static constexpr std::size_t NUM_JOINTS = 6;
+  static constexpr std::size_t BASE_IDX = 0;
+  static constexpr std::size_t SHOULDER_IDX = 1;
+  static constexpr std::size_t ELBOW_IDX = 2;
+  static constexpr std::size_t WRIST_ROLL_IDX = 3;
+  static constexpr std::size_t WRIST_TWIST_IDX = 4;
+  static constexpr std::size_t CLAW_IDX = 5;
 
-  std::array<double, 6> measured_positions_{{0.0, 0.0, 0.0, 0.0, 0.0, 0.0}};
-  std::array<double, 6> target_positions_{{0.0, 0.0, 0.0, 0.0, 0.0, 0.0}};
-  std::array<std::chrono::steady_clock::time_point, 6> hold_deadline_{};
+  rclcpp::Publisher<
+    std_msgs::msg::Float64MultiArray>::SharedPtr command_pub_;
 
-  const std::array<double, 6> joint_mins_{{-3.14, -1.57, -1.57, -1.57, -1.57, -1.57}};
-  const std::array<double, 6> joint_maxs_{{ 3.14,  1.57,  1.57,  1.57,  1.57,  1.57}};
+  rclcpp::Publisher<
+    std_msgs::msg::Bool>::SharedPtr debug_pub_;
 
-  double step_size_rad_{10.0 * M_PI / 180.0};
-  const double min_step_size_rad_{1.0 * M_PI / 180.0};
-  const double max_step_size_rad_{45.0 * M_PI / 180.0};
+  rclcpp::Subscription<
+    sensor_msgs::msg::JointState>::SharedPtr joint_state_sub_;
 
-  const std::chrono::milliseconds hold_timeout_{180};
+  std::array<double, NUM_JOINTS> velocity_commands_{
+    {0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+  };
+
+  std::array<
+    std::chrono::steady_clock::time_point,
+    NUM_JOINTS> hold_deadlines_{};
+
+  double command_speed_rad_s_{0.25};
+
+  const double min_command_speed_rad_s_{0.05};
+  const double max_command_speed_rad_s_{1.0};
+
+  int hold_timeout_ms_{180};
 
   bool have_joint_state_{false};
   bool publish_controller_commands_{true};
@@ -393,8 +451,12 @@ private:
 int main(int argc, char * argv[])
 {
   rclcpp::init(argc, argv);
-  auto node = std::make_shared<KeyboardTeleop>();
+
+  auto node =
+    std::make_shared<KeyboardTeleop>();
+
   node->spin();
+
   rclcpp::shutdown();
   return 0;
 }

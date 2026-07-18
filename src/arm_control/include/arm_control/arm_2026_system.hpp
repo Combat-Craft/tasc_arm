@@ -1,9 +1,6 @@
 #ifndef ARM_2026__ARM_2026_SYSTEM_HPP_
 #define ARM_2026__ARM_2026_SYSTEM_HPP_
 
-#include <cstddef>
-#include <cstdint>
-
 #include <atomic>
 #include <memory>
 #include <string>
