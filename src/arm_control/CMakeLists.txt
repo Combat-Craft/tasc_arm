@@ -10,18 +10,29 @@ find_package(rclcpp REQUIRED)
 find_package(rclcpp_lifecycle REQUIRED)
 find_package(hardware_interface REQUIRED)
 find_package(pluginlib REQUIRED)
+find_package(sensor_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 
-add_library(arm_control SHARED
-  src/mini_arm_hardware.cpp
+find_library(PHIDGET22_LIB phidget22 REQUIRED)
+
+add_library(arm_2026 SHARED
+  src/arm_2026_system.cpp
 )
 
-target_include_directories(arm_control PUBLIC
+add_executable(arm_2026_keyboard_teleop
+  teleop/keyboard_teleop.cpp
+)
+
+add_executable(arm_2026_joystick_teleop
+  teleop/joystick_teleop.cpp
+)
+
+target_include_directories(arm_2026 PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>
 )
 
-ament_target_dependencies(arm_control
+ament_target_dependencies(arm_2026
   rclcpp
   rclcpp_lifecycle
   hardware_interface
@@ -29,13 +40,27 @@ ament_target_dependencies(arm_control
   std_msgs
 )
 
-pluginlib_export_plugin_description_file(hardware_interface plugin.xml)
+ament_target_dependencies(arm_2026_keyboard_teleop
+  rclcpp
+  sensor_msgs
+  std_msgs
+)
 
-install(
-  TARGETS arm_control
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin
+ament_target_dependencies(arm_2026_joystick_teleop
+  rclcpp
+  sensor_msgs
+  std_msgs
+)
+
+target_link_libraries(arm_2026
+  ${PHIDGET22_LIB}
+)
+
+target_compile_features(arm_2026 PUBLIC cxx_std_17)
+
+pluginlib_export_plugin_description_file(
+  hardware_interface
+  plugin.xml
 )
 
 install(
@@ -44,24 +69,38 @@ install(
 )
 
 install(
+  DIRECTORY config
+  DESTINATION share/${PROJECT_NAME}
+)
+
+install(
   FILES plugin.xml
   DESTINATION share/${PROJECT_NAME}
 )
 
 install(
-  DIRECTORY config
-  DESTINATION share/${PROJECT_NAME}
+  TARGETS
+    arm_2026
+    arm_2026_keyboard_teleop
+    arm_2026_joystick_teleop
+  EXPORT export_${PROJECT_NAME}
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION lib/${PROJECT_NAME}
 )
 
-# Install python teleop scripts as executables
-install(PROGRAMS
-  arm_control/keyboard_teleop.py
-  arm_control/keyboard_cartesian_ik_teleop.py
-  arm_control/ps5_arm_teleop.py
-  arm_control/ps5_cartesian_ik_teleop.py
-  arm_control/logitech_joystick_ik.py
-  arm_control/joint_state_offset.py
-  DESTINATION lib/${PROJECT_NAME}
+ament_export_targets(
+  export_${PROJECT_NAME}
+  HAS_LIBRARY_TARGET
+)
+
+ament_export_dependencies(
+  rclcpp
+  rclcpp_lifecycle
+  hardware_interface
+  pluginlib
+  sensor_msgs
+  std_msgs
 )
 
 ament_package()

@@ -1,28 +1,28 @@
 <?xml version="1.0"?>
-<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>arm_control</name>
-  <version>0.0.0</version>
-  <description>ROS 2 control hardware + teleop nodes for the TASC arm.</description>
+  <version>0.0.1</version>
 
-  <maintainer email="ahmedmegahed20142@gmail.com">ahmedtabl</maintainer>
-  <license>TODO</license>
+  <description>
+    ros2_control hardware interface and teleoperation nodes for the ARM 2026 robot
+  </description>
+
+  <maintainer email="you@example.com">Ibrahim Ali</maintainer>
+  <license>Apache-2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
+  
+  <exec_depend>joint_state_broadcaster</exec_depend>
+  <exec_depend>forward_command_controller</exec_depend>
 
   <depend>rclcpp</depend>
   <depend>rclcpp_lifecycle</depend>
   <depend>hardware_interface</depend>
   <depend>pluginlib</depend>
+  <depend>sensor_msgs</depend>
   <depend>std_msgs</depend>
-
-  <test_depend>ament_copyright</test_depend>
-  <test_depend>ament_flake8</test_depend>
-  <test_depend>ament_pep257</test_depend>
-  <test_depend>python3-pytest</test_depend>
 
   <export>
     <build_type>ament_cmake</build_type>
   </export>
 </package>
-

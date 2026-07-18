@@ -5,17 +5,15 @@ controller_manager:
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
-    arm_forward_controller:
+    position_controller:
       type: forward_command_controller/ForwardCommandController
 
-arm_forward_controller:
+position_controller:
   ros__parameters:
     joints:
-      - base_rotator_joint
-      - shoulder_joint
-      - elbow_joint
-      - wrist_joint
-      - end_joint
-      - gear_right_joint
+      - base_yaw
+      - shoulder_extension
+      - elbow_extension
+      - wrist_roll
+      - wrist_twist
     interface_name: position
-
