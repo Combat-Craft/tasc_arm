@@ -1,23 +1,23 @@
 # tasc_arm
 
 ROS 2 workspace for the TASC robotic arm. This repo currently contains:
-- **URDF + meshes** for RViz visualization
+- **URDF** for RViz visualization (runs in parallel)
 - **ros2_control** setup (controllers + hardware plugin scaffold)
-- **Teleop** (keyboard and PS5) for joint control, plus IK-based Cartesian teleop (ikpy)
+- **Teleop** (keyboard and Logitech Extreme 3D Pro Joystick) for joint control
 - **Bringup launch** to start RViz, robot_state_publisher, ros2_control, and joystick nodes
 
 ## Repo layout
 ```bash
 tasc_arm/ 
 src/ 
-arm_description/ # URDF + STL meshes 
+arm_description/ # URDF 
 arm_control/ # ros2_control configs + hardware plugin + teleop nodes 
 arm_bringup/ # launch files (RViz + control bringup)
 ```
 ### Packages 
 
 #### `arm_description`
-- Contains the robot model used by RViz and robot_state_publisher.
+- Contains the robot model urdf used by RViz and robot_state_publisher.
 
 #### `arm_control`
 - Contains controller config + teleop nodes.
@@ -60,7 +60,7 @@ source install/setup.bash
 ```
 
 ## Run
-### Mini-arm bringup (RViz + robot_state_publisher + joy_node + ros2_control + controllers)
+### Arm bringup (RViz + robot_state_publisher + joy_node + ros2_control + controllers)
 ```bash
 ros2 launch arm_bringup bringup.launch.py
 ```
@@ -69,16 +69,8 @@ ros2 launch arm_bringup bringup.launch.py
 ```bash
 ros2 run arm_control keyboard_teleop
 ```
-#### Keyboard Cartesian IK teleop (ikpy)
+#### Logitech Joystick joint teleop
 ```bash
-ros2 run arm_control keyboard_cartesian_ik_teleop
-```
-#### PS5 joint teleop (ros2 joy)
-```bash
-ros2 run arm_control ps5_arm_teleop
-```
-#### PS5 Cartesian IK teleop (ikpy + /joy)
-```bash
-ros2 run arm_control ps5_cartesian_ik_teleop
+ros2 run arm_control joystick_teleop
 ```
 
