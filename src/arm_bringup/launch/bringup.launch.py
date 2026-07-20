@@ -64,45 +64,38 @@ def generate_launch_description():
         }],
         output="screen",
     )
-
-    joint_state_broadcaster_spawner = ExecuteProcess(
-        cmd=[
-            "ros2",
-            "run",
-            "controller_manager",
-            "spawner",
-            "joint_state_broadcaster",
-            "--controller-manager",
-            "/controller_manager"
-        ],
-        output="screen"
+    
+    joint_state_broadcaster_spawner = Node(
+    package="controller_manager",
+    executable="spawner",
+    arguments=[
+        "joint_state_broadcaster",
+        "--controller-manager",
+        "/controller_manager",
+        "--controller-manager-timeout",
+        "30",
+    ],
+    output="screen",
     )
 
-    manual_controller_spawner = ExecuteProcess(
-        cmd=[
-            "ros2",
-            "run",
-            "controller_manager",
-            "spawner",
+    manual_controller_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=[
             "manual_controller",
             "--controller-manager",
-            "/controller_manager"
+            "/controller_manager",
+            "--controller-manager-timeout",
+            "30",
         ],
-        output="screen"
+        output="screen",
     )
-
-    delayed_controller_spawners = TimerAction(
-        period=3.0,
-        actions=[
-            joint_state_broadcaster_spawner,
-            manual_controller_spawner
-        ]
-    )
-
+    
     return LaunchDescription([
         control_node,
         robot_state_publisher,
         rviz_node,
         joy_node,
-        delayed_controller_spawners
+        joint_state_broadcaster_spawner,
+        manual_controller_spawner,
     ])

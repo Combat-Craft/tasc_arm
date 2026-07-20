@@ -506,7 +506,7 @@ hardware_interface::CallbackReturn Arm2026System::on_configure(
   if (!phidget_ok(
         Phidget_openWaitForAttachment(
           reinterpret_cast<PhidgetHandle>(base_stepper_),
-          5000),
+          500),
         "Phidget_openWaitForAttachment base"))
   {
     RCLCPP_WARN(
@@ -572,7 +572,7 @@ hardware_interface::CallbackReturn Arm2026System::on_configure(
   if (!phidget_ok(
         Phidget_openWaitForAttachment(
           reinterpret_cast<PhidgetHandle>(wrist_motor_1_),
-          5000),
+          500),
         "Phidget_openWaitForAttachment wrist1"))
   {
     RCLCPP_WARN(
@@ -629,7 +629,7 @@ hardware_interface::CallbackReturn Arm2026System::on_configure(
   if (!phidget_ok(
         Phidget_openWaitForAttachment(
           reinterpret_cast<PhidgetHandle>(wrist_motor_2_),
-          5000),
+          500),
         "Phidget_openWaitForAttachment wrist2"))
   {
     RCLCPP_WARN(
@@ -686,7 +686,7 @@ hardware_interface::CallbackReturn Arm2026System::on_configure(
   if (!phidget_ok(
         Phidget_openWaitForAttachment(
           reinterpret_cast<PhidgetHandle>(claw_stepper_),
-          5000),
+          500),
         "Phidget_openWaitForAttachment claw"))
   {
     RCLCPP_WARN(
@@ -1424,11 +1424,6 @@ hardware_interface::return_type Arm2026System::write(
   /*
    * ESP32 linear actuator command.
    */
-  if (actuator_serial_fd_ < 0)
-  {
-    open_actuator_serial();
-  }
-
   if (actuator_serial_fd_ >= 0)
   {
     send_actuator_packet(

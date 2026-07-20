@@ -442,7 +442,7 @@ private:
   double wrist_twist_speed_rad_s_{0.60};
   double claw_speed_rad_s_{1.0};
 
-  double base_direction_{-1.0};
+  double base_direction_{1.0};
   double shoulder_direction_{1.0};
   double elbow_direction_{1.0};
   double wrist_roll_direction_{1.0};
