@@ -2,6 +2,7 @@
 #include <array>
 #include <chrono>
 #include <cmath>
+#include <functional>
 #include <memory>
 #include <string>
 
@@ -38,20 +39,65 @@ public:
 
     last_joy_time_ = now();
 
-    RCLCPP_INFO(get_logger(), "Arm velocity joystick teleop started");
-    RCLCPP_INFO(get_logger(), "Publishing to: %s", command_topic_.c_str());
-    RCLCPP_INFO(get_logger(), "Hold button %d as deadman", deadman_button_);
-    RCLCPP_INFO(get_logger(), "Stick forward/back: shoulder");
+    RCLCPP_INFO(
+      get_logger(),
+      "Arm velocity joystick teleop started");
+
+    RCLCPP_INFO(
+      get_logger(),
+      "Publishing to: %s",
+      command_topic_.c_str());
+
+    RCLCPP_INFO(
+      get_logger(),
+      "Hold button %d as deadman",
+      deadman_button_);
+
+    RCLCPP_INFO(
+      get_logger(),
+      "Stick forward/back: shoulder");
+
     RCLCPP_INFO(
       get_logger(),
       "Hold button %d + stick forward/back: elbow",
       elbow_mode_button_);
-    RCLCPP_INFO(get_logger(), "Twist: base");
-    RCLCPP_INFO(get_logger(), "Hat left/right: wrist roll");
-    RCLCPP_INFO(get_logger(), "Hat forward/back: wrist twist");
-    RCLCPP_INFO(get_logger(), "Button %d: open claw", gripper_open_button_);
-    RCLCPP_INFO(get_logger(), "Button %d: close claw", gripper_close_button_);
-    RCLCPP_INFO(get_logger(), "Button %d: emergency stop", stop_button_);
+
+    RCLCPP_INFO(
+      get_logger(),
+      "Twist: base");
+
+    RCLCPP_INFO(
+      get_logger(),
+      "Base center offset: %.3f",
+      base_center_offset_);
+
+    RCLCPP_INFO(
+      get_logger(),
+      "Base deadzone: %.3f",
+      base_deadzone_);
+
+    RCLCPP_INFO(
+      get_logger(),
+      "Hat left/right: wrist roll");
+
+    RCLCPP_INFO(
+      get_logger(),
+      "Hat forward/back: wrist twist");
+
+    RCLCPP_INFO(
+      get_logger(),
+      "Button %d: open claw",
+      gripper_open_button_);
+
+    RCLCPP_INFO(
+      get_logger(),
+      "Button %d: close claw",
+      gripper_close_button_);
+
+    RCLCPP_INFO(
+      get_logger(),
+      "Button %d: emergency stop",
+      stop_button_);
   }
 
   ~ArmJoystickTeleop() override
@@ -60,6 +106,10 @@ public:
   }
 
 private:
+  // ===========================================================================
+  // PARAMETERS
+  // ===========================================================================
+
   void declare_parameters()
   {
     joy_topic_ =
@@ -87,12 +137,23 @@ private:
         "deadzone",
         0.15);
 
+    /*
+     * The normal deadzone is applied around zero.
+     *
+     * The base twist axis has a separate calibrated center because this
+     * joystick currently rests around -0.30 instead of zero.
+     */
     base_deadzone_ =
       declare_parameter<double>(
         "base_deadzone",
-        0.45);
+        0.12);
 
-    // Logitech Extreme 3D Pro mapping
+    base_center_offset_ =
+      declare_parameter<double>(
+        "base_center_offset",
+        -0.30);
+
+    // Logitech Extreme 3D Pro axis mapping
     stick_x_axis_ =
       declare_parameter<int>(
         "stick_x_axis",
@@ -118,6 +179,7 @@ private:
         "hat_y_axis",
         5);
 
+    // Logitech Extreme 3D Pro button mapping
     deadman_button_ =
       declare_parameter<int>(
         "deadman_button",
@@ -143,6 +205,7 @@ private:
         "stop_button",
         7);
 
+    // Joint command speeds
     base_speed_rad_s_ =
       declare_parameter<double>(
         "base_speed_rad_s",
@@ -173,6 +236,7 @@ private:
         "claw_speed_rad_s",
         1.0);
 
+    // Direction multipliers
     base_direction_ =
       declare_parameter<double>(
         "base_direction",
@@ -204,12 +268,26 @@ private:
         1.0);
   }
 
-  void joy_callback(const sensor_msgs::msg::Joy::SharedPtr msg)
+  // ===========================================================================
+  // JOYSTICK CALLBACK
+  // ===========================================================================
+
+  void joy_callback(
+    const sensor_msgs::msg::Joy::SharedPtr msg)
   {
     latest_joy_ = msg;
     last_joy_time_ = now();
   }
 
+  // ===========================================================================
+  // INPUT HELPERS
+  // ===========================================================================
+
+  /*
+   * Read a normal joystick axis and apply a deadzone centered around zero.
+   *
+   * This is used for axes that correctly rest near zero.
+   */
   double get_axis(
     const sensor_msgs::msg::Joy::SharedPtr & joy,
     int index,
@@ -229,12 +307,110 @@ private:
         -1.0,
         1.0);
 
-    if (std::fabs(value) < deadzone)
+    if (std::fabs(value) <= deadzone)
     {
       return 0.0;
     }
 
     return value;
+  }
+
+  /*
+   * Read an axis without applying a deadzone.
+   *
+   * The raw twist value is needed because its neutral position is not zero.
+   */
+  double get_axis_raw(
+    const sensor_msgs::msg::Joy::SharedPtr & joy,
+    int index) const
+  {
+    if (
+      !joy ||
+      index < 0 ||
+      static_cast<std::size_t>(index) >= joy->axes.size())
+    {
+      return 0.0;
+    }
+
+    return std::clamp(
+      static_cast<double>(joy->axes[index]),
+      -1.0,
+      1.0);
+  }
+
+  /*
+   * Correct an axis whose physical neutral position does not report zero.
+   *
+   * Example:
+   *
+   *   raw neutral value = -0.30
+   *   configured center = -0.30
+   *   corrected value   =  0.00
+   *
+   * The positive and negative sides are scaled independently because an
+   * offset center leaves different amounts of travel on each side.
+   */
+  double apply_centered_deadzone(
+    double raw_value,
+    double center,
+    double deadzone) const
+  {
+    raw_value =
+      std::clamp(
+        raw_value,
+        -1.0,
+        1.0);
+
+    center =
+      std::clamp(
+        center,
+        -0.99,
+        0.99);
+
+    deadzone =
+      std::clamp(
+        deadzone,
+        0.0,
+        0.99);
+
+    const double centered_value =
+      raw_value - center;
+
+    if (std::fabs(centered_value) <= deadzone)
+    {
+      return 0.0;
+    }
+
+    if (centered_value > 0.0)
+    {
+      const double positive_range =
+        1.0 - center;
+
+      if (positive_range <= deadzone)
+      {
+        return 0.0;
+      }
+
+      return std::clamp(
+        (centered_value - deadzone) /
+        (positive_range - deadzone),
+        0.0,
+        1.0);
+    }
+
+    const double negative_range =
+      1.0 + center;
+
+    if (negative_range <= deadzone)
+    {
+      return 0.0;
+    }
+
+    return std::clamp(
+      (centered_value + deadzone) /
+      (negative_range - deadzone),
+      -1.0,
+      0.0);
   }
 
   bool get_button(
@@ -251,6 +427,10 @@ private:
 
     return joy->buttons[index] != 0;
   }
+
+  // ===========================================================================
+  // CONTROL UPDATE
+  // ===========================================================================
 
   void update()
   {
@@ -292,6 +472,10 @@ private:
       return;
     }
 
+    // -------------------------------------------------------------------------
+    // Shoulder and elbow
+    // -------------------------------------------------------------------------
+
     const double forward_back_input =
       get_axis(
         latest_joy_,
@@ -306,19 +490,33 @@ private:
     double shoulder_input = 0.0;
     double elbow_input = 0.0;
 
-    if (elbow_mode){
+    if (elbow_mode)
+    {
       elbow_input = forward_back_input;
-      }
+    }
     else
     {
       shoulder_input = forward_back_input;
     }
 
-    const double base_input =
-      get_axis(
+    // -------------------------------------------------------------------------
+    // Base twist with center-offset correction
+    // -------------------------------------------------------------------------
+
+    const double raw_base_input =
+      get_axis_raw(
         latest_joy_,
-        twist_axis_,
+        twist_axis_);
+
+    const double base_input =
+      apply_centered_deadzone(
+        raw_base_input,
+        base_center_offset_,
         base_deadzone_);
+
+    // -------------------------------------------------------------------------
+    // Wrist
+    // -------------------------------------------------------------------------
 
     const double wrist_roll_input =
       get_axis(
@@ -331,6 +529,10 @@ private:
         latest_joy_,
         hat_y_axis_,
         deadzone_);
+
+    // -------------------------------------------------------------------------
+    // Claw
+    // -------------------------------------------------------------------------
 
     const bool claw_open =
       get_button(
@@ -353,6 +555,14 @@ private:
       claw_input = -1.0;
     }
 
+    // Controller joint order:
+    //
+    // 0: base
+    // 1: shoulder
+    // 2: elbow
+    // 3: wrist roll
+    // 4: wrist twist
+    // 5: claw
     const std::array<double, 6> velocity_commands{
       base_input *
         base_speed_rad_s_ *
@@ -382,11 +592,18 @@ private:
     publish_commands(velocity_commands);
   }
 
+  // ===========================================================================
+  // COMMAND PUBLISHING
+  // ===========================================================================
+
   void publish_commands(
     const std::array<double, 6> & commands)
   {
     std_msgs::msg::Float64MultiArray msg;
-    msg.data.assign(commands.begin(), commands.end());
+    msg.data.assign(
+      commands.begin(),
+      commands.end());
+
     command_pub_->publish(msg);
   }
 
@@ -404,6 +621,10 @@ private:
     publish_commands(zero_commands);
   }
 
+  // ===========================================================================
+  // ROS INTERFACES
+  // ===========================================================================
+
   rclcpp::Publisher<
     std_msgs::msg::Float64MultiArray>::SharedPtr command_pub_;
 
@@ -414,6 +635,10 @@ private:
 
   sensor_msgs::msg::Joy::SharedPtr latest_joy_;
 
+  // ===========================================================================
+  // PARAMETERS AND STATE
+  // ===========================================================================
+
   std::string joy_topic_;
   std::string command_topic_;
 
@@ -421,7 +646,10 @@ private:
   double joy_timeout_sec_{0.5};
 
   double deadzone_{0.15};
-  double base_deadzone_{0.45};
+
+  // Twist axis calibration
+  double base_deadzone_{0.12};
+  double base_center_offset_{-0.30};
 
   int stick_x_axis_{0};
   int stick_y_axis_{1};
@@ -442,7 +670,7 @@ private:
   double wrist_twist_speed_rad_s_{0.60};
   double claw_speed_rad_s_{1.0};
 
-  double base_direction_{1.0};
+  double base_direction_{-1.0};
   double shoulder_direction_{1.0};
   double elbow_direction_{1.0};
   double wrist_roll_direction_{1.0};
@@ -452,10 +680,13 @@ private:
   rclcpp::Time last_joy_time_{0, 0, RCL_ROS_TIME};
 };
 
+
 int main(int argc, char ** argv)
 {
   rclcpp::init(argc, argv);
-  rclcpp::spin(std::make_shared<ArmJoystickTeleop>());
+  rclcpp::spin(
+    std::make_shared<ArmJoystickTeleop>());
   rclcpp::shutdown();
+
   return 0;
 }

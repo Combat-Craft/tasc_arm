@@ -188,7 +188,7 @@ private:
   int actuator_serial_fd_ = -1;
 
   std::string actuator_serial_device_ =
-    "/dev/armUSB";
+    "/dev/ttyUSB0";
 
   int actuator_serial_baud_ = 115200;
 
