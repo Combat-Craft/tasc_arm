@@ -240,7 +240,7 @@ private:
     base_direction_ =
       declare_parameter<double>(
         "base_direction",
-        -1.0);
+        1.0);
 
     shoulder_direction_ =
       declare_parameter<double>(
@@ -250,7 +250,7 @@ private:
     elbow_direction_ =
       declare_parameter<double>(
         "elbow_direction",
-        1.0);
+        -1.0);
 
     wrist_roll_direction_ =
       declare_parameter<double>(
