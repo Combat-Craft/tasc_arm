@@ -645,11 +645,11 @@ private:
   double update_rate_hz_{30.0};
   double joy_timeout_sec_{0.5};
 
-  double deadzone_{0.15};
+  double deadzone_{0.50};
 
   // Twist axis calibration
-  double base_deadzone_{0.12};
-  double base_center_offset_{-0.30};
+  double base_deadzone_{0.80};
+  double base_center_offset_{-0.40};
 
   int stick_x_axis_{0};
   int stick_y_axis_{1};
