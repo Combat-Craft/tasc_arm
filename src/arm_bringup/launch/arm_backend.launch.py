@@ -30,6 +30,7 @@ def generate_launch_description():
     control_node = Node(
         package="controller_manager",
         executable="ros2_control_node",
+        namespace="arm",
         parameters=[
             {"robot_description": robot_description_content},
             controller_config,
@@ -40,8 +41,13 @@ def generate_launch_description():
     robot_state_publisher = Node(
         package="robot_state_publisher",
         executable="robot_state_publisher",
+        namespace="arm",
         parameters=[
             {"robot_description": robot_description_content},
+        ],
+        remappings=[
+            ("tf", "/tf"),
+            ("tf_static", "/tf_static"),
         ],
         output="screen",
     )
@@ -49,10 +55,11 @@ def generate_launch_description():
     joint_state_broadcaster_spawner = Node(
         package="controller_manager",
         executable="spawner",
+        namespace="arm",
         arguments=[
             "joint_state_broadcaster",
             "--controller-manager",
-            "/controller_manager",
+            "/arm/controller_manager",
             "--controller-manager-timeout",
             "30",
         ],
@@ -62,10 +69,11 @@ def generate_launch_description():
     manual_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
+        namespace="arm",
         arguments=[
             "manual_controller",
             "--controller-manager",
-            "/controller_manager",
+            "/arm/controller_manager",
             "--controller-manager-timeout",
             "30",
         ],

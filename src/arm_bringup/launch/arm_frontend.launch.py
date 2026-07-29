@@ -6,6 +6,7 @@ def generate_launch_description():
     joy_node = Node(
         package="joy",
         executable="joy_node",
+        namespace="arm",
         name="joy_node",
         parameters=[{
             "dev": "/dev/input/js0",
@@ -18,13 +19,19 @@ def generate_launch_description():
     joystick_teleop = Node(
         package="arm_control",
         executable="joystick_teleop",
-        name="arm_2026_joystick_teleop",
+        namespace="arm",
+        name="joystick_teleop",
+        parameters=[{
+        "joy_topic": "/arm/joy",
+        "command_topic": "/arm/manual_controller/commands",
+        }],
         output="screen",
     )
 
     rviz_node = Node(
         package="rviz2",
         executable="rviz2",
+        name="rviz2",
         output="screen",
     )
 

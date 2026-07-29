@@ -1,0 +1,11 @@
+<library path="arm_dashboard_panel">
+  <class
+    name="arm_dashboard/ArmDashboardPanel"
+    type="arm_dashboard::ArmDashboardPanel"
+    base_class_type="rviz_common::Panel">
+
+    <description>
+      RViz2 dashboard panel for the TASC robotic arm.
+    </description>
+  </class>
+</library>

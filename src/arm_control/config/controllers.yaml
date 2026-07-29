@@ -1,4 +1,4 @@
-controller_manager:
+/arm/controller_manager:
   ros__parameters:
     update_rate: 50
 
@@ -8,7 +8,8 @@ controller_manager:
     manual_controller:
       type: forward_command_controller/ForwardCommandController
 
-manual_controller:
+
+/arm/manual_controller:
   ros__parameters:
     joints:
       - base_yaw

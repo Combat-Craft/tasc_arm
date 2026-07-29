@@ -78,6 +78,9 @@ hardware_interface::CallbackReturn Arm2026System::on_init(
   wrist_twist_target_position_rad_ = 0.0;
   claw_target_position_rad_ = 0.0;
 
+  base_encoder_read_valid_ = false;
+  reset_base_pid();
+
   return hardware_interface::CallbackReturn::SUCCESS;
 }
 
@@ -121,6 +124,120 @@ double Arm2026System::clampf(
   double maximum) const
 {
   return std::clamp(value, minimum, maximum);
+}
+
+bool Arm2026System::read_base_encoder_counts(
+  int64_t & counts)
+{
+  if (!base_encoder_ || !base_encoder_attached_)
+  {
+    return false;
+  }
+
+  if (!phidget_ok(
+        PhidgetEncoder_getPosition(
+          base_encoder_,
+          &counts),
+        "PhidgetEncoder_getPosition base"))
+  {
+    return false;
+  }
+
+  return true;
+}
+
+double Arm2026System::base_encoder_counts_to_output_rad(
+  int64_t relative_counts) const
+{
+  if (
+    base_encoder_counts_per_motor_rev_ <= 0.0 ||
+    base_gear_ratio_ <= 0.0)
+  {
+    return 0.0;
+  }
+
+  const double motor_revolutions =
+    static_cast<double>(relative_counts) /
+    base_encoder_counts_per_motor_rev_;
+
+  const double output_revolutions =
+    motor_revolutions /
+    base_gear_ratio_;
+
+  return
+    base_encoder_direction_ *
+    output_revolutions *
+    2.0 *
+    M_PI;
+}
+
+void Arm2026System::reset_base_pid()
+{
+  base_pid_integral_ = 0.0;
+  base_pid_previous_error_ = 0.0;
+}
+
+double Arm2026System::calculate_base_pid_velocity(
+  double target_position_rad,
+  double measured_position_rad,
+  double measured_velocity_rad_s,
+  double dt)
+{
+  if (!base_pid_enabled_ || dt <= 0.0)
+  {
+    return 0.0;
+  }
+
+  const double position_error =
+    target_position_rad -
+    measured_position_rad;
+
+  if (
+    std::fabs(position_error) <=
+    base_pid_position_tolerance_rad_)
+  {
+    reset_base_pid();
+    return 0.0;
+  }
+
+  base_pid_integral_ +=
+    position_error * dt;
+
+  base_pid_integral_ =
+    clampf(
+      base_pid_integral_,
+      -base_pid_integral_limit_,
+      base_pid_integral_limit_);
+
+  const double proportional_term =
+    base_pid_kp_ *
+    position_error;
+
+  const double integral_term =
+    base_pid_ki_ *
+    base_pid_integral_;
+
+  /*
+   * Derivative on measurement.
+   *
+   * This avoids a large derivative spike when the target changes.
+   */
+  const double derivative_term =
+    -base_pid_kd_ *
+    measured_velocity_rad_s;
+
+  const double output_velocity =
+    proportional_term +
+    integral_term +
+    derivative_term;
+
+  base_pid_previous_error_ =
+    position_error;
+
+  return clampf(
+    output_velocity,
+    -base_pid_max_velocity_rad_s_,
+    base_pid_max_velocity_rad_s_);
 }
 
 bool Arm2026System::phidget_ok(
@@ -288,7 +405,9 @@ bool Arm2026System::send_actuator_packet(
   }
 
   const uint8_t header = 0xAA;
-  const uint8_t checksum = shoulder_cmd ^ elbow_cmd;
+  const uint8_t checksum =
+    shoulder_cmd ^
+    elbow_cmd;
 
   const uint8_t packet[4] = {
     header,
@@ -298,7 +417,10 @@ bool Arm2026System::send_actuator_packet(
   };
 
   const ssize_t written =
-    ::write(actuator_serial_fd_, packet, sizeof(packet));
+    ::write(
+      actuator_serial_fd_,
+      packet,
+      sizeof(packet));
 
   if (written != static_cast<ssize_t>(sizeof(packet)))
   {
@@ -315,10 +437,30 @@ bool Arm2026System::send_actuator_packet(
 
 void Arm2026System::cleanup_phidgets()
 {
+  base_encoder_read_valid_ = false;
+  reset_base_pid();
+
+  if (base_encoder_)
+  {
+    phidget_ok(
+      Phidget_close(
+        reinterpret_cast<PhidgetHandle>(base_encoder_)),
+      "Phidget_close base encoder");
+
+    phidget_ok(
+      PhidgetEncoder_delete(&base_encoder_),
+      "PhidgetEncoder_delete base encoder");
+
+    base_encoder_ = nullptr;
+    base_encoder_attached_ = false;
+  }
+
   if (base_stepper_)
   {
     phidget_ok(
-      PhidgetStepper_setEngaged(base_stepper_, 0),
+      PhidgetStepper_setEngaged(
+        base_stepper_,
+        0),
       "PhidgetStepper_setEngaged(0) base");
 
     phidget_ok(
@@ -337,7 +479,9 @@ void Arm2026System::cleanup_phidgets()
   if (wrist_motor_1_)
   {
     phidget_ok(
-      PhidgetStepper_setEngaged(wrist_motor_1_, 0),
+      PhidgetStepper_setEngaged(
+        wrist_motor_1_,
+        0),
       "PhidgetStepper_setEngaged(0) wrist1");
 
     phidget_ok(
@@ -356,7 +500,9 @@ void Arm2026System::cleanup_phidgets()
   if (wrist_motor_2_)
   {
     phidget_ok(
-      PhidgetStepper_setEngaged(wrist_motor_2_, 0),
+      PhidgetStepper_setEngaged(
+        wrist_motor_2_,
+        0),
       "PhidgetStepper_setEngaged(0) wrist2");
 
     phidget_ok(
@@ -375,7 +521,9 @@ void Arm2026System::cleanup_phidgets()
   if (claw_stepper_)
   {
     phidget_ok(
-      PhidgetStepper_setEngaged(claw_stepper_, 0),
+      PhidgetStepper_setEngaged(
+        claw_stepper_,
+        0),
       "PhidgetStepper_setEngaged(0) claw");
 
     phidget_ok(
@@ -422,12 +570,13 @@ hardware_interface::CallbackReturn Arm2026System::on_configure(
 
   comms_node_ =
     std::make_shared<rclcpp::Node>(
-      "arm_2026_hw_bridge");
+      "arm_2026_hw_bridge",
+      "/arm");
 
   actuator_state_sub_ =
     comms_node_->create_subscription<
       std_msgs::msg::Float32MultiArray>(
-      "/arm_actuator_states",
+      "actuator_states",
       10,
       std::bind(
         &Arm2026System::actuator_state_callback,
@@ -437,7 +586,7 @@ hardware_interface::CallbackReturn Arm2026System::on_configure(
   debug_mode_sub_ =
     comms_node_->create_subscription<
       std_msgs::msg::Bool>(
-      "/arm_2026/debug_mode",
+      "debug_mode",
       10,
       std::bind(
         &Arm2026System::debug_mode_callback,
@@ -539,6 +688,76 @@ hardware_interface::CallbackReturn Arm2026System::on_configure(
       "Base Phidget attached on serial %d, hub port %d",
       base_device_serial_,
       base_hub_port_);
+  }
+
+  /*
+   * Base encoder
+   */
+  if (!phidget_ok(
+        PhidgetEncoder_create(&base_encoder_),
+        "PhidgetEncoder_create base"))
+  {
+    return hardware_interface::CallbackReturn::ERROR;
+  }
+
+  if (!phidget_ok(
+        Phidget_setDeviceSerialNumber(
+          reinterpret_cast<PhidgetHandle>(base_encoder_),
+          base_encoder_device_serial_),
+        "Phidget_setDeviceSerialNumber base encoder"))
+  {
+    return hardware_interface::CallbackReturn::ERROR;
+  }
+
+  if (!phidget_ok(
+        Phidget_setHubPort(
+          reinterpret_cast<PhidgetHandle>(base_encoder_),
+          base_encoder_hub_port_),
+        "Phidget_setHubPort base encoder"))
+  {
+    return hardware_interface::CallbackReturn::ERROR;
+  }
+
+  if (!phidget_ok(
+        Phidget_setChannel(
+          reinterpret_cast<PhidgetHandle>(base_encoder_),
+          base_encoder_channel_),
+        "Phidget_setChannel base encoder"))
+  {
+    return hardware_interface::CallbackReturn::ERROR;
+  }
+
+  if (!phidget_ok(
+        Phidget_openWaitForAttachment(
+          reinterpret_cast<PhidgetHandle>(base_encoder_),
+          1000),
+        "Phidget_openWaitForAttachment base encoder"))
+  {
+    RCLCPP_WARN(
+      rclcpp::get_logger("Arm2026System"),
+      "Base encoder not attached on hub port %d. "
+      "Continuing without encoder feedback.",
+      base_encoder_hub_port_);
+
+    base_encoder_attached_ = false;
+    base_encoder_read_valid_ = false;
+
+    if (base_encoder_)
+    {
+      PhidgetEncoder_delete(&base_encoder_);
+      base_encoder_ = nullptr;
+    }
+  }
+  else
+  {
+    base_encoder_attached_ = true;
+    base_encoder_read_valid_ = false;
+
+    RCLCPP_INFO(
+      rclcpp::get_logger("Arm2026System"),
+      "Base encoder attached on serial %d, hub port %d",
+      base_encoder_device_serial_,
+      base_encoder_hub_port_);
   }
 
   /*
@@ -733,7 +952,7 @@ hardware_interface::CallbackReturn Arm2026System::on_activate(
   }
 
   /*
-   * Base initialization
+   * Base stepper initialization
    */
   if (base_stepper_ && base_stepper_attached_)
   {
@@ -785,7 +1004,9 @@ hardware_interface::CallbackReturn Arm2026System::on_activate(
     }
 
     base_target_position_rad_ =
-      base_position_deg * M_PI / 180.0;
+      base_position_deg *
+      M_PI /
+      180.0;
 
     hw_states_[BASE_IDX] =
       base_target_position_rad_;
@@ -798,7 +1019,56 @@ hardware_interface::CallbackReturn Arm2026System::on_activate(
   }
   else
   {
-    base_target_position_rad_ = hw_states_[BASE_IDX];
+    base_target_position_rad_ =
+      hw_states_[BASE_IDX];
+  }
+
+  /*
+   * Base encoder initialization
+   */
+  base_encoder_read_valid_ = false;
+  reset_base_pid();
+
+  if (base_encoder_ && base_encoder_attached_)
+  {
+    int64_t encoder_counts = 0;
+
+    if (!read_base_encoder_counts(encoder_counts))
+    {
+      RCLCPP_ERROR(
+        rclcpp::get_logger("Arm2026System"),
+        "Failed to read base encoder during activation.");
+
+      return hardware_interface::CallbackReturn::ERROR;
+    }
+
+    base_encoder_zero_counts_ =
+      encoder_counts;
+
+    base_encoder_last_counts_ =
+      encoder_counts;
+
+    base_encoder_position_rad_ = 0.0;
+    base_encoder_previous_position_rad_ = 0.0;
+    base_encoder_velocity_rad_s_ = 0.0;
+
+    hw_states_[BASE_IDX] = 0.0;
+    base_target_position_rad_ = 0.0;
+
+    base_encoder_read_valid_ = true;
+
+    RCLCPP_INFO(
+      rclcpp::get_logger("Arm2026System"),
+      "Base encoder zeroed at raw count %lld",
+      static_cast<long long>(
+        base_encoder_zero_counts_));
+  }
+  else
+  {
+    RCLCPP_WARN(
+      rclcpp::get_logger("Arm2026System"),
+      "Base encoder unavailable. "
+      "Base will use stepper-estimated feedback.");
   }
 
   /*
@@ -878,20 +1148,28 @@ hardware_interface::CallbackReturn Arm2026System::on_activate(
     wrist_motor_2_attached_)
   {
     const double wrist_motor_1_position_rad =
-      wrist_motor_1_position_deg * M_PI / 180.0;
+      wrist_motor_1_position_deg *
+      M_PI /
+      180.0;
 
     const double wrist_motor_2_position_rad =
-      wrist_motor_2_position_deg * M_PI / 180.0;
+      wrist_motor_2_position_deg *
+      M_PI /
+      180.0;
 
     wrist_roll_target_position_rad_ =
-      0.5 * (
+      0.5 *
+      (
         wrist_motor_1_position_rad +
-        wrist_motor_2_position_rad);
+        wrist_motor_2_position_rad
+      );
 
     wrist_twist_target_position_rad_ =
-      0.5 * (
+      0.5 *
+      (
         wrist_motor_1_position_rad -
-        wrist_motor_2_position_rad);
+        wrist_motor_2_position_rad
+      );
   }
   else
   {
@@ -946,7 +1224,9 @@ hardware_interface::CallbackReturn Arm2026System::on_activate(
       "PhidgetStepper_getPosition claw");
 
     claw_target_position_rad_ =
-      claw_position_deg * M_PI / 180.0;
+      claw_position_deg *
+      M_PI /
+      180.0;
   }
   else
   {
@@ -1009,9 +1289,63 @@ hardware_interface::return_type Arm2026System::read(
   const rclcpp::Duration & period)
 {
   /*
-   * Base position state
+   * Base position feedback
    */
-  if (base_stepper_ && base_stepper_attached_)
+  if (base_encoder_ && base_encoder_attached_)
+  {
+    int64_t encoder_counts = 0;
+
+    if (read_base_encoder_counts(encoder_counts))
+    {
+      base_encoder_read_valid_ = true;
+
+      const int64_t relative_counts =
+        encoder_counts -
+        base_encoder_zero_counts_;
+
+      base_encoder_position_rad_ =
+        base_encoder_counts_to_output_rad(
+          relative_counts);
+
+      const double dt =
+        std::clamp(
+          period.seconds(),
+          0.0001,
+          0.1);
+
+      base_encoder_velocity_rad_s_ =
+        (
+          base_encoder_position_rad_ -
+          base_encoder_previous_position_rad_
+        ) /
+        dt;
+
+      base_encoder_previous_position_rad_ =
+        base_encoder_position_rad_;
+
+      base_encoder_last_counts_ =
+        encoder_counts;
+
+      hw_states_[BASE_IDX] =
+        base_encoder_position_rad_;
+    }
+    else
+    {
+      base_encoder_read_valid_ = false;
+      base_encoder_velocity_rad_s_ = 0.0;
+
+      if (comms_node_)
+      {
+        RCLCPP_WARN_THROTTLE(
+          comms_node_->get_logger(),
+          *comms_node_->get_clock(),
+          1000,
+          "Base encoder read failed. "
+          "Base PID output disabled.");
+      }
+    }
+  }
+  else if (base_stepper_ && base_stepper_attached_)
   {
     double base_position_deg = 0.0;
 
@@ -1022,13 +1356,21 @@ hardware_interface::return_type Arm2026System::read(
           "PhidgetStepper_getPosition base"))
     {
       hw_states_[BASE_IDX] =
-        base_position_deg * M_PI / 180.0;
+        base_position_deg *
+        M_PI /
+        180.0;
     }
+
+    base_encoder_read_valid_ = false;
+    base_encoder_velocity_rad_s_ = 0.0;
   }
   else
   {
     hw_states_[BASE_IDX] =
       base_target_position_rad_;
+
+    base_encoder_read_valid_ = false;
+    base_encoder_velocity_rad_s_ = 0.0;
   }
 
   /*
@@ -1045,21 +1387,26 @@ hardware_interface::return_type Arm2026System::read(
   else
   {
     const double dt =
-      std::clamp(period.seconds(), 0.0, 0.1);
+      std::clamp(
+        period.seconds(),
+        0.0,
+        0.1);
 
     if (
       actuator_command_shoulder_ >
       actuator_command_deadband_)
     {
       actuator_estimated_shoulder_pos_ +=
-        actuator_estimated_shoulder_speed_rad_s_ * dt;
+        actuator_estimated_shoulder_speed_rad_s_ *
+        dt;
     }
     else if (
       actuator_command_shoulder_ <
       -actuator_command_deadband_)
     {
       actuator_estimated_shoulder_pos_ -=
-        actuator_estimated_shoulder_speed_rad_s_ * dt;
+        actuator_estimated_shoulder_speed_rad_s_ *
+        dt;
     }
 
     if (
@@ -1067,14 +1414,16 @@ hardware_interface::return_type Arm2026System::read(
       actuator_command_deadband_)
     {
       actuator_estimated_elbow_pos_ +=
-        actuator_estimated_elbow_speed_rad_s_ * dt;
+        actuator_estimated_elbow_speed_rad_s_ *
+        dt;
     }
     else if (
       actuator_command_elbow_ <
       -actuator_command_deadband_)
     {
       actuator_estimated_elbow_pos_ -=
-        actuator_estimated_elbow_speed_rad_s_ * dt;
+        actuator_estimated_elbow_speed_rad_s_ *
+        dt;
     }
 
     if (!debug_mode_enabled_.load())
@@ -1100,8 +1449,7 @@ hardware_interface::return_type Arm2026System::read(
   }
 
   /*
-   * Wrist and claw use the internal targets as their state until
-   * dedicated physical feedback is added.
+   * Wrist and claw currently use estimated target positions.
    */
   hw_states_[WRIST_ROLL_IDX] =
     wrist_roll_target_position_rad_;
@@ -1120,10 +1468,13 @@ hardware_interface::return_type Arm2026System::write(
   const rclcpp::Duration & period)
 {
   const double dt =
-    std::clamp(period.seconds(), 0.0, 0.1);
+    std::clamp(
+      period.seconds(),
+      0.0,
+      0.1);
 
   /*
-   * Clamp the incoming velocity commands.
+   * Clamp incoming manual velocity commands.
    */
   if (!debug_mode_enabled_.load())
   {
@@ -1165,22 +1516,26 @@ hardware_interface::return_type Arm2026System::write(
   }
 
   /*
-   * Integrate stepper velocity commands into position targets.
+   * Integrate velocity commands into position targets.
    */
   base_target_position_rad_ +=
-    hw_commands_[BASE_IDX] * dt;
+    hw_commands_[BASE_IDX] *
+    dt;
 
   wrist_roll_target_position_rad_ +=
-    hw_commands_[WRIST_ROLL_IDX] * dt;
+    hw_commands_[WRIST_ROLL_IDX] *
+    dt;
 
   wrist_twist_target_position_rad_ +=
-    hw_commands_[WRIST_TWIST_IDX] * dt;
+    hw_commands_[WRIST_TWIST_IDX] *
+    dt;
 
   claw_target_position_rad_ +=
-    hw_commands_[CLAW_IDX] * dt;
+    hw_commands_[CLAW_IDX] *
+    dt;
 
   /*
-   * Apply position limits to the accumulated targets.
+   * Apply joint position limits.
    */
   if (!debug_mode_enabled_.load())
   {
@@ -1209,9 +1564,6 @@ hardware_interface::return_type Arm2026System::write(
         claw_max_);
   }
 
-  /*
-   * Shoulder and elbow remain direct directional commands.
-   */
   actuator_command_shoulder_ =
     hw_commands_[SHOULDER_IDX];
 
@@ -1219,7 +1571,7 @@ hardware_interface::return_type Arm2026System::write(
     hw_commands_[ELBOW_IDX];
 
   /*
-   * Prevent further physical movement when estimated limits are reached.
+   * Prevent estimated actuator limit violations.
    */
   if (!debug_mode_enabled_.load())
   {
@@ -1253,16 +1605,12 @@ hardware_interface::return_type Arm2026System::write(
   }
 
   const uint8_t shoulder_byte =
-    command_to_byte(actuator_command_shoulder_);
+    command_to_byte(
+      actuator_command_shoulder_);
 
   const uint8_t elbow_byte =
-    command_to_byte(actuator_command_elbow_);
-
-  /*
-   * Convert accumulated targets into Phidget degrees.
-   */
-  const double base_target_deg =
-    base_target_position_rad_ * 180.0 / M_PI;
+    command_to_byte(
+      actuator_command_elbow_);
 
   const double wrist_motor_1_target_rad =
     wrist_roll_target_position_rad_ +
@@ -1273,13 +1621,19 @@ hardware_interface::return_type Arm2026System::write(
     wrist_twist_target_position_rad_;
 
   const double wrist_motor_1_target_deg =
-    wrist_motor_1_target_rad * 180.0 / M_PI;
+    wrist_motor_1_target_rad *
+    180.0 /
+    M_PI;
 
   const double wrist_motor_2_target_deg =
-    wrist_motor_2_target_rad * 180.0 / M_PI;
+    wrist_motor_2_target_rad *
+    180.0 /
+    M_PI;
 
   const double claw_target_deg =
-    claw_target_position_rad_ * 180.0 / M_PI;
+    claw_target_position_rad_ *
+    180.0 /
+    M_PI;
 
   if (comms_node_)
   {
@@ -1330,11 +1684,99 @@ hardware_interface::return_type Arm2026System::write(
         "PhidgetStepper_setEngaged base re-engage");
     }
 
-    phidget_ok(
-      PhidgetStepper_setTargetPosition(
-        base_stepper_,
-        base_target_deg),
-      "PhidgetStepper_setTargetPosition base");
+    if (
+      base_encoder_ &&
+      base_encoder_attached_ &&
+      base_encoder_read_valid_)
+    {
+      const double pid_velocity_rad_s =
+        calculate_base_pid_velocity(
+          base_target_position_rad_,
+          hw_states_[BASE_IDX],
+          base_encoder_velocity_rad_s_,
+          dt);
+
+      double current_stepper_position_deg = 0.0;
+
+      if (phidget_ok(
+            PhidgetStepper_getPosition(
+              base_stepper_,
+              &current_stepper_position_deg),
+            "PhidgetStepper_getPosition base PID"))
+      {
+        const double position_increment_deg =
+          pid_velocity_rad_s *
+          dt *
+          180.0 /
+          M_PI;
+
+        const double next_stepper_target_deg =
+          current_stepper_position_deg +
+          position_increment_deg;
+
+        phidget_ok(
+          PhidgetStepper_setTargetPosition(
+            base_stepper_,
+            next_stepper_target_deg),
+          "PhidgetStepper_setTargetPosition base PID");
+
+        if (comms_node_)
+        {
+          RCLCPP_INFO_THROTTLE(
+            comms_node_->get_logger(),
+            *comms_node_->get_clock(),
+            500,
+            "base PID | target=%.4f measured=%.4f "
+            "error=%.4f velocity=%.4f",
+            base_target_position_rad_,
+            hw_states_[BASE_IDX],
+            base_target_position_rad_ -
+            hw_states_[BASE_IDX],
+            pid_velocity_rad_s);
+        }
+      }
+    }
+    else if (base_encoder_attached_)
+    {
+      /*
+       * Encoder was expected but its current reading is invalid.
+       * Hold the present stepper position instead of switching to
+       * uncontrolled open-loop motion.
+       */
+      double current_stepper_position_deg = 0.0;
+
+      if (phidget_ok(
+            PhidgetStepper_getPosition(
+              base_stepper_,
+              &current_stepper_position_deg),
+            "PhidgetStepper_getPosition base encoder fault"))
+      {
+        phidget_ok(
+          PhidgetStepper_setTargetPosition(
+            base_stepper_,
+            current_stepper_position_deg),
+          "PhidgetStepper_setTargetPosition base encoder fault hold");
+      }
+
+      reset_base_pid();
+    }
+    else
+    {
+      /*
+       * Encoder was unavailable from startup.
+       * Fall back to the original open-loop position control.
+       */
+      const double base_target_deg =
+        base_target_position_rad_ *
+        180.0 /
+        M_PI;
+
+      phidget_ok(
+        PhidgetStepper_setTargetPosition(
+          base_stepper_,
+          base_target_deg),
+        "PhidgetStepper_setTargetPosition base fallback");
+    }
   }
 
   /*
@@ -1422,7 +1864,7 @@ hardware_interface::return_type Arm2026System::write(
   }
 
   /*
-   * ESP32 linear actuator command.
+   * ESP32 linear actuator command
    */
   if (actuator_serial_fd_ >= 0)
   {

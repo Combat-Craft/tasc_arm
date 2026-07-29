@@ -2,6 +2,7 @@
 #define ARM_2026__ARM_2026_SYSTEM_HPP_
 
 #include <atomic>
+#include <cstdint>
 #include <memory>
 #include <string>
 #include <thread>
@@ -84,6 +85,23 @@ private:
 
   uint8_t command_to_byte(double value) const;
 
+  /*
+   * Base encoder and PID helpers.
+   */
+  bool base_encoder_read_valid_ = false;
+  bool read_base_encoder_counts(int64_t & counts);
+
+  double base_encoder_counts_to_output_rad(
+    int64_t relative_counts) const;
+
+  void reset_base_pid();
+
+  double calculate_base_pid_velocity(
+    double target_position_rad,
+    double measured_position_rad,
+    double measured_velocity_rad_s,
+    double dt);
+
   static constexpr std::size_t NUM_JOINTS = 6;
 
   static constexpr std::size_t BASE_IDX = 0;
@@ -128,7 +146,6 @@ private:
 
   /*
    * Maximum accepted manual velocity commands.
-   * These protect against unexpectedly large controller values.
    */
   double base_command_limit_rad_s_ = 1.0;
   double shoulder_command_limit_rad_s_ = 1.0;
@@ -139,9 +156,6 @@ private:
 
   /*
    * Internal target positions for the Phidget steppers.
-   *
-   * The manual controller sends velocity commands. The hardware
-   * interface integrates velocity over time and updates these targets.
    */
   double base_target_position_rad_ = 0.0;
   double wrist_roll_target_position_rad_ = 0.0;
@@ -203,6 +217,84 @@ private:
   int base_channel_ = 0;
 
   /*
+   * Base quadrature encoder.
+   *
+   * ENC1001 is connected to VINT hub port 5.
+   * The encoder is mounted on the motor shaft before the gearbox.
+   */
+  PhidgetEncoderHandle base_encoder_ = nullptr;
+  bool base_encoder_attached_ = false;
+
+  int base_encoder_device_serial_ = 766944;
+  int base_encoder_hub_port_ = 5;
+  int base_encoder_channel_ = 0;
+
+  /*
+   * Encoder configuration.
+   *
+   * A 300 CPR quadrature encoder commonly produces 1200 decoded
+   * position counts per motor-shaft revolution.
+   *
+   * Verify this by rotating the encoder shaft exactly one revolution
+   * and checking the raw position-count change.
+   */
+  double base_encoder_counts_per_motor_rev_ = 1200.0;
+
+  /*
+   * Actual gearbox ratio for the nominal 77:1 Phidget gearbox.
+   * Change this if your motor datasheet specifies a different ratio.
+   */
+  double base_gear_ratio_ = 76.765625;
+
+  /*
+   * Use -1.0 if positive motor motion produces negative encoder counts.
+   * Use +1.0 if their positive directions already match.
+   */
+  double base_encoder_direction_ = -1.0;
+
+  int64_t base_encoder_zero_counts_ = 0;
+  int64_t base_encoder_last_counts_ = 0;
+
+  double base_encoder_position_rad_ = 0.0;
+  double base_encoder_previous_position_rad_ = 0.0;
+  double base_encoder_velocity_rad_s_ = 0.0;
+
+  /*
+   * Base position PID.
+   *
+   * Input:
+   *   target base angle minus encoder-measured base angle
+   *
+   * Output:
+   *   requested base output velocity in rad/s
+   *
+   * Start conservatively. Tune P first, then add D if needed.
+   */
+  bool base_pid_enabled_ = true;
+
+  double base_pid_kp_ = 0.50;
+  double base_pid_ki_ = 0.0;
+  double base_pid_kd_ = 0.0;
+
+  double base_pid_integral_ = 0.0;
+  double base_pid_previous_error_ = 0.0;
+
+  double base_pid_integral_limit_ = 0.25;
+
+  /*
+   * Stop correcting inside this position error to avoid reversing
+   * continuously inside mechanical backlash.
+   *
+   * 0.01 rad is approximately 0.57 degrees.
+   */
+  double base_pid_position_tolerance_rad_ = 0.01;
+
+  /*
+   * Maximum PID output speed at the gearbox output.
+   */
+  double base_pid_max_velocity_rad_s_ = 0.50;
+
+  /*
    * Wrist differential steppers.
    */
   PhidgetStepperHandle wrist_motor_1_ = nullptr;
@@ -236,9 +328,8 @@ private:
 
   double claw_rescale_factor_deg_ = 0.000075;
 
-    /*
+  /*
    * Phidget stepper motor electrical limits.
-   * Based on the 3322_1 NEMA11 motor rated current.
    */
   double base_current_limit_a_ = 0.67;
   double wrist_motor_1_current_limit_a_ = 0.67;
@@ -246,10 +337,7 @@ private:
   double claw_current_limit_a_ = 0.67;
 
   /*
-   * Maximum output speed:
-   * 13 RPM = approximately 1.36 rad/s = approximately 78 deg/s.
-   *
-   * Use 75 deg/s to remain slightly below the stated limit.
+   * Stepper velocity and acceleration limits.
    */
   double base_velocity_limit_deg_ = 75.0;
   double base_acceleration_deg_ = 150.0;

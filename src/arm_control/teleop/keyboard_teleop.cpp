@@ -26,11 +26,13 @@ class TerminalGuard
 public:
   TerminalGuard()
   {
-    if (!isatty(STDIN_FILENO)) {
+    if (!isatty(STDIN_FILENO))
+    {
       return;
     }
 
-    if (tcgetattr(STDIN_FILENO, &original_) != 0) {
+    if (tcgetattr(STDIN_FILENO, &original_) != 0)
+    {
       return;
     }
 
@@ -39,14 +41,16 @@ public:
     raw.c_cc[VMIN] = 0;
     raw.c_cc[VTIME] = 0;
 
-    if (tcsetattr(STDIN_FILENO, TCSANOW, &raw) == 0) {
+    if (tcsetattr(STDIN_FILENO, TCSANOW, &raw) == 0)
+    {
       active_ = true;
     }
   }
 
   ~TerminalGuard()
   {
-    if (active_) {
+    if (active_)
+    {
       tcsetattr(STDIN_FILENO, TCSANOW, &original_);
     }
   }
@@ -63,33 +67,49 @@ class KeyboardTeleop : public rclcpp::Node
 {
 public:
   KeyboardTeleop()
-  : Node("arm_2026_keyboard_teleop")
+  : Node("keyboard_teleop")
   {
-    publish_controller_commands_ = declare_parameter<bool>(
-      "publish_controller_commands", true);
+    publish_controller_commands_ =
+      declare_parameter<bool>(
+        "publish_controller_commands",
+        true);
 
-    require_joint_state_before_motion_ = declare_parameter<bool>(
-      "require_joint_state_before_motion", false);
+    require_joint_state_before_motion_ =
+      declare_parameter<bool>(
+        "require_joint_state_before_motion",
+        false);
 
-    command_speed_rad_s_ = declare_parameter<double>(
-      "command_speed_rad_s", 0.25);
+    command_speed_rad_s_ =
+      declare_parameter<double>(
+        "command_speed_rad_s",
+        0.25);
 
-    hold_timeout_ms_ = declare_parameter<int>(
-      "hold_timeout_ms", 180);
+    hold_timeout_ms_ =
+      declare_parameter<int>(
+        "hold_timeout_ms",
+        180);
 
+    /*
+     * Relative topic names are used so launching this node under the
+     * "arm" namespace produces:
+     *
+     *   /arm/manual_controller/commands
+     *   /arm/debug_mode
+     *   /arm/joint_states
+     */
     command_pub_ =
       create_publisher<std_msgs::msg::Float64MultiArray>(
-        "/manual_controller/commands",
+        "/arm/manual_controller/commands",
         10);
 
     debug_pub_ =
       create_publisher<std_msgs::msg::Bool>(
-        "/arm_2026/debug_mode",
+        "/arm/debug_mode",
         10);
 
     joint_state_sub_ =
       create_subscription<sensor_msgs::msg::JointState>(
-        "/joint_states",
+        "/arm/joint_states",
         10,
         std::bind(
           &KeyboardTeleop::joint_state_callback,
@@ -101,23 +121,28 @@ public:
 
   void spin()
   {
-    if (!isatty(STDIN_FILENO)) {
+    if (!isatty(STDIN_FILENO))
+    {
       RCLCPP_ERROR(
         get_logger(),
         "Keyboard teleop requires a real terminal (TTY).");
+
       return;
     }
 
     TerminalGuard terminal_guard;
     rclcpp::WallRate loop_rate(50.0);
 
-    while (rclcpp::ok()) {
+    while (rclcpp::ok())
+    {
       rclcpp::spin_some(shared_from_this());
 
       char key = 0;
 
-      if (read_key(key)) {
-        if (!handle_key(key)) {
+      if (read_key(key))
+      {
+        if (!handle_key(key))
+        {
           break;
         }
       }
@@ -134,7 +159,7 @@ private:
   {
     std::printf(
       "\n"
-      "Keyboard teleop for arm_2026\n"
+      "Keyboard teleop for arm\n"
       "Commands:\n"
       "  q/a : base + / -\n"
       "  w/s : shoulder + / -\n"
@@ -149,11 +174,11 @@ private:
       "\n");
 
     std::printf(
-      "Publishing to /manual_controller/commands: %s\n",
+      "Publishing to /arm/manual_controller/commands: %s\n",
       publish_controller_commands_ ? "yes" : "no");
 
     std::printf(
-      "Require joint states: %s\n",
+      "Require /arm/joint_states: %s\n",
       require_joint_state_before_motion_ ? "yes" : "no");
 
     print_status();
@@ -208,8 +233,10 @@ private:
         nullptr,
         &timeout);
 
-    if (ready < 0) {
-      if (errno != EINTR) {
+    if (ready < 0)
+    {
+      if (errno != EINTR)
+      {
         RCLCPP_WARN(
           get_logger(),
           "select() failed while reading keyboard input: %s",
@@ -219,12 +246,16 @@ private:
       return false;
     }
 
-    if (ready == 0) {
+    if (ready == 0)
+    {
       return false;
     }
 
     const ssize_t bytes_read =
-      ::read(STDIN_FILENO, &key, 1);
+      ::read(
+        STDIN_FILENO,
+        &key,
+        1);
 
     return bytes_read == 1;
   }
@@ -232,66 +263,93 @@ private:
   void joint_state_callback(
     const sensor_msgs::msg::JointState::SharedPtr msg)
   {
-    if (!have_joint_state_ &&
-        !msg->name.empty() &&
-        !msg->position.empty()) {
+    if (
+      !have_joint_state_ &&
+      !msg->name.empty() &&
+      !msg->position.empty())
+    {
       have_joint_state_ = true;
 
       RCLCPP_INFO(
         get_logger(),
-        "Received initial /joint_states message.");
+        "Received initial /arm/joint_states message.");
     }
   }
 
   bool handle_key(char key)
   {
-    switch (key) {
+    switch (key)
+    {
       case 'q':
-        set_hold_joint(BASE_IDX, command_speed_rad_s_);
+        set_hold_joint(
+          BASE_IDX,
+          command_speed_rad_s_);
         return true;
 
       case 'a':
-        set_hold_joint(BASE_IDX, -command_speed_rad_s_);
+        set_hold_joint(
+          BASE_IDX,
+          -command_speed_rad_s_);
         return true;
 
       case 'w':
-        set_hold_joint(SHOULDER_IDX, command_speed_rad_s_);
+        set_hold_joint(
+          SHOULDER_IDX,
+          command_speed_rad_s_);
         return true;
 
       case 's':
-        set_hold_joint(SHOULDER_IDX, -command_speed_rad_s_);
+        set_hold_joint(
+          SHOULDER_IDX,
+          -command_speed_rad_s_);
         return true;
 
       case 'e':
-        set_hold_joint(ELBOW_IDX, command_speed_rad_s_);
+        set_hold_joint(
+          ELBOW_IDX,
+          command_speed_rad_s_);
         return true;
 
       case 'd':
-        set_hold_joint(ELBOW_IDX, -command_speed_rad_s_);
+        set_hold_joint(
+          ELBOW_IDX,
+          -command_speed_rad_s_);
         return true;
 
       case 'r':
-        set_hold_joint(WRIST_TWIST_IDX, command_speed_rad_s_);
+        set_hold_joint(
+          WRIST_TWIST_IDX,
+          command_speed_rad_s_);
         return true;
 
       case 'f':
-        set_hold_joint(WRIST_TWIST_IDX, -command_speed_rad_s_);
+        set_hold_joint(
+          WRIST_TWIST_IDX,
+          -command_speed_rad_s_);
         return true;
 
       case 't':
-        set_hold_joint(WRIST_ROLL_IDX, command_speed_rad_s_);
+        set_hold_joint(
+          WRIST_ROLL_IDX,
+          command_speed_rad_s_);
         return true;
 
       case 'g':
-        set_hold_joint(WRIST_ROLL_IDX, -command_speed_rad_s_);
+        set_hold_joint(
+          WRIST_ROLL_IDX,
+          -command_speed_rad_s_);
         return true;
 
       case 'y':
-        set_hold_joint(CLAW_IDX, command_speed_rad_s_);
+        set_hold_joint(
+          CLAW_IDX,
+          command_speed_rad_s_);
         return true;
 
       case 'h':
-        set_hold_joint(CLAW_IDX, -command_speed_rad_s_);
+        set_hold_joint(
+          CLAW_IDX,
+          -command_speed_rad_s_);
         return true;
 
       case 'z':
@@ -330,13 +388,15 @@ private:
     std::size_t joint_index,
     double velocity)
   {
-    if (!have_joint_state_ &&
-        require_joint_state_before_motion_) {
+    if (
+      !have_joint_state_ &&
+      require_joint_state_before_motion_)
+    {
       RCLCPP_WARN_THROTTLE(
         get_logger(),
         *get_clock(),
         2000,
-        "Waiting for /joint_states before accepting commands.");
+        "Waiting for /arm/joint_states before accepting commands.");
 
       return;
     }
@@ -349,7 +409,8 @@ private:
 
     hold_deadlines_[joint_index] =
       std::chrono::steady_clock::now() +
-      std::chrono::milliseconds(hold_timeout_ms_);
+      std::chrono::milliseconds(
+        hold_timeout_ms_);
 
     publish_commands();
   }
@@ -361,17 +422,22 @@ private:
 
     bool command_changed = false;
 
-    for (std::size_t i = 0;
-         i < velocity_commands_.size();
-         ++i) {
-      if (std::fabs(velocity_commands_[i]) > 1e-9 &&
-          now > hold_deadlines_[i]) {
+    for (
+      std::size_t i = 0;
+      i < velocity_commands_.size();
+      ++i)
+    {
+      if (
+        std::fabs(velocity_commands_[i]) > 1e-9 &&
+        now > hold_deadlines_[i])
+      {
         velocity_commands_[i] = 0.0;
         command_changed = true;
       }
     }
 
-    if (command_changed) {
+    if (command_changed)
+    {
       publish_commands();
     }
   }
@@ -384,10 +450,12 @@ private:
 
   void toggle_debug_mode()
   {
-    debug_mode_enabled_ = !debug_mode_enabled_;
+    debug_mode_enabled_ =
+      !debug_mode_enabled_;
 
     std_msgs::msg::Bool msg;
     msg.data = debug_mode_enabled_;
+
     debug_pub_->publish(msg);
 
     print_debug_banner();
@@ -395,7 +463,10 @@ private:
 
   void publish_commands()
   {
-    if (publish_controller_commands_ && command_pub_) {
+    if (
+      publish_controller_commands_ &&
+      command_pub_)
+    {
       std_msgs::msg::Float64MultiArray msg;
 
       msg.data.assign(
@@ -409,6 +480,7 @@ private:
   }
 
   static constexpr std::size_t NUM_JOINTS = 6;
+
   static constexpr std::size_t BASE_IDX = 0;
   static constexpr std::size_t SHOULDER_IDX = 1;
   static constexpr std::size_t ELBOW_IDX = 2;
@@ -458,5 +530,6 @@ int main(int argc, char * argv[])
   node->spin();
 
   rclcpp::shutdown();
+
   return 0;
 }

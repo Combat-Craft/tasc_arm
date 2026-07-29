@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<package format="3">
+
+  <name>arm_dashboard</name>
+  <version>0.0.1</version>
+
+  <description>
+    RViz2 dashboard panel for monitoring and operating the TASC robotic arm.
+  </description>
+
+  <maintainer email="your_email@example.com">
+    ibrahim
+  </maintainer>
+
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>rviz_common</depend>
+  <depend>pluginlib</depend>
+
+  <depend>sensor_msgs</depend>
+  <depend>std_msgs</depend>
+
+  <exec_depend>rviz2</exec_depend>
+  <exec_depend>arm_description</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+
+    <rviz plugin="${prefix}/plugin_description.xml"/>
+  </export>
+
+</package>

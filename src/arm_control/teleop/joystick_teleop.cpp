@@ -14,7 +14,7 @@ class ArmJoystickTeleop : public rclcpp::Node
 {
 public:
   ArmJoystickTeleop()
-  : Node("arm_2026_joystick_teleop")
+  : Node("joystick_teleop")
   {
     declare_parameters();
 
@@ -115,12 +115,12 @@ private:
     joy_topic_ =
       declare_parameter<std::string>(
         "joy_topic",
-        "/joy");
+        "/arm/joy");
 
     command_topic_ =
       declare_parameter<std::string>(
         "command_topic",
-        "/manual_controller/commands");
+        "/arm/manual_controller/commands");
 
     update_rate_hz_ =
       declare_parameter<double>(
