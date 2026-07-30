@@ -153,7 +153,7 @@ void ArmDashboardPanel::build_ui()
     "padding: 4px;");
 
   joystick_status_label_ =
-    new QLabel("Joystick: waiting for /joy", right_column_widget);
+    new QLabel("Joystick: waiting for /arm/joy", right_column_widget);
 
   joystick_status_label_->setAlignment(Qt::AlignCenter);
   joystick_status_label_->setStyleSheet(
@@ -409,7 +409,7 @@ void ArmDashboardPanel::onInitialize()
   joy_sub_ =
     raw_node_->create_subscription<
       sensor_msgs::msg::Joy>(
-        "/joy",
+        "/arm/joy",
         10,
         std::bind(
           &ArmDashboardPanel::joy_callback,

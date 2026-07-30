@@ -672,9 +672,9 @@ private:
 
   double base_direction_{-1.0};
   double shoulder_direction_{1.0};
-  double elbow_direction_{1.0};
+  double elbow_direction_{-1.0};
   double wrist_roll_direction_{1.0};
-  double wrist_twist_direction_{1.0};
+  double wrist_twist_direction_{-1.0};
   double claw_direction_{1.0};
 
   rclcpp::Time last_joy_time_{0, 0, RCL_ROS_TIME};

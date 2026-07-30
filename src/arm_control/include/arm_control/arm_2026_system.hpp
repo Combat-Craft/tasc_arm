@@ -323,10 +323,10 @@ private:
    */
   double base_rescale_factor_deg_ = 0.00146103896;
 
-  double wrist_motor_1_rescale_factor_deg_ = 0.000225;
-  double wrist_motor_2_rescale_factor_deg_ = 0.000225;
+  double wrist_motor_1_rescale_factor_deg_ = 0.001125;
+  double wrist_motor_2_rescale_factor_deg_ = 0.001125;
 
-  double claw_rescale_factor_deg_ = 0.000075;
+  double claw_rescale_factor_deg_ = 0.001125;
 
   /*
    * Phidget stepper motor electrical limits.
