@@ -2,12 +2,14 @@
 #include <array>
 #include <chrono>
 #include <cmath>
+#include <cstdio>
 #include <functional>
 #include <memory>
 #include <string>
 
 #include "rclcpp/rclcpp.hpp"
 #include "sensor_msgs/msg/joy.hpp"
+#include "std_msgs/msg/bool.hpp"
 #include "std_msgs/msg/float64_multi_array.hpp"
 
 class ArmJoystickTeleop : public rclcpp::Node
@@ -21,6 +23,11 @@ public:
     command_pub_ =
       create_publisher<std_msgs::msg::Float64MultiArray>(
         command_topic_,
+        10);
+
+    debug_pub_ =
+      create_publisher<std_msgs::msg::Bool>(
+        "/arm/debug_mode",
         10);
 
     joy_sub_ =
@@ -47,6 +54,11 @@ public:
       get_logger(),
       "Publishing to: %s",
       command_topic_.c_str());
+
+    RCLCPP_INFO(
+      get_logger(),
+      "Listening to joystick: %s",
+      joy_topic_.c_str());
 
     RCLCPP_INFO(
       get_logger(),
@@ -98,6 +110,11 @@ public:
       get_logger(),
       "Button %d: emergency stop",
       stop_button_);
+
+    RCLCPP_INFO(
+      get_logger(),
+      "Button %d: toggle debug mode",
+      debug_mode_button_);
   }
 
   ~ArmJoystickTeleop() override
@@ -205,6 +222,11 @@ private:
         "stop_button",
         7);
 
+    debug_mode_button_ =
+      declare_parameter<int>(
+        "debug_mode_button",
+        10);
+
     // Joint command speeds
     base_speed_rad_s_ =
       declare_parameter<double>(
@@ -277,6 +299,24 @@ private:
   {
     latest_joy_ = msg;
     last_joy_time_ = now();
+
+    /*
+     * Debug mode uses a rising-edge toggle.
+     *
+     * This means debug mode changes only once when button 10 is pressed,
+     * rather than repeatedly toggling while the button is held down.
+     */
+    const bool debug_button =
+      get_button(
+        msg,
+        debug_mode_button_);
+
+    if (debug_button && !previous_debug_button_)
+    {
+      toggle_debug_mode();
+    }
+
+    previous_debug_button_ = debug_button;
   }
 
   // ===========================================================================
@@ -426,6 +466,36 @@ private:
     }
 
     return joy->buttons[index] != 0;
+  }
+
+  // ===========================================================================
+  // DEBUG MODE
+  // ===========================================================================
+
+  void toggle_debug_mode()
+  {
+    debug_mode_enabled_ =
+      !debug_mode_enabled_;
+
+    std_msgs::msg::Bool msg;
+    msg.data = debug_mode_enabled_;
+
+    debug_pub_->publish(msg);
+
+    print_debug_banner();
+  }
+
+  void print_debug_banner() const
+  {
+    std::printf("\n");
+    std::printf("########################################\n");
+    std::printf(
+      "#          DEBUG MODE %s             #\n",
+      debug_mode_enabled_ ? "ON " : "OFF");
+    std::printf("########################################\n");
+    std::printf("\n");
+
+    std::fflush(stdout);
   }
 
   // ===========================================================================
@@ -628,6 +698,9 @@ private:
   rclcpp::Publisher<
     std_msgs::msg::Float64MultiArray>::SharedPtr command_pub_;
 
+  rclcpp::Publisher<
+    std_msgs::msg::Bool>::SharedPtr debug_pub_;
+
   rclcpp::Subscription<
     sensor_msgs::msg::Joy>::SharedPtr joy_sub_;
 
@@ -663,6 +736,9 @@ private:
   int gripper_close_button_{5};
   int stop_button_{7};
 
+  // Button 10 toggles debug mode.
+  int debug_mode_button_{10};
+
   double base_speed_rad_s_{0.25};
   double shoulder_speed_rad_s_{1.0};
   double elbow_speed_rad_s_{1.0};
@@ -677,6 +753,9 @@ private:
   double wrist_twist_direction_{-1.0};
   double claw_direction_{1.0};
 
+  bool debug_mode_enabled_{false};
+  bool previous_debug_button_{false};
+
   rclcpp::Time last_joy_time_{0, 0, RCL_ROS_TIME};
 };
 
@@ -684,8 +763,10 @@ private:
 int main(int argc, char ** argv)
 {
   rclcpp::init(argc, argv);
+
   rclcpp::spin(
     std::make_shared<ArmJoystickTeleop>());
+
   rclcpp::shutdown();
 
   return 0;
