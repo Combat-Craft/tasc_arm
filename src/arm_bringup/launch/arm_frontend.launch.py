@@ -9,7 +9,7 @@ def generate_launch_description():
         namespace="arm",
         name="joy_node",
         parameters=[{
-            "dev": "/dev/input/js0",
+            "dev": "/dev/input/by-id/usb-Logitech_Logitech_Extreme_3D-joystick",
             "deadzone": 0.05,
             "autorepeat_rate": 20.0,
         }],
